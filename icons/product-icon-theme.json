@@ -1,54 +1,211 @@
 {
   "$schema": "vscode://schemas/product-icon-theme",
-  "fonts": [{"id":"witchy-codicons","src":[{"path":"./witchy-codicons.woff","format":"woff"}],"weight":"normal","style":"normal"}],
+  "fonts": [
+    {
+      "id": "witchynibbles-product-icons",
+      "family": "WitchyNibbles Product Icons",
+      "src": [
+        {
+          "path": "./witchynibbles-product-icons.woff",
+          "format": "woff"
+        }
+      ],
+      "weight": "normal",
+      "style": "normal"
+    }
+  ],
   "iconDefinitions": {
-    "activity-bar-left":{"fontCharacter":"\\EBEC","fontId":"witchy-codicons"},
-    "activity-bar-right":{"fontCharacter":"\\EBED","fontId":"witchy-codicons"},
-    "explorer-view-icon":{"fontCharacter":"\\EAF0","fontId":"witchy-codicons"},
-    "search-view-icon":{"fontCharacter":"\\EA6D","fontId":"witchy-codicons"},
-    "source-control-view-icon":{"fontCharacter":"\\EA68","fontId":"witchy-codicons"},
-    "debug-alt":{"fontCharacter":"\\EB91","fontId":"witchy-codicons"},
-    "extensions-view-icon":{"fontCharacter":"\\EAE6","fontId":"witchy-codicons"},
-    "settings-gear":{"fontCharacter":"\\EB51","fontId":"witchy-codicons"},
-    "account":{"fontCharacter":"\\EB99","fontId":"witchy-codicons"},
-    "terminal-view-icon":{"fontCharacter":"\\EA85","fontId":"witchy-codicons"},
-    "split-horizontal":{"fontCharacter":"\\EB56","fontId":"witchy-codicons"},
-    "split-vertical":{"fontCharacter":"\\EB57","fontId":"witchy-codicons"},
-    "close":{"fontCharacter":"\\EA76","fontId":"witchy-codicons"},
-    "check":{"fontCharacter":"\\EAB2","fontId":"witchy-codicons"},
-    "add":{"fontCharacter":"\\EA60","fontId":"witchy-codicons"},
-    "remove":{"fontCharacter":"\\EB3B","fontId":"witchy-codicons"},
-    "search":{"fontCharacter":"\\EA6D","fontId":"witchy-codicons"},
-    "refresh":{"fontCharacter":"\\EB37","fontId":"witchy-codicons"},
-    "sync":{"fontCharacter":"\\EA77","fontId":"witchy-codicons"},
-    "go-to-file":{"fontCharacter":"\\EA94","fontId":"witchy-codicons"},
-    "copy":{"fontCharacter":"\\EBCC","fontId":"witchy-codicons"},
-    "edit":{"fontCharacter":"\\EA73","fontId":"witchy-codicons"},
-    "save":{"fontCharacter":"\\EB4B","fontId":"witchy-codicons"},
-    "trash":{"fontCharacter":"\\EA81","fontId":"witchy-codicons"},
-    "filter":{"fontCharacter":"\\EAF1","fontId":"witchy-codicons"},
-    "ellipsis":{"fontCharacter":"\\EA7C","fontId":"witchy-codicons"},
-    "menu":{"fontCharacter":"\\EB94","fontId":"witchy-codicons"},
-    "home":{"fontCharacter":"\\EB06","fontId":"witchy-codicons"},
-    "layout-sidebar-left":{"fontCharacter":"\\EBF3","fontId":"witchy-codicons"},
-    "layout-sidebar-right":{"fontCharacter":"\\EBF4","fontId":"witchy-codicons"},
-    "layout-panel":{"fontCharacter":"\\EBF2","fontId":"witchy-codicons"},
-    "run":{"fontCharacter":"\\EB2C","fontId":"witchy-codicons"},
-    "debug-start":{"fontCharacter":"\\EAD3","fontId":"witchy-codicons"},
-    "debug-stop":{"fontCharacter":"\\EAD7","fontId":"witchy-codicons"},
-    "debug-pause":{"fontCharacter":"\\EAD1","fontId":"witchy-codicons"},
-    "debug-continue":{"fontCharacter":"\\EACF","fontId":"witchy-codicons"},
-    "debug-step-over":{"fontCharacter":"\\EAD6","fontId":"witchy-codicons"},
-    "debug-step-into":{"fontCharacter":"\\EAD4","fontId":"witchy-codicons"},
-    "debug-step-out":{"fontCharacter":"\\EAD5","fontId":"witchy-codicons"},
-    "error":{"fontCharacter":"\\EA87","fontId":"witchy-codicons"},
-    "warning":{"fontCharacter":"\\EA6C","fontId":"witchy-codicons"},
-    "info":{"fontCharacter":"\\EA74","fontId":"witchy-codicons"},
-    "symbol-class":{"fontCharacter":"\\EB5B","fontId":"witchy-codicons"},
-    "symbol-method":{"fontCharacter":"\\EA8C","fontId":"witchy-codicons"},
-    "symbol-property":{"fontCharacter":"\\EB65","fontId":"witchy-codicons"},
-    "symbol-variable":{"fontCharacter":"\\EA88","fontId":"witchy-codicons"},
-    "folder":{"fontCharacter":"\\EA83","fontId":"witchy-codicons"},
-    "file":{"fontCharacter":"\\EA7B","fontId":"witchy-codicons"}
+    "activity-bar-left": {
+      "fontCharacter": "\\E000",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "activity-bar-right": {
+      "fontCharacter": "\\E001",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "explorer-view-icon": {
+      "fontCharacter": "\\E002",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "search-view-icon": {
+      "fontCharacter": "\\E003",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "source-control-view-icon": {
+      "fontCharacter": "\\E004",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-alt": {
+      "fontCharacter": "\\E005",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "extensions-view-icon": {
+      "fontCharacter": "\\E006",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "settings-gear": {
+      "fontCharacter": "\\E007",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "account": {
+      "fontCharacter": "\\E008",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "terminal-view-icon": {
+      "fontCharacter": "\\E009",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "split-horizontal": {
+      "fontCharacter": "\\E00A",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "split-vertical": {
+      "fontCharacter": "\\E00B",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "close": {
+      "fontCharacter": "\\E00C",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "check": {
+      "fontCharacter": "\\E00D",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "add": {
+      "fontCharacter": "\\E00E",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "remove": {
+      "fontCharacter": "\\E00F",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "search": {
+      "fontCharacter": "\\E010",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "refresh": {
+      "fontCharacter": "\\E011",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "sync": {
+      "fontCharacter": "\\E012",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "go-to-file": {
+      "fontCharacter": "\\E013",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "copy": {
+      "fontCharacter": "\\E014",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "edit": {
+      "fontCharacter": "\\E015",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "save": {
+      "fontCharacter": "\\E016",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "trash": {
+      "fontCharacter": "\\E017",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "filter": {
+      "fontCharacter": "\\E018",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "ellipsis": {
+      "fontCharacter": "\\E019",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "menu": {
+      "fontCharacter": "\\E01A",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "home": {
+      "fontCharacter": "\\E01B",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "layout-sidebar-left": {
+      "fontCharacter": "\\E01C",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "layout-sidebar-right": {
+      "fontCharacter": "\\E01D",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "layout-panel": {
+      "fontCharacter": "\\E01E",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "run": {
+      "fontCharacter": "\\E01F",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-start": {
+      "fontCharacter": "\\E020",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-stop": {
+      "fontCharacter": "\\E021",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-pause": {
+      "fontCharacter": "\\E022",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-continue": {
+      "fontCharacter": "\\E023",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-step-over": {
+      "fontCharacter": "\\E024",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-step-into": {
+      "fontCharacter": "\\E025",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "debug-step-out": {
+      "fontCharacter": "\\E026",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "error": {
+      "fontCharacter": "\\E027",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "warning": {
+      "fontCharacter": "\\E028",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "info": {
+      "fontCharacter": "\\E029",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-class": {
+      "fontCharacter": "\\E02A",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-method": {
+      "fontCharacter": "\\E02B",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-property": {
+      "fontCharacter": "\\E02C",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-variable": {
+      "fontCharacter": "\\E02D",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "folder": {
+      "fontCharacter": "\\E02E",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "file": {
+      "fontCharacter": "\\E02F",
+      "fontId": "witchynibbles-product-icons"
+    }
   }
 }

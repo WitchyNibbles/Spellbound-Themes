@@ -1,11 +1,7 @@
-# WitchyNibbles icon themes
+# WitchyNibbles icon assets
 
-`file-icon-theme.json` uses the original WitchyNibbles SVGs in this directory.
-`product-icon-theme.json` uses the official VS Code Codicon font glyphs, downloaded from
-the `@vscode/codicons` package (version 0.0.36) and wrapped as WOFF for the extension.
-Codicons are distributed under CC BY 4.0, with attribution to Microsoft Corporation
-and contributors. The complete packaged notice is in `CODICONS-LICENSE.txt`; see also
-the upstream license at https://github.com/microsoft/vscode-codicons/blob/main/LICENSE.
+The file icon theme is defined in file-icon-theme.json.
 
-The product icon IDs are VS Code product icon definition keys and the font characters
-are the published Codicon code points for the selected icons.
+The product icon theme is generated from the original 16×16 SVG artwork in product-src/. Run npm run build:product-icons to regenerate product-icon-theme.json and witchynibbles-product-icons.woff. The generated font uses private Unicode codepoints and the font family WitchyNibbles Product Icons.
+
+These product glyphs were drawn for this extension. They do not use the VS Code Codicons font. Product icon themes are monochrome; VS Code applies the active color theme to them.

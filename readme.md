@@ -1,30 +1,34 @@
 # WitchyNibbles Spellbound Themes
 
-Version 1.1.0 adds a matching **WitchyNibbles Product Icons** theme alongside the color themes and file icons.
-
-WitchyNibbles is a coordinated VS Code theme family where moonlit purple meets neon pink and electric blue. It is designed for clear, comfortable coding across Python, JavaScript, TypeScript, CSS, JSON, and YAML, with no green accents.
+A coordinated VS Code collection with three color themes, matching file icons, and an original product icon font. Moonlit purple, neon pink, and electric blue carry the palette across Python, JavaScript, TypeScript, CSS, JSON, and YAML.
 
 ## Choose your atmosphere
 
-- **Moonlit** — A deep aubergine dark theme with soft lavender surfaces and bright neon token accents.
-- **Daydream** — A pale lilac light theme with ink text, royal purple structure, and pink and blue highlights.
-- **Coven Contrast** — A high contrast theme for maximum separation and reliable visibility.
+- **Moonlit:** dark aubergine surfaces with lavender and neon accents.
+- **Daydream:** pale lilac surfaces with deep purple text.
+- **Coven Contrast:** high contrast dark surfaces with clear focus and selection states.
 
-The extension includes **WitchyNibbles Icons**, a matching file icon theme.
+The collection avoids green accents.
 
-## Install
+## Install and select
 
-The extension can be installed from a local `.vsix`. Run `npm run package`, then in VS Code run `Extensions: Install from VSIX...` and select the generated file.
+Build the VSIX with npm run package, then use **Extensions: Install from VSIX...** in VS Code. The Marketplace publisher is EimiMartinez.
 
-The Marketplace publisher ID is `EimiMartinez`. The repository does not publish automatically.
+After installation, use the Command Palette to select:
 
-After installation, use the Command Palette to choose `Preferences: Color Theme`. For matching files, run `Preferences: File Icon Theme` and select **WitchyNibbles Icons**. For matching command and activity icons, run `Preferences: Product Icon Theme` and select **WitchyNibbles Product Icons**.
+1. **Preferences: Color Theme** → a WitchyNibbles color theme.
+2. **Preferences: File Icon Theme** → WitchyNibbles Icons.
+3. **Preferences: Product Icon Theme** → WitchyNibbles Product Icons.
 
-## Product icons
+## Original product icons
 
-After installing the extension, open the Command Palette and choose `Preferences: Product Icon Theme`, then select **WitchyNibbles Product Icons**. The set covers the activity bar, explorer, search, source control, debug, extensions, settings, account, terminal, and common editor actions with the collection's pink, blue, purple, black, and white palette.
+Version 1.2.0 replaces the bundled stock Codicons font with a WitchyNibbles font built from 48 original SVG sources. The most visible workbench icons include a spellbook for Explorer, a crystal search lens, a lunar source control branch, a witch hat profile, and a cauldron terminal. Familiar controls such as close, check, and split remain recognizable at small sizes.
 
-## Preview
+Product icon fonts are monochrome. VS Code colors the glyphs with the active color theme.
+
+![Preview of eight original WitchyNibbles product icons](https://github.com/WitchyNibbles/pastel-princess/raw/HEAD/assets/screenshots/product-icons.png)
+
+## Color theme previews
 
 ![WitchyNibbles Moonlit preview](https://github.com/WitchyNibbles/pastel-princess/raw/HEAD/assets/screenshots/moonlit.png)
 
@@ -36,18 +40,18 @@ After installing the extension, open the Command Palette and choose `Preferences
 
 From this directory:
 
-```sh
+~~~
 npm install
 npm run build
 npm run validate
 npm run package
-```
+~~~
 
-`npm run package` creates a VSIX through the local `@vscode/vsce` dependency. The build step generates distributable themes from the source palette files, and validation checks theme references, JSON, contrast, and forbidden green hues.
+The build regenerates the color themes and product icon font. Validation checks theme references, color contrast, product icon sources and font mappings, and forbidden green accents. The package command creates a VSIX; it does not publish to Marketplace.
 
 ## Feedback
 
-When reporting a readability issue, include the theme name, VS Code version, language, and a screenshot through the project’s chosen support channel.
+For a readability or icon issue, include the theme name, VS Code version, affected UI action or language, and a screenshot.
 
 ## License
 

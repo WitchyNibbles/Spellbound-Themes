@@ -1,19 +1,16 @@
 # Changelog
 
-All notable changes to WitchyNibbles Spellbound Themes are documented here.
+## 1.2.0 — 2026-09-26
 
-## [1.1.0] - 2026-09-26
+- Replaced the stock Codicons product font with an original WitchyNibbles icon font generated from 48 SVG sources.
+- Added witchy workbench glyphs for Explorer, Search, Source Control, Debug, Extensions, Settings, Account, Terminal, and common actions.
+- Added a product icon preview and validation for SVG sources, font contours, and stable icon mappings.
 
-### Added
+## 1.1.0 — 2026-09-26
 
-- WitchyNibbles Product Icons, a coordinated product icon theme for VS Code activity, explorer, search, source control, debug, extensions, settings, account, terminal, and common editor actions.
-- Product icon installation instructions and expanded icon theme coverage.
+- Expanded the selectable product icon theme and its validation.
 
-## [1.0.0] - 2026-09-25
+## 1.0.0 — 2026-09-26
 
-### Added
-
-- Moonlit, Daydream, and Coven Contrast color themes.
-- Semantic and TextMate token coverage for Python, JavaScript, TypeScript, CSS, JSON, and YAML.
-- WitchyNibbles file icon theme.
-- Marketplace metadata, validation, showcase fixtures, and packaging workflow.
+- Released Moonlit, Daydream, and Coven Contrast color themes.
+- Added matching file icons, screenshots, and VSIX packaging.
