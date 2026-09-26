@@ -1,0 +1,27 @@
+name: witchynibbles
+version: 1
+description: A moonlit palette for bright ideas and late-night coding.
+themes:
+  moonlit:
+    ui: dark
+    background: '#110D24'
+    accents: [pink, blue, purple]
+  daydream:
+    ui: light
+    background: '#FFF9FD'
+    accents: [pink, blue, purple]
+  coven-contrast:
+    ui: high-contrast
+    background: '#000000'
+    accents: [pink, blue, purple]
+languages:
+  - python
+  - javascript
+  - typescript
+  - css
+  - json
+  - yaml
+features:
+  semantic-highlighting: true
+  matching-icons: true
+  green-free-palette: true

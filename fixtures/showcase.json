@@ -1,0 +1,23 @@
+{
+  "theme": {
+    "name": "WitchyNibbles Moonlit",
+    "mode": "dark",
+    "version": 1
+  },
+  "palette": {
+    "background": "#110D24",
+    "foreground": "#FFFFFF",
+    "accents": ["pink", "blue", "purple"],
+    "greenFree": true
+  },
+  "coven": [
+    { "name": "Luna", "affinity": "moon", "power": 42 },
+    { "name": "Nova", "affinity": "spark", "power": 77 },
+    { "name": "Echo", "affinity": "tide", "power": 13 }
+  ],
+  "features": {
+    "semanticHighlighting": true,
+    "iconTheme": "WitchyNibbles Icons",
+    "contrast": "balanced"
+  }
+}

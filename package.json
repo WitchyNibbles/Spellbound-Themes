@@ -2,7 +2,7 @@
   "name": "witchynibbles-theme-collection",
   "displayName": "WitchyNibbles Spellbound Themes",
   "description": "Moonlit purple, neon pink, and electric blue themes for focused coding.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "EimiMartinez",
   "author": {
     "name": "WitchyNibbles"
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WitchyNibbles/pastel-princess"
+    "url": "https://github.com/WitchyNibbles/Spellbound-Themes.git"
   },
   "engines": {
     "vscode": "^1.100.0"
@@ -70,7 +70,7 @@
     "build": "node scripts/build-themes.mjs && node scripts/build-product-icons.mjs",
     "build:product-icons": "node scripts/build-product-icons.mjs",
     "validate": "node scripts/validate.mjs",
-    "package": "npm run build && npm run validate && vsce package --no-dependencies"
+    "package": "npm run build && npm run validate && vsce package --no-dependencies --baseImagesUrl https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main --baseContentUrl https://github.com/WitchyNibbles/Spellbound-Themes/blob/main"
   },
   "devDependencies": {
     "@vscode/vsce": "^3.6.0",

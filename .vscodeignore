@@ -1,0 +1,15 @@
+.vscode/**
+.vscode-test/**
+.gitignore
+vsc-extension-quickstart.md
+package-lock.json
+fixtures/**
+docs/**
+scripts/**
+src/**
+.git/**
+.github/**
+.agents/**
+.codex/**
+.devgod/**
+test.py

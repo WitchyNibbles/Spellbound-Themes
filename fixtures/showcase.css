@@ -1,0 +1,38 @@
+:root {
+  --night: #110d24;
+  --spell-pink: #ff4fb3;
+  --electric-blue: #58d9ff;
+  --moon-purple: #9d7aff;
+  color-scheme: dark;
+}
+
+.coven {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  max-width: 48rem;
+  margin: 4rem auto;
+  padding: 1.5rem;
+  background: var(--night);
+  color: #fff;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.card {
+  border: 1px solid var(--moon-purple);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.card:hover,
+.card:focus-within {
+  color: var(--spell-pink);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0 1.5rem var(--electric-blue);
+}
+
+.card__power {
+  color: var(--electric-blue);
+  font-variant-numeric: tabular-nums;
+}
