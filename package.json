@@ -71,13 +71,15 @@
     "build": "node scripts/build-themes.mjs && node scripts/build-product-icons.mjs",
     "build:product-icons": "node scripts/build-product-icons.mjs",
     "validate": "node scripts/validate.mjs",
-    "package": "npm run build && npm run validate && vsce package --no-dependencies --baseImagesUrl https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main --baseContentUrl https://github.com/WitchyNibbles/Spellbound-Themes/blob/main"
+    "package": "npm run build && npm run validate && vsce package --no-dependencies --baseImagesUrl https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main --baseContentUrl https://github.com/WitchyNibbles/Spellbound-Themes/blob/main && node scripts/normalize-vsix.mjs"
   },
   "devDependencies": {
     "@vscode/vsce": "^3.6.0",
     "fontkit": "2.0.4",
     "svg2ttf": "6.1.0",
     "svgicons2svgfont": "15.0.1",
-    "ttf2woff": "3.0.0"
+    "ttf2woff": "3.0.0",
+    "yauzl": "3.4.0",
+    "yazl": "2.5.1"
   }
 }

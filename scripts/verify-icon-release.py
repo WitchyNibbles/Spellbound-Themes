@@ -99,6 +99,10 @@ with ZipFile(VSIX) as package:
     require(LIVE_IMAGE_PROOF.is_file(), "Independent live packed-image check is missing")
     live = json.loads(LIVE_IMAGE_PROOF.read_text())
     require(live["invocation"] == "python3 scripts/verify-live-readme-images.py", "Live invocation missing")
+    require(
+        live["vsix_sha256"] == digest(VSIX.read_bytes()),
+        "Live evidence was generated from a different VSIX",
+    )
     require(live["packed_readme_sha256"] == digest(readme), "Live README differs")
     results = {Path(item["packed_path"]).name: item for item in live["results"]}
     require(set(results) == SCREENSHOTS, "Live check did not cover every image")
