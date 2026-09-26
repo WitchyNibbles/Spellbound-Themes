@@ -1,5 +1,7 @@
 # WitchyNibbles Spellbound Themes
 
+Version 1.1.0 adds a matching **WitchyNibbles Product Icons** theme alongside the color themes and file icons.
+
 WitchyNibbles is a coordinated VS Code theme family where moonlit purple meets neon pink and electric blue. It is designed for clear, comfortable coding across Python, JavaScript, TypeScript, CSS, JSON, and YAML, with no green accents.
 
 ## Choose your atmosphere
@@ -17,6 +19,10 @@ The extension can be installed from a local `.vsix`. Run `npm run package`, then
 The Marketplace publisher ID is `EimiMartinez`. The repository does not publish automatically.
 
 After installation, use the Command Palette to choose `Preferences: Color Theme`. For matching files, run `Preferences: File Icon Theme` and select **WitchyNibbles Icons**. For matching command and activity icons, run `Preferences: Product Icon Theme` and select **WitchyNibbles Product Icons**.
+
+## Product icons
+
+After installing the extension, open the Command Palette and choose `Preferences: Product Icon Theme`, then select **WitchyNibbles Product Icons**. The set covers the activity bar, explorer, search, source control, debug, extensions, settings, account, terminal, and common editor actions with the collection's pink, blue, purple, black, and white palette.
 
 ## Preview
 
