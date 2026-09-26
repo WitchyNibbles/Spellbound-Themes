@@ -1,0 +1,36 @@
+{
+  "name": "witchynibbles-theme-collection",
+  "displayName": "WitchyNibbles Spellbound Themes",
+  "description": "Moonlit purple, neon pink, and electric blue themes for focused coding.",
+  "version": "1.0.0",
+  "publisher": "EimiMartinez",
+  "author": { "name": "WitchyNibbles" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/WitchyNibbles/pastel-princess" },
+  "engines": { "vscode": "^1.100.0" },
+  "categories": ["Themes"],
+  "keywords": ["theme", "dark theme", "light theme", "witchy", "pastel", "neon", "purple", "pink"],
+  "galleryBanner": { "color": "#110d24", "theme": "dark" },
+  "icon": "assets/witchynibbles.png",
+  "contributes": {
+    "themes": [
+      { "label": "WitchyNibbles Moonlit", "uiTheme": "vs-dark", "path": "./themes/WitchyNibbles-color-theme-dark.json" },
+      { "label": "WitchyNibbles Daydream", "uiTheme": "vs", "path": "./themes/WitchyNibbles-color-theme-light.json" },
+      { "label": "WitchyNibbles Coven Contrast", "uiTheme": "hc-black", "path": "./themes/WitchyNibbles-color-theme-high-contrast.json" }
+    ],
+    "iconThemes": [
+      { "id": "witchynibbles-icons", "label": "WitchyNibbles Icons", "path": "./icons/file-icon-theme.json" }
+    ],
+    "productIconThemes": [
+      { "id": "witchynibbles-product-icons", "label": "WitchyNibbles Product Icons", "path": "./icons/product-icon-theme.json" }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build-themes.mjs",
+    "validate": "node scripts/validate.mjs",
+    "package": "npm run build && npm run validate && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.6.0"
+  }
+}

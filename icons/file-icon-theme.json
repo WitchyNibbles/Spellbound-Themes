@@ -1,0 +1,31 @@
+{
+  "$schema": "vscode://schemas/icon-theme",
+  "iconDefinitions": {
+    "file": {"iconPath": "./witchy-file.svg"},
+    "code": {"iconPath": "./witchy-code.svg"},
+    "style": {"iconPath": "./witchy-style.svg"},
+    "data": {"iconPath": "./witchy-data.svg"},
+    "folder": {"iconPath": "./witchy-folder.svg"},
+    "test": {"iconPath": "./witchy-test.svg"}
+    ,"python": {"iconPath": "./witchy-python.svg"}
+    ,"javascript": {"iconPath": "./witchy-javascript.svg"}
+    ,"typescript": {"iconPath": "./witchy-typescript.svg"}
+    ,"css": {"iconPath": "./witchy-css.svg"}
+    ,"json": {"iconPath": "./witchy-json.svg"}
+    ,"yaml": {"iconPath": "./witchy-yaml.svg"}
+  },
+  "file": "file",
+  "folder": "folder",
+  "folderExpanded": "folder",
+  "folderNames": {"src":"folder", "source":"folder", "tests":"test", "test":"test", "__tests__":"test", ".github":"folder"},
+  "folderNamesExpanded": {"src":"folder", "source":"folder", "tests":"test", "test":"test", "__tests__":"test", ".github":"folder"},
+  "fileExtensions": {
+    "py":"python", "pyw":"python", "js":"javascript", "jsx":"javascript", "mjs":"javascript", "cjs":"javascript", "ts":"typescript", "tsx":"typescript", "mts":"typescript", "cts":"typescript",
+    "css":"css", "scss":"css", "less":"css", "json":"json", "jsonc":"json", "yaml":"yaml", "yml":"yaml",
+    "md":"file", "mdx":"file", "txt":"file", "html":"style", "htm":"style"
+  },
+  "fileNames": {
+    "package.json":"data", "tsconfig.json":"data", "jsconfig.json":"data", "pyproject.toml":"data", "requirements.txt":"data", "Dockerfile":"code", ".gitignore":"file", ".env":"data", "vite.config.ts":"code", "jest.config.js":"test", "pytest.ini":"test"
+  },
+  "languageIds": {"python":"python", "javascript":"javascript", "javascriptreact":"javascript", "typescript":"typescript", "typescriptreact":"typescript", "css":"css", "scss":"css", "json":"json", "jsonc":"json", "yaml":"yaml", "markdown":"file"}
+}

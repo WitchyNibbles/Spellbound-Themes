@@ -1,0 +1,18 @@
+{
+  "$schema": "vscode://schemas/product-icon-theme",
+  "fonts": [{"id":"witchy-codicons","src":[{"path":"./witchy-codicons.woff","format":"woff"}],"weight":"normal","style":"normal"}],
+  "iconDefinitions": {
+    "activity-bar": {"fontCharacter":"\\EBF3","fontId":"witchy-codicons"},
+    "explorer-view-icon": {"fontCharacter":"\\EAF0","fontId":"witchy-codicons"},
+    "search-view-icon": {"fontCharacter":"\\EA6D","fontId":"witchy-codicons"},
+    "source-control-view-icon": {"fontCharacter":"\\EA68","fontId":"witchy-codicons"},
+    "debug-alt": {"fontCharacter":"\\EB91","fontId":"witchy-codicons"},
+    "extensions-view-icon": {"fontCharacter":"\\EAE6","fontId":"witchy-codicons"},
+    "settings-gear": {"fontCharacter":"\\EB51","fontId":"witchy-codicons"},
+    "account": {"fontCharacter":"\\EB99","fontId":"witchy-codicons"},
+    "terminal-view-icon": {"fontCharacter":"\\EA85","fontId":"witchy-codicons"},
+    "split-horizontal": {"fontCharacter":"\\EB56","fontId":"witchy-codicons"},
+    "close": {"fontCharacter":"\\EA76","fontId":"witchy-codicons"},
+    "check": {"fontCharacter":"\\EAB2","fontId":"witchy-codicons"}
+  }
+}

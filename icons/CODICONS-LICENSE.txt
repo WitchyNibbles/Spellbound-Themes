@@ -1,0 +1,17 @@
+Codicons attribution
+====================
+
+The file witchy-codicons.woff contains glyphs from @vscode/codicons 0.0.36,
+the icon font for Visual Studio Code.
+
+Copyright Microsoft Corporation and contributors.
+Source: https://github.com/microsoft/vscode-codicons
+
+The font was repackaged as WOFF for this extension; its glyph designs are unchanged.
+
+The Codicons are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+This notice accompanies the redistributed font and does not apply to the
+original WitchyNibbles SVG file icons in this directory.
