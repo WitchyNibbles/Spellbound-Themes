@@ -43,7 +43,7 @@ npm run validate
 npm run package
 ```
 
-The package command creates a VSIX; it does not publish to the Marketplace. The extension page serves its screenshots from the public [Spellbound-Themes repository](https://github.com/WitchyNibbles/Spellbound-Themes).
+The package command creates a VSIX; it does not publish to the Marketplace. This project is published at the root of the public [Spellbound-Themes repository](https://github.com/WitchyNibbles/Spellbound-Themes), where the extension page serves its screenshots from `assets/screenshots/`.
 
 ## License
 

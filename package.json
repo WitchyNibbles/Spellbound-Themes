@@ -10,7 +10,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/WitchyNibbles/Spellbound-Themes.git"
+    "url": "https://github.com/WitchyNibbles/Spellbound-Themes.git",
+    "directory": "."
   },
   "engines": {
     "vscode": "^1.100.0"

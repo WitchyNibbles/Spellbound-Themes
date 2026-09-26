@@ -1,0 +1,49 @@
+{
+  "repository": "https://github.com/WitchyNibbles/Spellbound-Themes",
+  "published_project_root": ".",
+  "main_commit_at_check": "c1824c5766c05f112ca284865520d5d64dbde788",
+  "checked_at_utc": "2026-09-26T12:24:45.360377+00:00",
+  "root_paths_verified": [
+    "README.md",
+    "package.json",
+    "LICENSE.md"
+  ],
+  "screenshots": [
+    {
+      "path": "assets/screenshots/product-icons.png",
+      "raw_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/product-icons.png",
+      "http_status": 200,
+      "sha256": "a3a7ecd6bcb55bdaa0344a934c42ea27552ab92baed06ab28e0ff36787b4ec92",
+      "git_blob_sha": "0601b20cc32473e2e01be0e02e5d25371da49e83",
+      "incorrect_nested_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/pastel-princess-dark/assets/screenshots/product-icons.png",
+      "incorrect_nested_http_status": 404
+    },
+    {
+      "path": "assets/screenshots/moonlit.png",
+      "raw_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/moonlit.png",
+      "http_status": 200,
+      "sha256": "c03adfe4a0bd2a6c1848bc7729bca21628fbb637b645b77f71baa55f77068577",
+      "git_blob_sha": "7a7a7e05ce19a550db53990f2a453c49ab57535f",
+      "incorrect_nested_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/pastel-princess-dark/assets/screenshots/moonlit.png",
+      "incorrect_nested_http_status": 404
+    },
+    {
+      "path": "assets/screenshots/daydream.png",
+      "raw_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/daydream.png",
+      "http_status": 200,
+      "sha256": "e2041a63a5b688785e0ac82c481805d959d8e07a3f93aae366266bea05711bcf",
+      "git_blob_sha": "3527e6d1498057d8ed51882aa16f4f56b8a25534",
+      "incorrect_nested_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/pastel-princess-dark/assets/screenshots/daydream.png",
+      "incorrect_nested_http_status": 404
+    },
+    {
+      "path": "assets/screenshots/coven-contrast.png",
+      "raw_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/coven-contrast.png",
+      "http_status": 200,
+      "sha256": "815cb528d4abc1ba58ad95ed75c9eda62fe70ab9adedb6f63732e5fb788679ec",
+      "git_blob_sha": "a3674ebdf781c0ce69f041d51711c797f435cc70",
+      "incorrect_nested_url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/pastel-princess-dark/assets/screenshots/coven-contrast.png",
+      "incorrect_nested_http_status": 404
+    }
+  ]
+}
