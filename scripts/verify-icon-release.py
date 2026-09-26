@@ -12,6 +12,7 @@ BASELINE_ARCHIVE = ROOT / "docs/qa/witchynibbles-pre-edit-icons-1.2.1.zip"
 CHANGED = {"explorer-view-icon.svg", "extensions-view-icon.svg", "settings-gear.svg"}
 SCREENSHOTS = {"product-icons.png", "moonlit.png", "daydream.png", "coven-contrast.png"}
 PUBLIC_IMAGE_PROOF = ROOT / "docs/qa/public-image-verification.json"
+LIVE_IMAGE_PROOF = ROOT / "docs/qa/live-packed-image-verification.json"
 VSIX = ROOT / "witchynibbles-theme-collection-1.2.1.vsix"
 
 
@@ -95,6 +96,21 @@ with ZipFile(VSIX) as package:
         require((base + name).encode() in readme, f"Packaged README image path wrong: {name}")
     require(b"raw.githubusercontent.com/WitchyNibbles/pastel-princess/" not in readme, "Old broken screenshot path remains")
     print(f"extension/readme.md {digest(readme)}")
+    require(LIVE_IMAGE_PROOF.is_file(), "Independent live packed-image check is missing")
+    live = json.loads(LIVE_IMAGE_PROOF.read_text())
+    require(live["invocation"] == "python3 scripts/verify-live-readme-images.py", "Live invocation missing")
+    require(live["packed_readme_sha256"] == digest(readme), "Live README differs")
+    results = {Path(item["packed_path"]).name: item for item in live["results"]}
+    require(set(results) == SCREENSHOTS, "Live check did not cover every image")
+    for name in SCREENSHOTS:
+        item = results[name]
+        packed_path = f"extension/assets/screenshots/{name}"
+        packed_hash = digest(package.read(packed_path))
+        require(item["url"] == base + name, f"Live URL differs: {name}")
+        require(item["packed_path"] == packed_path, f"Live packed path differs: {name}")
+        require(item["http_status"] == 200 and item["body_match"], f"Live fetch failed: {name}")
+        require(item["packed_sha256"] == packed_hash == item["remote_sha256"], f"Live bytes differ: {name}")
+    print(f"External live packed-image evidence {digest(LIVE_IMAGE_PROOF.read_bytes())}")
 
 print(f"VSIX {digest(VSIX.read_bytes())}")
 qa_render = ROOT / "docs/qa/witchynibbles-1.2.1-icon-comparison.png"

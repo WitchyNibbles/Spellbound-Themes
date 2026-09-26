@@ -1,0 +1,40 @@
+{
+  "invocation": "python3 scripts/verify-live-readme-images.py",
+  "checked_at_utc": "2026-09-26T12:35:56.867256+00:00",
+  "vsix_sha256": "091eb60df3f5c5525398a1bb0ca62e2d82f6fb33e491f52ae59f1b11213e2298",
+  "packed_readme_sha256": "056fe0a455677644043238f537433166be153e097014b6ca69d5acf14c6bc859",
+  "results": [
+    {
+      "url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/product-icons.png",
+      "packed_path": "extension/assets/screenshots/product-icons.png",
+      "http_status": 200,
+      "packed_sha256": "a3a7ecd6bcb55bdaa0344a934c42ea27552ab92baed06ab28e0ff36787b4ec92",
+      "remote_sha256": "a3a7ecd6bcb55bdaa0344a934c42ea27552ab92baed06ab28e0ff36787b4ec92",
+      "body_match": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/moonlit.png",
+      "packed_path": "extension/assets/screenshots/moonlit.png",
+      "http_status": 200,
+      "packed_sha256": "c03adfe4a0bd2a6c1848bc7729bca21628fbb637b645b77f71baa55f77068577",
+      "remote_sha256": "c03adfe4a0bd2a6c1848bc7729bca21628fbb637b645b77f71baa55f77068577",
+      "body_match": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/daydream.png",
+      "packed_path": "extension/assets/screenshots/daydream.png",
+      "http_status": 200,
+      "packed_sha256": "e2041a63a5b688785e0ac82c481805d959d8e07a3f93aae366266bea05711bcf",
+      "remote_sha256": "e2041a63a5b688785e0ac82c481805d959d8e07a3f93aae366266bea05711bcf",
+      "body_match": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main/assets/screenshots/coven-contrast.png",
+      "packed_path": "extension/assets/screenshots/coven-contrast.png",
+      "http_status": 200,
+      "packed_sha256": "815cb528d4abc1ba58ad95ed75c9eda62fe70ab9adedb6f63732e5fb788679ec",
+      "remote_sha256": "815cb528d4abc1ba58ad95ed75c9eda62fe70ab9adedb6f63732e5fb788679ec",
+      "body_match": true
+    }
+  ]
+}
