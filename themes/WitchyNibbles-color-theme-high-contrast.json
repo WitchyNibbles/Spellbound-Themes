@@ -159,7 +159,10 @@
     "symbolIcon.propertyForeground": "#9CCBFF",
     "symbolIcon.keywordForeground": "#FF67B7",
     "debugIcon.breakpointCurrentStackframeForeground": "#FF67B7",
-    "debugIcon.breakpointStackframeForeground": "#D0B8FF"
+    "debugIcon.breakpointStackframeForeground": "#D0B8FF",
+    "quickInputList.focusBackground": "#FF67B7",
+    "quickInputList.focusForeground": "#000000",
+    "quickInputList.focusIconForeground": "#000000"
   },
   "tokenColors": [
     {

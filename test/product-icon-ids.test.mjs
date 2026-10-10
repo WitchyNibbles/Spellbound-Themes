@@ -5,10 +5,10 @@ import pinned from '../icons/product-icon-ids.json' with { type: 'json' };
 const entries = Object.entries(pinned.ids);
 const BATCHES = ['1', 'chrome', 'panel', 'status', 'debug', 'editor', 'symbols'];
 
-test('132 core IDs plus 38 named extras', () => {
+test('132 core IDs plus 40 named extras', () => {
   assert.equal(entries.filter(([, e]) => e.tier === 'core').length, 132);
-  assert.equal(entries.filter(([, e]) => e.tier === 'extra').length, 38);
-  assert.equal(entries.length, 170);
+  assert.equal(entries.filter(([, e]) => e.tier === 'extra').length, 40);
+  assert.equal(entries.length, 172);
 });
 
 test('the keys added by author decisions 4, 5 and 7 sit in their batches', () => {
@@ -32,6 +32,10 @@ test('the keys added at gate 1 (G4-G6) sit in their batches with the kind and de
   };
   for (const [id, entry] of Object.entries(expected)) assert.deepEqual(pinned.ids[id], { tier: 'extra', ...entry }, id);
   assert.equal('gutter-lightbulb-sparkle-filled' in pinned.ids, false, 'the all-AI gutter mark stays unpinned until gate 4 (spec 11.2, G11)');
+});
+
+test('the keys added at gate 3 (G20, G23) sit in the debug batch with the kind and default the 1.141 bundle registers', () => {
+  for (const id of ['debug-disconnect', 'debug-breakpoint-log-unverified']) assert.deepEqual(pinned.ids[id], { tier: 'extra', kind: 'codicon', default: null, batch: 'debug' }, id);
 });
 
 test('every key has a known batch and kind', () => {

@@ -5,7 +5,8 @@ export const drawings = {};
 export const variants = {};
 
 // Shared parts (phase 2): the status batch builds bell-dot, the copilot cat variants and the dirty-branch sprigs from
-// these, so a variant never drifts from its base drawing. Each returns path strings for svgDocument.
+// these, so a variant never drifts from its base drawing; the panel batch (gate 3) builds its ink drops from the
+// flame. Each returns path strings for svgDocument.
 export const parts = {
   // ✦: four tips at `outer` from (cx, cy) on the axes, waist vertices at `inner` on the diagonals (a solid core).
   star: (cx, cy, outer, inner) => polygon([[cx, cy - outer], [cx + inner, cy - inner], [cx + outer, cy], [cx + inner, cy + inner],
@@ -27,6 +28,9 @@ export const parts = {
     polygon([[3, 4], [5.5, 6], [10.5, 6], [13, 4], [13, 11.5], [10.5, 14], [5.5, 14], [3, 11.5]], 'ccw'),
   ],
   catEyes: () => [leaf([4, 10], [7.5, 10], 3), leaf([8.5, 10], [12, 10], 3)], // [left, right]: almond eyes 3.5x3, symmetric about x = 8
+  // Flame (or drop): pointed top, round bottom, 2 * half wide, all curves, so every point stays on the grid.
+  flame: (cx, top, bottom, half) => `M${cx} ${top}C${cx + half * 0.6} ${top + 1.5} ${cx + half} ${bottom - half - 0.6} ${cx + half} ${bottom - half}`
+    + `A${half} ${half} 0 0 1 ${cx - half} ${bottom - half}C${cx - half} ${bottom - half - 0.6} ${cx - half * 0.6} ${top + 1.5} ${cx} ${top}Z`,
   // Small git-branch sprig (a different drawing from the activity-bar herb sprig).
   sprigSmall: () => [
     rect(4, 6, 1, 9), // stem x4-5, y6-15
@@ -49,16 +53,12 @@ drawings['dirty-star'] = () => svgDocument(parts.star(8, 8, 5, 1.5));
 drawings['star-separator'] = () => svgDocument(polygon([[8, 4.5], [9, 7], [11.5, 7], [9.5, 8.5], [10.5, 11], [8, 9.5], [5.5, 11], [6.5, 8.5], [4.5, 7], [7, 7]]));
 
 // ---- Signals (Task 13) ----
-// Flame: pointed top, round bottom; shape-bearing accent 4 wide.
-const flame = (cx, top, bottom, half) => `M${cx} ${top}C${cx + half * 0.6} ${top + 1.5} ${cx + half} ${bottom - half - 0.6} ${cx + half} ${bottom - half}`
-  + `A${half} ${half} 0 0 1 ${cx - half} ${bottom - half}C${cx - half} ${bottom - half - 0.6} ${cx - half * 0.6} ${top + 1.5} ${cx} ${top}Z`;
-
 // Adjusted after the 16px sheet: the first-pass 4x5 flame lost its point and read as a round dot, so the flame is 4x6;
 // the 6x7 body read as a jar, so the body is a 4-wide pillar.
 drawings.candle = () => svgDocument(
   frame(6, 9, 4, 6, { r: 0 }), // wax body x6-10, y9-15, 1-unit walls, 2x4 inside
   rect(7, 8, 2, 1), // wick x7-9, y8-9
-  flame(8, 1, 7, 2), // accent: flame x6-10, y1-7, one unit above the wick
+  parts.flame(8, 1, 7, 2), // accent: flame x6-10, y1-7, one unit above the wick (shape-bearing accent 4 wide)
 );
 
 drawings.skull = () => svgDocument(

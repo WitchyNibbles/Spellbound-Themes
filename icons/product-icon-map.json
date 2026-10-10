@@ -121,12 +121,6 @@
         "git-branch"
       ]
     },
-    "moon-breakpoint": {
-      "codepoint": "E116",
-      "ids": [
-        "debug-breakpoint"
-      ]
-    },
     "explorer-grimoire": {
       "codepoint": "E100",
       "ids": [
@@ -278,13 +272,6 @@
         "toolbar-more"
       ]
     },
-    "warning-triangle": {
-      "codepoint": "E120",
-      "ids": [
-        "warning",
-        "dialog-warning"
-      ]
-    },
     "info-disc": {
       "codepoint": "E121",
       "ids": [
@@ -375,6 +362,173 @@
       "ids": [
         "terminal-decoration-success",
         "ports-forwarded-with-process-icon"
+      ]
+    },
+    "quill": {
+      "codepoint": "E130",
+      "ids": [
+        "output-view-icon"
+      ]
+    },
+    "console-spider": {
+      "codepoint": "E131",
+      "ids": [
+        "debug-console-view-icon"
+      ]
+    },
+    "broom": {
+      "codepoint": "E132",
+      "ids": [
+        "clear-all",
+        "notifications-clear-all"
+      ]
+    },
+    "funnel": {
+      "codepoint": "E133",
+      "ids": [
+        "filter"
+      ]
+    },
+    "bin": {
+      "codepoint": "E134",
+      "ids": [
+        "trash",
+        "terminal-kill"
+      ]
+    },
+    "expand-corners": {
+      "codepoint": "E135",
+      "ids": [
+        "panel-maximize"
+      ]
+    },
+    "warning-triangle": {
+      "codepoint": "E120",
+      "ids": [
+        "warning",
+        "dialog-warning",
+        "markers-view-icon"
+      ]
+    },
+    "moon-breakpoint": {
+      "codepoint": "E116",
+      "ids": [
+        "debug-breakpoint",
+        "debug-hint"
+      ]
+    },
+    "moon-outline": {
+      "codepoint": "E136",
+      "ids": [
+        "debug-breakpoint-disabled"
+      ]
+    },
+    "dashed-ring": {
+      "codepoint": "E137",
+      "ids": [
+        "debug-breakpoint-unverified",
+        "debug-breakpoint-conditional-unverified",
+        "debug-breakpoint-log-unverified"
+      ]
+    },
+    "moon-equals": {
+      "codepoint": "E138",
+      "ids": [
+        "debug-breakpoint-conditional",
+        "debug-breakpoint-conditional-disabled"
+      ]
+    },
+    "diamond": {
+      "codepoint": "E139",
+      "ids": [
+        "debug-breakpoint-log",
+        "debug-breakpoint-log-disabled"
+      ]
+    },
+    "stackframe-arrow": {
+      "codepoint": "E13A",
+      "ids": [
+        "debug-stackframe"
+      ]
+    },
+    "stackframe-moon": {
+      "codepoint": "E13B",
+      "ids": [
+        "debug-stackframe-focused"
+      ]
+    },
+    "moon-dot": {
+      "codepoint": "E13C",
+      "ids": [
+        "debug-stackframe-dot"
+      ]
+    },
+    "step-over": {
+      "codepoint": "E13D",
+      "ids": [
+        "debug-step-over"
+      ]
+    },
+    "step-into": {
+      "codepoint": "E13E",
+      "ids": [
+        "debug-step-into"
+      ]
+    },
+    "step-out": {
+      "codepoint": "E13F",
+      "ids": [
+        "debug-step-out"
+      ]
+    },
+    "play-filled": {
+      "codepoint": "E140",
+      "ids": [
+        "debug-start"
+      ]
+    },
+    "play-outline": {
+      "codepoint": "E141",
+      "ids": [
+        "run",
+        "testing-run-icon"
+      ]
+    },
+    "play-stacked": {
+      "codepoint": "E142",
+      "ids": [
+        "testing-run-all-icon"
+      ]
+    },
+    "continue": {
+      "codepoint": "E143",
+      "ids": [
+        "debug-continue"
+      ]
+    },
+    "pause": {
+      "codepoint": "E144",
+      "ids": [
+        "debug-pause"
+      ]
+    },
+    "stop-square": {
+      "codepoint": "E145",
+      "ids": [
+        "debug-stop",
+        "debug-disconnect"
+      ]
+    },
+    "restart": {
+      "codepoint": "E146",
+      "ids": [
+        "debug-restart"
+      ]
+    },
+    "check-disc": {
+      "codepoint": "E147",
+      "ids": [
+        "testing-passed-icon"
       ]
     }
   }

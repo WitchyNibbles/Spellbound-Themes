@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { drawings as batchOne, parts } from '../scripts/glyphs/batch-1.mjs';
-import { crescent, polygon, svgDocument } from '../scripts/glyphs/primitives.mjs';
+import { crescent, polygon, rect, svgDocument } from '../scripts/glyphs/primitives.mjs';
 import { drawings, variants } from '../scripts/glyphs/status.mjs';
-import { filledAt, parseGlyphSvg, pathBounds, subpaths } from '../scripts/lib/svg-geometry.mjs';
+import { filledAt, outlineGap as gap, parseGlyphSvg, pathBounds, subpaths } from '../scripts/lib/svg-geometry.mjs';
 
-// Helpers for Tasks 7-10. Clearances are measured on the flattened outlines (curves sampled as in subpaths).
+// Helpers for Tasks 7-10. Clearances are measured on the flattened outlines (curves sampled as in subpaths) with
+// outlineGap, which is 0 where two outlines cross.
 const pathsOf = (svg) => parseGlyphSvg(svg).paths.map((path) => path.d);
 const box = (ds) => Object.fromEntries(Object.entries(pathBounds(ds)).map(([key, value]) => [key, Number(value.toFixed(2))]));
 const bounds = (svg) => box(pathsOf(svg));
@@ -14,17 +15,6 @@ const without = (polygons, d) => {
   const removed = subpaths(d).map((poly) => JSON.stringify(poly));
   return polygons.filter((poly) => !removed.includes(JSON.stringify(poly)));
 };
-const segmentsOf = (polygons) => polygons.flatMap((poly) => poly.map((point, index) => [point, poly[(index + 1) % poly.length]]));
-const pointToSegment = ([px, py], [[ax, ay], [bx, by]]) => {
-  const [dx, dy] = [bx - ax, by - ay];
-  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy || 1)));
-  return Math.hypot(px - ax - t * dx, py - ay - t * dy);
-};
-// Shortest distance between two sets of outlines that do not cross (endpoint-to-segment distances, both ways).
-const gap = (a, b) => Math.min(
-  ...segmentsOf(a).flatMap(([p, q]) => segmentsOf(b).flatMap((s) => [pointToSegment(p, s), pointToSegment(q, s)])),
-  ...segmentsOf(b).flatMap(([p, q]) => segmentsOf(a).flatMap((s) => [pointToSegment(p, s), pointToSegment(q, s)])),
-);
 
 // ---- Severity signals (Task 7) ----
 test('warning and info use the skull footprint, so the Problems tree and the status bar line up', () => {
@@ -151,6 +141,12 @@ test('copilot-warning is the solid cat head with the "!" cut out (gate 2), and n
 });
 
 // ---- Dirty-branch sprigs (Task 10) ----
+test('each dirty-branch state carries its own badge: ✦ changes, ✓ staged, ! conflicts', () => {
+  assert.equal(drawings['sprig-changes'](), svgDocument(parts.sprigSmall(), parts.star(12.5, 12.5, 2.5, 1)));
+  assert.equal(drawings['sprig-staged'](), svgDocument(parts.sprigSmall(), polygon([[10, 12], [11, 11], [12, 12], [14, 10], [15, 11], [12, 14]])));
+  assert.equal(drawings['sprig-conflicts'](), svgDocument(parts.sprigSmall(), rect(13, 9, 2, 3), rect(13, 13, 2, 2)));
+});
+
 test('dirty-branch sprigs: one badge each in the lower-right corner, 1 unit clear of the sprig', () => {
   const sprig = subpaths(parts.sprigSmall().join(''));
   const badges = new Set();

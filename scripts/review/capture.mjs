@@ -136,10 +136,23 @@ async function shutdown({ child, cdp }) {
   try { execFileSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore' }); } catch { /* already gone */ }
 }
 
+// Tooltips (workbench hovers, editor hovers) that are on screen. Every screenshot waits until there are none.
+const NO_TOOLTIP = `![...document.querySelectorAll('.workbench-hover, .monaco-hover')].some((el) => {
+  const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && !el.closest('.hidden'); })`;
+
 async function runStep(cdp, step, where) {
   try {
     if (step.press) await cdp.press(step.press);
     if (step.insert) await cdp.insert(step.insert);
+    // hover: an expression that returns the { x, y } (CSS px) to move the mouse to, for states only a pointer reaches
+    // (the debug-hint breakpoint helper in the glyph margin, the Call Stack row actions). The pointer stays there until
+    // a later hover step moves it (scenes that hover park it on the status bar in their teardown). CDP takes the point in
+    // the page's CSS px in both modes: in a zoom-mode run at 200%, the same point scaled by the zoom factor missed the
+    // glyph margin and the unscaled point reached it.
+    if (step.hover) {
+      const { x, y } = await waitFor(() => cdp.evaluate(step.hover), { timeout: step.timeout ?? 30000, label: step.hover });
+      await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
+    }
     if (step.waitFor) await waitFor(() => cdp.evaluate(step.waitFor), { timeout: step.timeout ?? 30000, label: step.waitFor });
   } catch (error) {
     if (!step.optional) throw error;
@@ -159,7 +172,14 @@ const rectOf = (cdp, { selector, maxHeight }) => cdp.evaluate(`(() => {
   return { x: r.x, y: r.y, width: r.width, height: ${maxHeight ? `Math.min(r.height, ${maxHeight})` : 'r.height'} };
 })()`);
 
-const baseSettings = JSON.parse(fs.readFileSync(path.join(work, 'profile', 'settings.base.json'), 'utf8'));
+// The review PowerShell profile runs with -NoProfile, so the author's own profile (and any prompt that prints a user
+// path) never loads. VS Code injects shell integration only when a profile's args are empty or -NoLogo, so the profile
+// sources the script itself, inside try/catch (as VS Code does), so a Restricted execution policy prints no path. Its
+// path depends on the install, so it is filled in here: ' doubled for PowerShell's single quotes, then JSON-escaped.
+const shellIntegrationPs1 = path.join(job.codeDir, commitDir, 'resources', 'app', 'out', 'vs', 'workbench', 'contrib', 'terminal', 'common', 'scripts', 'shellIntegration.ps1');
+if (!fs.existsSync(shellIntegrationPs1)) throw new Error(`no shell integration script at ${shellIntegrationPs1}`);
+const baseSettings = JSON.parse(fs.readFileSync(path.join(work, 'profile', 'settings.base.json'), 'utf8')
+  .replaceAll('{{shellIntegrationPs1}}', JSON.stringify(shellIntegrationPs1.replaceAll("'", "''")).slice(1, -1)));
 const keybindings = fs.readFileSync(path.join(work, 'profile', 'keybindings.json'), 'utf8');
 const capturesDir = path.join(work, 'captures');
 // A pass can write the fixture to disk (notes.md reached disk after the first pass of run 2026-10-10T01-41-22),
@@ -205,12 +225,18 @@ for (const pass of job.passes) {
       for (const scene of job.scenes.filter((s) => !pass.scenes || pass.scenes.includes(s.name))) {
         const where = `${pass.name}/${scale}/${scene.name}`;
         log(`  ${scene.name}`);
+        // A scene's own settings (gate 3: panel tabs as icons) hold for its setup and every capture. Each setup starts
+        // in the first theme, not in the last theme of the previous scene.
+        const sceneSettings = scene.settings ?? {};
+        writeUserFile(userDataDir, 'settings.json', settingsFor(job.themes[0], sceneSettings));
+        await waitFor(() => cdp.evaluate(themeApplied(job.themes[0].signature)), { timeout: 20000, label: `theme ${job.themes[0].label}` });
         for (const step of scene.setup ?? []) await runStep(cdp, step, where);
         for (const theme of job.themes) {
           for (const variant of scene.variants ?? [{ name: 'default', settings: {} }]) {
-            writeUserFile(userDataDir, 'settings.json', settingsFor(theme, variant.settings));
+            writeUserFile(userDataDir, 'settings.json', settingsFor(theme, { ...sceneSettings, ...variant.settings }));
             await waitFor(() => cdp.evaluate(themeApplied(theme.signature)), { timeout: 20000, label: `theme ${theme.label}` });
             await delay(1500);
+            await waitFor(() => cdp.evaluate(NO_TOOLTIP), { timeout: 10000, label: 'hover tooltips to close' });
             const stem = path.join(capturesDir, pass.name, String(scale), scene.name, theme.slug, variant.name);
             const shoot = async (crop, clip) => {
               const file = path.join(stem, `${crop}.png`);

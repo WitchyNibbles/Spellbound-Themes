@@ -21,7 +21,7 @@ Make the VS Code collection look as good as witchyterm and read as the same bran
 In:
 
 - Color themes: new Moonlit Candle; semantic and typography fixes to Moonlit, Daydream and Coven Contrast.
-- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 170 keys in total. Work is sized by distinct drawings, not by keys.
+- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 172 keys in total. Work is sized by distinct drawings, not by keys.
 - File icon theme: full redraw, ~30 file types, ~15 folder names, special file names, dark/light/high-contrast sets resolved by a build step from one source per drawing.
 - Build and validation scripts for all of the above.
 - README, CHANGELOG, Marketplace screenshots, version 2.0.0.
@@ -135,7 +135,7 @@ Pixel grid. The font is unhinted, so outline coordinates are drawn exactly as wr
 - 45° diagonals are about 1.25–1.4 units measured across the stroke, so they look as dense as 1-unit straight strokes (guidance).
 - A circle's centre is on a whole number when its diameter is even and on .5 when it is odd. Prefer even diameters (4, 8, 10, 12, 14) centred on (8,8).
 - (8,8) is a pixel boundary, so an odd-width central feature cannot sit exactly in the middle. Put it on pixel column 7 (x 7–8), as Codicon `add` does, and use the same side in every glyph.
-- No radius, sliver or gap under 1 unit.
+- No radius, sliver or gap under 1 unit. One exception, kept at gate 3 (G21): the round 0.5-unit dash ends of the unverified dashed ring.
 - Accepted off-grid points (gate 2): the corners of the gear's four 45° teeth, the four band ends of `sync` at 235° and 55°, and the points where the `copilot-unavailable` knockout band cuts the cat head's straight edges. Snapping them would distort the shape or break the 1-unit clearance.
 - Snapping guarantees crisp edges only at whole device scales (100%, 200%). At 125% and 150% it only keeps the blur from getting worse.
 
@@ -181,7 +181,8 @@ Font build:
 - Metaphors only for views, identity and status signals. Universal actions keep familiar silhouettes in the house style.
 - Keys follow `docs/research/vscode-1.141-icon-inventory.md`. Alias IDs that do not inherit (for example `tree-item-expanded`, `toolbar-more`, `menu-submenu`, `quick-input-back`, `dialog-*`, `plus`) get their own explicit entries.
 - Keys beyond the 132 core-tier IDs, included on purpose: `account`, `debug-alt`, `run`, `settings-gear`, `gear`, `ellipsis`, `trash` (helper codicons used directly), `more`, `plus`, `dialog-close`, `dialog-error`, `dialog-info`, `dialog-warning` (extended-tier aliases), and three registered IDs the inventory omits: `timeline-view-icon`, `debug-stackframe-dot` and `copilot-unavailable`. Added by the author decisions (section 11): `debug-breakpoint-unverified`, `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` (debug batch); `copilot-warning`, `copilot-snooze`, `copilot-dot` (status batch); `panel-right`, `panel-right-off`, `auxiliarybar-left-layout-icon`, `auxiliarybar-left-off-layout-icon`, `panel-bottom` (editor batch).
-- Added at review gate 1 (section 11.1): `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix` and the inline light-bulb codicons `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` (batch 1, claimed by the candle; G5 as amended in section 11.1: with chat on, every quick-fix bulb is one of these, in the gutter or inline); `git-branch-changes`, `git-branch-staged-changes`, `git-branch-conflicts` (status batch, sprig variants; G6) and `ports-forwarded-with-process-icon` (status batch, the `terminal-decoration-success` dot; G4). Total: 170 keys (132 core + 38 extras). `gutter-lightbulb-sparkle-filled` (the gutter mark when every action on the line is an AI action) stays stock until gate 4, where it joins the editor batch on the ✧ cluster (section 11.2) and the total becomes 171.
+- Added at review gate 1 (section 11.1): `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix` and the inline light-bulb codicons `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` (batch 1, claimed by the candle; G5 as amended in section 11.1: with chat on, every quick-fix bulb is one of these, in the gutter or inline); `git-branch-changes`, `git-branch-staged-changes`, `git-branch-conflicts` (status batch, sprig variants; G6) and `ports-forwarded-with-process-icon` (status batch, the `terminal-decoration-success` dot; G4). Total: 170 keys (132 core + 38 extras). `gutter-lightbulb-sparkle-filled` (the gutter mark when every action on the line is an AI action) stays stock until gate 4, where it joins the editor batch on the ✧ cluster (section 11.2).
+- Added at review gate 3 (section 11.3): `debug-disconnect` (debug batch, on the Stop square; G23) and `debug-breakpoint-log-unverified` (debug batch, on the dashed ring; G20). Total: 172 keys (132 core + 40 extras), 173 once gate 4 adds `gutter-lightbulb-sparkle-filled`.
 - Dropped keys from 1.2.1: `home`, `activity-bar-left`, `activity-bar-right`, `menu`, `copy`, `edit`, `save` (not core-tier). `file`/`folder` are replaced by `symbol-file`/`symbol-folder`. `split-vertical` stays: it is a core ID (the Alt state of Split Editor), and it was given a glyph in the design interview. The legacy `layout-sidebar-left`, `layout-sidebar-right` and `layout-panel` keys are dropped too; the registered toggle keys in section 5.2 replace them.
 - Several IDs share one glyph drawing. The map format is drawing-based: each drawing has one SVG source and one codepoint, and lists the IDs that use it. Codepoints are stored in the map, are never reused within a release, and are not derived from an ID's position in a list.
 - A product icon theme cannot rotate a glyph per ID (only tree twisties are rotated by VS Code's CSS). Every orientation used is its own pre-rotated drawing, so "one chevron" means separate down, right and up drawings, each ID taking the orientation of its Codicon default.
@@ -260,21 +261,21 @@ Debug and testing (the moon means "here"):
 | :- | :- | :- |
 | `debug-breakpoint`, `debug-hint` | plain full moon; the crater did not survive the 16px render (gate 1, G1) | disc |
 | `debug-breakpoint-disabled` | moon outline | |
-| `debug-breakpoint-unverified` | dashed ring | |
+| `debug-breakpoint-unverified`, `debug-breakpoint-log-unverified` | dashed ring (six round-ended dashes) | |
 | `debug-breakpoint-conditional` | moon with `=` cut out | disc |
 | `debug-breakpoint-log` | diamond | diamond |
-| `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` | reuse existing drawings: the `=` moon, the diamond and the dashed ring; VS Code's disabled and unverified colours carry the state (pairing chosen while applying the decision; the author may overrule it at the debug gate) | as reused |
+| `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` | reuse existing drawings: the `=` moon, the diamond and the dashed ring; VS Code's disabled and unverified colours carry the state (kept at gate 3, G18) | as reused |
 | `debug-stackframe` / `debug-stackframe-focused` | pointer arrow / arrow with moon dot | tip / moon |
 | `debug-stackframe-dot` | moon dot, 4×4 at 6–10 | dot |
 | `debug-step-over`, `debug-step-into`, `debug-step-out` | arrow with moon dot | moon |
 | `debug-start` / `run`, `testing-run-icon` | `debug-start`: filled play triangle; `run` and `testing-run-icon` (which inherits `run`): outline play triangle | triangle |
-| `testing-run-all-icon` | two stacked triangles | front triangle |
-| `debug-continue`, `debug-pause`, `debug-stop`, `debug-restart` | bar+play, two bars, square, circular arrow | main shape |
+| `testing-run-all-icon` | filled play triangle with an open chevron ahead of it (gate 3, G25) | front triangle |
+| `debug-continue`, `debug-pause`, `debug-stop`, `debug-disconnect`, `debug-restart` | bar+play, two bars, square (Stop and Disconnect, G23), circular arrow | main shape |
 | `testing-passed-icon` | disc with check cut out | disc |
 
 Breakpoint footprint: every breakpoint glyph matches the Codicon footprint, an 8-unit shape centred on (8,8) spanning 4–12 (the log diamond may span 3–13, as Codicon's does). Breakpoint states that stay on Codicons (function, data and their variants) then sit in the same place, and the glyph does not jump when a breakpoint changes state.
 
-Paused on a breakpoint: VS Code draws `debug-stackframe-dot` over `debug-stackframe` and `debug-stackframe-focused` with a CSS `::after` overlay, coloured by `debugIcon.breakpointForeground`. The focused glyph's moon dot sits at the same place (6–10), so the two coincide.
+Paused on a breakpoint: VS Code draws `debug-stackframe-dot` over `debug-stackframe` and `debug-stackframe-focused` with a CSS `::after` overlay, coloured by `debugIcon.breakpointForeground`. The focused glyph's moon dot sits at the same place (6–10), so the two coincide. The inline arrow that VS Code adds before the stopped column whenever the stop is not in column 1 (`.debug-top-stack-frame-column`, also at the first statement of an indented line, where it sits in the indentation; character U+EB8B in the `codicon` font family, both hard-coded in 1.141) always shows the stock Codicon: a product icon theme cannot reach it. `debug-breakpoint-conditional-disabled` and `debug-breakpoint-conditional-unverified` are mapped as D4 decided but never drawn in 1.141: a disabled or unverified conditional breakpoint shows the plain disabled or unverified icon.
 
 Editor, find, layout, SCM:
 
@@ -534,3 +535,21 @@ Taken at review gate 2 (`docs/qa/2.0-gate-2/README.md`), all as recommended.
 - G15 The 3×3 `copilot-dot` pip keeps its size.
 - G16 (G3) The remaining off-grid points in `gear`, `sync` and `copilot-unavailable` are accepted as drawn (section 4). The `copilot-unavailable` knockout band stays at 2x − y = 6.75 to 14.25.
 - G17 Batch 1 as redrawn and snapped, the chrome batch and the status batch are approved with G9–G16.
+
+### 11.3 Gate 3 decisions (2026-10-10)
+
+Taken at review gate 3 (`docs/qa/2.0-gate-3/README.md`), all as recommended.
+
+- G18 (D4) Disabled and unverified breakpoints keep the reused drawings: the `=` moon and the diamond in VS Code's disabled colour, the dashed ring for every unverified state. No hollow `=`-moon or diamond outlines.
+- G19 `debug-breakpoint-conditional-disabled` and `debug-breakpoint-conditional-unverified` stay mapped, although 1.141 never draws them.
+- G20 `debug-breakpoint-log-unverified` is pinned in the debug batch on the dashed ring.
+- G21 The dashed ring keeps its round 0.5-unit dash ends, the one sub-unit radius in the set (section 4).
+- G22 The debug toolbar keeps its weights: continue, pause and stop solid; the steps and restart light.
+- G23 `debug-disconnect` is pinned in the debug batch on the Stop square. js-debug focuses a child session, so the Node.js toolbar shows Disconnect where Stop would be, and the row now ends solid.
+- G24 The focused frame keeps its drawing; focused and top frame differ by colour only, and a conditional breakpoint under a focused frame shows no breakpoint colour (1.141's CSS).
+- G25 `testing-run-all-icon` keeps the filled triangle with the open chevron ahead of it.
+- G26 The quill (`output-view-icon`) keeps its solid vane, an exception to the one-accent rule like the witch hat (G12).
+- G27 The funnel (`filter`) keeps the drop below the cone.
+- G28 The quill and the broom keep their shared diagonal.
+- G29 Coven Contrast sets `quickInputList.focusBackground` (`#FF67B7`, the list selection) and `quickInputList.focusForeground` and `quickInputList.focusIconForeground` (`#000000`). 1.141 leaves the focused quick-input row transparent in high contrast, so its black text and icons sat on the near-black quick input. The other themes keep VS Code's defaults.
+- G30 The panel batch and the debug batch are approved with G18–G29.

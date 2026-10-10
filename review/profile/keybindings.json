@@ -31,5 +31,19 @@
   { "key": "ctrl+alt+shift+h", "command": "spellboundReview.scm", "args": "changes" },
   { "key": "ctrl+alt+shift+p", "command": "workbench.action.terminal.newWithProfile", "args": { "profileName": "Spellbound PowerShell" } },
   { "key": "ctrl+alt+shift+s", "command": "workbench.action.terminal.sendSequence", "args": { "text": "Write-Output 'moonwater brews'\r" } },
-  { "key": "ctrl+alt+shift+x", "command": "workbench.action.terminal.sendSequence", "args": { "text": "Write-Error 'nightshade spilled'\r" } }
+  { "key": "ctrl+alt+shift+x", "command": "workbench.action.terminal.sendSequence", "args": { "text": "Write-Error 'nightshade spilled'\r" } },
+  { "key": "ctrl+alt+shift+a", "command": "workbench.action.focusActiveEditorGroup" },
+  { "key": "ctrl+alt+shift+F4", "command": "spellboundReview.iconSheetPage" },
+  { "key": "ctrl+alt+shift+i", "command": "spellboundReview.breakpoints" },
+  { "key": "ctrl+alt+shift+z", "command": "workbench.action.quickOpen", "args": "brews.spec.js" },
+  { "key": "ctrl+alt+shift+F1", "command": "workbench.action.debug.callStackDown" },
+  { "key": "ctrl+alt+shift+F2", "command": "workbench.action.debug.continue" },
+  { "key": "ctrl+alt+shift+F3", "command": "workbench.debug.viewlet.action.disableAllBreakpoints" },
+  { "key": "ctrl+alt+shift+F5", "command": "notifications.showList" },
+  { "key": "ctrl+alt+shift+F6", "command": "notifications.clearAll" },
+  { "key": "ctrl+alt+shift+F7", "command": "workbench.action.output.toggleOutput" },
+  { "key": "ctrl+alt+shift+F8", "command": "workbench.action.closeSidebar" },
+  { "key": "ctrl+alt+shift+F9", "command": "workbench.action.closeAuxiliaryBar" },
+  { "key": "ctrl+alt+shift+F10", "command": "workbench.action.quickOpen", "args": "term " },
+  { "key": "ctrl+alt+shift+F11", "command": "runCommands", "args": { "commands": ["workbench.debug.variablesView.toggleVisibility", "workbench.debug.watchExpressionsView.toggleVisibility"] } }
 ]

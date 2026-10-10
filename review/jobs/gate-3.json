@@ -1,0 +1,225 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "passes": [
+    { "name": "main", "vsix": ["spellbound-main.vsix"], "scales": [1, 1.25, 1.5, 2] },
+    { "name": "variants", "vsix": ["spellbound-variants.vsix"], "scales": [1, 2], "scenes": ["breakpoints", "debug-stopped", "debug-focused", "debug-running", "icon-sheet", "icon-sheet-2"] }
+  ],
+  "scenes": [
+    {
+      "name": "output",
+      "setup": [
+        { "press": "ctrl+alt+shift+F7", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.panel .codicon-clear-all')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "title", "selector": ".part.panel > .title" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+e", "wait": 800 }
+      ]
+    },
+    {
+      "name": "notifications-center",
+      "setup": [
+        { "press": "ctrl+alt+shift+0", "wait": 1000 },
+        { "press": "ctrl+alt+shift+F5", "wait": 1000 },
+        { "waitFor": "!!document.querySelector('.notifications-center.visible .codicon-notifications-clear-all')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "list", "selector": ".notifications-center" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+F6", "wait": 500 },
+        { "press": "Escape", "wait": 500 }
+      ]
+    },
+    {
+      "name": "terminal",
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
+        { "press": "ctrl+alt+shift+p", "wait": 8000 },
+        { "press": "ctrl+alt+shift+m", "wait": 1500 },
+        { "press": "ctrl+alt+shift+s", "wait": 2500 },
+        { "press": "ctrl+alt+shift+x", "wait": 2500 },
+        { "waitFor": "!!document.querySelector('.terminal-command-decoration.codicon-terminal-decoration-success') && !!document.querySelector('.terminal-command-decoration.codicon-terminal-decoration-error')", "timeout": 30000 },
+        { "waitFor": "!!document.querySelector('.part.panel .codicon-trash')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+m", "wait": 800 },
+        { "press": "ctrl+alt+shift+e" }
+      ]
+    },
+    {
+      "name": "terminal-picker",
+      "setup": [
+        { "press": "ctrl+alt+shift+F10", "wait": 1200 },
+        { "waitFor": "!!document.querySelector('.quick-input-widget .codicon-terminal-kill')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".quick-input-widget" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 }
+      ]
+    },
+    {
+      "name": "breakpoints",
+      "settings": { "workbench.hover.delay": 600000, "workbench.hover.reducedDelay": 600000 },
+      "setup": [
+        { "press": "ctrl+alt+shift+5", "wait": 800 },
+        { "press": "ctrl+alt+shift+F11", "wait": 800 },
+        { "press": "ctrl+alt+shift+i", "wait": 1000 },
+        { "press": "ctrl+alt+shift+q", "wait": 800 },
+        { "press": "Enter", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.editor .margin .codicon-debug-breakpoint') && !!document.querySelector('.part.editor .margin .codicon-debug-breakpoint-disabled') && !!document.querySelector('.part.editor .margin .codicon-debug-breakpoint-conditional') && !!document.querySelector('.part.editor .margin .codicon-debug-breakpoint-log') && !!document.querySelector('.part.editor .margin .codicon-debug-breakpoint-log-disabled')", "timeout": 20000 },
+        { "waitFor": "(() => { const inside = (r, box) => r.top >= box.top && r.bottom <= box.bottom && r.left >= box.left && r.right <= box.right; const side = document.querySelector('.part.sidebar')?.getBoundingClientRect(); return !!side && ['.codicon-debug-breakpoint', '.codicon-debug-breakpoint-disabled', '.codicon-debug-breakpoint-log', '.codicon-debug-breakpoint-log-disabled', '.codicon-debug-breakpoint-conditional'].every((selector) => [...document.querySelectorAll(`.part.sidebar .debug-breakpoints ${selector}`)].some((el) => { const r = el.getBoundingClientRect(); const body = el.closest('.pane-body')?.getBoundingClientRect(); return r.width > 0 && !!body && inside(r, body) && inside(r, side); })); })()", "timeout": 10000 },
+        { "waitFor": "!!document.querySelector('.part.sidebar .codicon-debug-start')", "timeout": 10000 },
+        { "hover": "(() => { const editor = document.querySelector('.part.editor .monaco-editor'); const line = [...(editor?.querySelectorAll('.margin .line-numbers') ?? [])].find((el) => el.textContent.trim() === '12'); const glyphs = editor?.querySelector('.margin .glyph-margin'); if (!line || !glyphs) return null; const a = line.getBoundingClientRect(); const b = glyphs.getBoundingClientRect(); return b.width ? { x: b.x + b.width / 2, y: a.y + a.height / 2 } : null; })()" },
+        { "waitFor": "!!document.querySelector('.part.editor .margin .codicon-debug-hint')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 300 },
+        { "name": "sidebar", "selector": ".part.sidebar" }
+      ],
+      "teardown": [
+        { "hover": "(() => { const bar = document.querySelector('.part.statusbar'); if (!bar) return null; const box = bar.getBoundingClientRect(); const items = [...bar.querySelectorAll('.statusbar-item')].map((el) => el.getBoundingClientRect()).filter((r) => r.width > 0).sort((a, b) => a.left - b.left); let best = null; let from = box.left; for (const r of [...items, { left: box.right, right: box.right }]) { if (!best || r.left - from > best.gap) best = { gap: r.left - from, x: (from + r.left) / 2 }; from = Math.max(from, r.right); } return best && best.gap >= 8 ? { x: best.x, y: box.top + box.height / 2 } : null; })()" },
+        { "waitFor": "![...document.querySelectorAll('.workbench-hover, .monaco-hover')].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && !el.closest('.hidden'); })", "timeout": 10000 }
+      ]
+    },
+    {
+      "name": "debug-stopped",
+      "settings": { "workbench.hover.delay": 600000, "workbench.hover.reducedDelay": 600000 },
+      "setup": [
+        { "press": "ctrl+alt+shift+3", "wait": 2000 },
+        { "waitFor": "!!document.querySelector('.part.editor .margin .codicon-debug-breakpoint.codicon-debug-stackframe')", "timeout": 40000 },
+        { "waitFor": "(() => { const inside = (r, box) => r.top >= box.top && r.bottom <= box.bottom && r.left >= box.left && r.right <= box.right; const side = document.querySelector('.part.sidebar')?.getBoundingClientRect(); return !!side && ['.codicon-debug-breakpoint-unverified'].every((selector) => [...document.querySelectorAll(`.part.sidebar .debug-breakpoints ${selector}`)].some((el) => { const r = el.getBoundingClientRect(); const body = el.closest('.pane-body')?.getBoundingClientRect(); return r.width > 0 && !!body && inside(r, body) && inside(r, side); })); })()", "timeout": 20000 },
+        { "waitFor": "!!document.querySelector('.debug-toolbar .codicon-debug-continue') && !!document.querySelector('.debug-toolbar .codicon-debug-step-over') && !!document.querySelector('.debug-toolbar .codicon-debug-step-into') && !!document.querySelector('.debug-toolbar .codicon-debug-step-out') && !!document.querySelector('.debug-toolbar .codicon-debug-restart')", "timeout": 20000 },
+        { "hover": "(() => { const row = [...document.querySelectorAll('.part.sidebar .debug-call-stack .monaco-list-row')].find((candidate) => candidate.querySelector('.session')); const label = row?.querySelector('.session .name') ?? row?.querySelector('.session'); if (!label) return null; const box = label.getBoundingClientRect(); return { x: box.left + Math.min(20, box.width / 2), y: box.top + box.height / 2 }; })()" },
+        { "waitFor": "!!document.querySelector('.part.sidebar .debug-call-stack .monaco-list-row:hover .codicon-debug-stop')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 300 },
+        { "name": "sidebar", "selector": ".part.sidebar" },
+        { "name": "toolbar", "selector": ".debug-toolbar" },
+        { "name": "panel-title", "selector": ".part.panel > .title" }
+      ],
+      "teardown": [
+        { "hover": "(() => { const bar = document.querySelector('.part.statusbar'); if (!bar) return null; const box = bar.getBoundingClientRect(); const items = [...bar.querySelectorAll('.statusbar-item')].map((el) => el.getBoundingClientRect()).filter((r) => r.width > 0).sort((a, b) => a.left - b.left); let best = null; let from = box.left; for (const r of [...items, { left: box.right, right: box.right }]) { if (!best || r.left - from > best.gap) best = { gap: r.left - from, x: (from + r.left) / 2 }; from = Math.max(from, r.right); } return best && best.gap >= 8 ? { x: best.x, y: box.top + box.height / 2 } : null; })()" },
+        { "waitFor": "![...document.querySelectorAll('.workbench-hover, .monaco-hover')].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && !el.closest('.hidden'); })", "timeout": 10000 }
+      ]
+    },
+    {
+      "name": "debug-focused",
+      "setup": [
+        { "press": "ctrl+alt+shift+F1", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.editor .margin .codicon-debug-breakpoint-conditional.codicon-debug-stackframe-focused')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 300 },
+        { "name": "sidebar", "selector": ".part.sidebar" }
+      ]
+    },
+    {
+      "name": "debug-running",
+      "setup": [
+        { "press": "ctrl+alt+shift+F3", "wait": 800 },
+        { "press": "ctrl+alt+shift+F2", "wait": 2000 },
+        { "waitFor": "!!document.querySelector('.debug-toolbar .codicon-debug-pause')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "toolbar", "selector": ".debug-toolbar" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+t", "wait": 1500 },
+        { "press": "ctrl+alt+shift+e", "wait": 500 }
+      ]
+    },
+    {
+      "name": "testing",
+      "setup": [
+        { "press": "ctrl+alt+shift+6", "wait": 1500 },
+        { "press": "ctrl+alt+shift+z", "wait": 800 },
+        { "press": "Enter", "wait": 2000 },
+        { "waitFor": "!!document.querySelector('.part.sidebar .codicon-testing-run-all-icon')", "timeout": 10000 },
+        { "waitFor": "!!document.querySelector('.part.editor .margin .codicon-testing-run-icon')", "timeout": 20000 }
+      ],
+      "crops": [
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 300 },
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 160 }
+      ]
+    },
+    {
+      "name": "testing-results",
+      "setup": [
+        { "press": "ctrl+alt+shift+r", "wait": 2500 },
+        { "waitFor": "!!document.querySelector('.part.sidebar .codicon-testing-passed-icon') && !!document.querySelector('.part.editor .margin .codicon-testing-passed-icon')", "timeout": 20000 }
+      ],
+      "crops": [
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 300 },
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 160 }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+e", "wait": 500 }
+      ]
+    },
+    {
+      "name": "icon-sheet",
+      "setup": [
+        { "press": "ctrl+alt+shift+F8", "wait": 500 },
+        { "press": "ctrl+alt+shift+F9", "wait": 500 },
+        { "press": "ctrl+alt+shift+7", "wait": 1500 },
+        { "press": "ctrl+alt+shift+m", "wait": 1500 },
+        { "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 1 of 2')", "timeout": 10000 },
+        { "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ]
+    },
+    {
+      "name": "icon-sheet-2",
+      "setup": [
+        { "press": "ctrl+alt+shift+F4", "wait": 1500 },
+        { "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 2 of 2')", "timeout": 10000 },
+        { "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+F4", "wait": 500 },
+        { "press": "ctrl+alt+shift+m", "wait": 800 },
+        { "press": "ctrl+alt+shift+e" }
+      ]
+    },
+    {
+      "name": "panel-icons",
+      "settings": { "workbench.panel.showLabels": false },
+      "setup": [
+        { "press": "ctrl+alt+shift+o", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.panel .codicon-markers-view-icon') && !!document.querySelector('.part.panel .codicon-output-view-icon') && !!document.querySelector('.part.panel .codicon-debug-console-view-icon')", "timeout": 20000 },
+        { "waitFor": "!!document.querySelector('.part.panel .codicon-panel-maximize') && !!document.querySelector('.part.panel .codicon-filter')", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "title", "selector": ".part.panel > .title" },
+        { "name": "panel", "selector": ".part.panel", "maxHeight": 200 }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+e", "wait": 800 }
+      ]
+    }
+  ],
+  "commitSheets": [
+    "main-output-title", "main-notifications-center-list", "main-terminal-panel", "main-terminal-picker-widget",
+    "main-breakpoints-code", "main-breakpoints-sidebar", "main-debug-stopped-code", "main-debug-stopped-sidebar",
+    "main-debug-stopped-toolbar", "main-debug-stopped-panel-title", "main-debug-focused-code", "main-debug-running-toolbar",
+    "main-testing-sidebar", "main-testing-code", "main-testing-results-sidebar", "main-testing-results-code",
+    "main-icon-sheet-panel", "main-icon-sheet-2-panel", "main-panel-icons-title", "main-panel-icons-panel"
+  ]
+}

@@ -66,13 +66,19 @@ export const svgDocument = (...parts) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" d="${parts.flat(Infinity).join('')}"/></svg>\n`;
 
 // Sutherland-Hodgman clip of one closed polygon against the half-plane a*x + b*y >= c. The result keeps the winding.
+// An edge gets an intersection point only when its ends lie strictly on opposite sides: a vertex on the boundary is
+// kept as itself, so a boundary through a vertex adds no duplicate point.
 function clipHalfPlane(points, [a, b, c]) {
-  const side = ([x, y]) => a * x + b * y - c;
+  // Values within 1e-9 of the boundary count as on it, so floating-point noise cannot make a near-duplicate point.
+  const side = ([x, y]) => {
+    const value = a * x + b * y - c;
+    return Math.abs(value) < 1e-9 ? 0 : value;
+  };
   const out = [];
   points.forEach((q, index) => {
     const p = points.at(index - 1);
     const [sp, sq] = [side(p), side(q)];
-    if ((sp >= 0) !== (sq >= 0)) {
+    if ((sp > 0 && sq < 0) || (sp < 0 && sq > 0)) {
       const t = sp / (sp - sq);
       out.push([p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])]);
     }

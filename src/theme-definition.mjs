@@ -97,6 +97,9 @@ const optionalColors = (c) => Object.fromEntries(Object.entries({
   'terminal.selectionBackground': c.terminalSelection,
   'debugIcon.breakpointCurrentStackframeForeground': c.currentStackframe,
   'debugIcon.breakpointStackframeForeground': c.stackframe,
+  'quickInputList.focusBackground': c.quickInputFocus,
+  'quickInputList.focusForeground': c.onQuickInputFocus,
+  'quickInputList.focusIconForeground': c.onQuickInputFocus,
 }).filter(([, value]) => value !== undefined));
 
 const sharedColors = (c) => ({
@@ -223,7 +226,7 @@ const palettes = {
   },
   contrast: {
     name: 'WitchyNibbles Coven Contrast', type: 'hc-black',
-    c: { editor: '#000000', panel: '#08050C', sidebar: '#000000', terminal: '#000000', foreground: '#FFFFFF', onAccent: '#000000', muted: '#D8C7FF', border: '#FFFFFF', line: '#171020', whitespace: '#FFFFFF', selection: '#5A1B45', selectionMuted: '#38224A', accent: '#FF67B7', pink: '#FF67B7', purple: '#D0B8FF', blue: '#77D9FF', cyan: '#7DEBFF', warning: '#FFE38A', error: '#FF78A8', inserted: '#173A48', removed: '#4A1930', insertedLine: '#173A48', removedLine: '#4A1930', parameter: '#FFC7EA', punctuation: '#D0B8FF', currentStackframe: '#FF67B7', stackframe: '#D0B8FF' }
+    c: { editor: '#000000', panel: '#08050C', sidebar: '#000000', terminal: '#000000', foreground: '#FFFFFF', onAccent: '#000000', muted: '#D8C7FF', border: '#FFFFFF', line: '#171020', whitespace: '#FFFFFF', selection: '#5A1B45', selectionMuted: '#38224A', accent: '#FF67B7', pink: '#FF67B7', purple: '#D0B8FF', blue: '#77D9FF', cyan: '#7DEBFF', warning: '#FFE38A', error: '#FF78A8', inserted: '#173A48', removed: '#4A1930', insertedLine: '#173A48', removedLine: '#4A1930', parameter: '#FFC7EA', punctuation: '#D0B8FF', currentStackframe: '#FF67B7', stackframe: '#D0B8FF', quickInputFocus: '#FF67B7', onQuickInputFocus: '#000000' } // G29: 1.141 leaves the focused quick-input row transparent in high contrast
   }
 };
 

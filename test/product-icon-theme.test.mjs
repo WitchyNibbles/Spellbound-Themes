@@ -40,3 +40,56 @@ test('every status-batch ID is mapped; the aliases and the ports dot share their
   assert.equal(glyph('dialog-info'), glyph('info'));
   assert.equal(glyph('ports-forwarded-with-process-icon'), glyph('terminal-decoration-success'));
 });
+
+test('each dirty-branch ID maps to its own sprig drawing in the map', () => {
+  const drawingOf = (id) => Object.entries(map.drawings).find(([, { ids }]) => ids.includes(id))?.[0];
+  assert.deepEqual(['git-branch-changes', 'git-branch-staged-changes', 'git-branch-conflicts'].map(drawingOf),
+    ['sprig-changes', 'sprig-staged', 'sprig-conflicts']);
+});
+
+test('every panel-batch ID maps to its own drawing and codepoint', () => {
+  const panel = Object.entries(pinned.ids).filter(([, entry]) => entry.batch === 'panel').map(([id]) => id).sort();
+  const drawingOf = (id) => Object.entries(map.drawings).find(([, { ids }]) => ids.includes(id))?.[0];
+  assert.deepEqual(Object.fromEntries(panel.map((id) => [id, drawingOf(id)])), {
+    'clear-all': 'broom', 'debug-console-view-icon': 'console-spider', filter: 'funnel', 'markers-view-icon': 'warning-triangle',
+    'notifications-clear-all': 'broom', 'output-view-icon': 'quill', 'panel-maximize': 'expand-corners', 'terminal-kill': 'bin', trash: 'bin',
+  });
+  for (const [name, codepoint] of [['quill', 'E130'], ['console-spider', 'E131'], ['broom', 'E132'], ['funnel', 'E133'], ['bin', 'E134'], ['expand-corners', 'E135'], ['warning-triangle', 'E120']]) {
+    assert.equal(map.drawings[name].codepoint, codepoint, name);
+  }
+  for (const id of panel) assert.equal(theme.iconDefinitions[id]?.fontCharacter, `\\${map.drawings[drawingOf(id)].codepoint}`, id);
+});
+
+test('every debug-batch ID is mapped; the reused breakpoint drawings and the run alias share their glyphs', () => {
+  const debug = Object.entries(pinned.ids).filter(([, entry]) => entry.batch === 'debug').map(([id]) => id);
+  assert.equal(debug.length, 25);
+  for (const id of debug) assert.ok(id in theme.iconDefinitions, id);
+  const drawingOf = (id) => Object.entries(map.drawings).find(([, { ids }]) => ids.includes(id))?.[0];
+  assert.deepEqual(Object.fromEntries(debug.sort().map((id) => [id, drawingOf(id)])), {
+    'debug-hint': 'moon-breakpoint',
+    'debug-breakpoint-disabled': 'moon-outline',
+    'debug-breakpoint-unverified': 'dashed-ring', 'debug-breakpoint-conditional-unverified': 'dashed-ring',
+    'debug-breakpoint-log-unverified': 'dashed-ring',
+    'debug-breakpoint-conditional': 'moon-equals', 'debug-breakpoint-conditional-disabled': 'moon-equals',
+    'debug-breakpoint-log': 'diamond', 'debug-breakpoint-log-disabled': 'diamond',
+    'debug-stackframe': 'stackframe-arrow', 'debug-stackframe-focused': 'stackframe-moon', 'debug-stackframe-dot': 'moon-dot',
+    'debug-step-over': 'step-over', 'debug-step-into': 'step-into', 'debug-step-out': 'step-out',
+    'debug-start': 'play-filled', run: 'play-outline', 'testing-run-icon': 'play-outline', 'testing-run-all-icon': 'play-stacked',
+    'debug-continue': 'continue', 'debug-pause': 'pause', 'debug-stop': 'stop-square', 'debug-restart': 'restart',
+    'debug-disconnect': 'stop-square',
+    'testing-passed-icon': 'check-disc',
+  });
+  for (const id of debug) assert.equal(theme.iconDefinitions[id].fontCharacter, `\\${map.drawings[drawingOf(id)].codepoint}`, id);
+  const glyph = (id) => theme.iconDefinitions[id].fontCharacter;
+  // G1/D4: the hint is the moon breakpoint; the disabled and unverified variants reuse a drawing and let VS Code's
+  // state colours carry the difference.
+  assert.equal(glyph('debug-hint'), glyph('debug-breakpoint'));
+  assert.equal(glyph('debug-breakpoint-conditional-disabled'), glyph('debug-breakpoint-conditional'));
+  assert.equal(glyph('debug-breakpoint-log-disabled'), glyph('debug-breakpoint-log'));
+  assert.equal(glyph('debug-breakpoint-conditional-unverified'), glyph('debug-breakpoint-unverified'));
+  assert.equal(glyph('debug-breakpoint-log-unverified'), glyph('debug-breakpoint-unverified'));
+  // G23: js-debug focuses a child session, so the Node toolbar ends with Disconnect where Stop would be.
+  assert.equal(glyph('debug-disconnect'), glyph('debug-stop'));
+  assert.equal(glyph('testing-run-icon'), glyph('run'));
+  assert.notEqual(glyph('debug-start'), glyph('run'));
+});

@@ -94,6 +94,19 @@ test('Coven Contrast keeps its own status colours', () => {
   assert.equal(coven.colors['editorWarning.foreground'], '#FFE38A');
 });
 
+test('Coven Contrast fills the focused quick-input row, so its text and icons stay readable (G29)', () => {
+  // VS Code 1.141 leaves quickInputList.focusBackground transparent in high contrast, while the row text takes
+  // list.activeSelectionForeground (black): black on the near-black quick input without these keys.
+  const c = coven.colors;
+  for (const key of ['quickInputList.focusBackground', 'quickInputList.focusForeground', 'quickInputList.focusIconForeground']) assert.ok(c[key], `${key} is set`);
+  for (const key of ['quickInputList.focusForeground', 'quickInputList.focusIconForeground']) {
+    assert.ok(contrast(c[key], c['quickInputList.focusBackground']) >= 7, key);
+  }
+  for (const theme of [candle, daydream, byName('WitchyNibbles Moonlit')]) {
+    assert.equal('quickInputList.focusBackground' in theme.colors, false, `${theme.name} keeps VS Code's default`);
+  }
+});
+
 test('UI-boundary borders reach 3:1 on editor, sidebar and panel (decision 14)', () => {
   assert.equal(daydream.colors['input.border'], '#8E78A6');
   assert.equal(daydream.colors['editorGroup.border'], '#DCC7E5');

@@ -1,9 +1,11 @@
 // Review helper: shows every mapped drawing at 16px in side-by-side trees, creates a Testing provider so the Testing
-// container and pass/fail icons appear, raises notifications, and puts the review fixture into the states that the
-// status-batch glyphs need (Problems severities, staged and conflicted git branch, Copilot states, spinners, quick input).
+// container, the gutter run icons and pass/fail icons appear, raises notifications, sets one breakpoint of each kind,
+// and puts the review fixture into the states that the status-batch glyphs need (Problems severities, staged and
+// conflicted git branch, Copilot states, spinners, quick input).
 const path = require('path');
 const vscode = require('vscode');
 const rows = require('./ids.json'); // written by run-gate.mjs: [{ id, label, description }]
+const breakpointPlan = require('./breakpoints.json').breakpoints;
 const sheetViews = require('./package.json').contributes.views.spellboundReview.map(({ id }) => id);
 
 async function gitRepository() {
@@ -33,27 +35,46 @@ function activate(context) {
     item.description = description;
     return item;
   });
-  // Side-by-side views (every view package.json contributes), so every row fits a maximized panel even at 200%.
-  const perView = Math.ceil(items.length / sheetViews.length);
-  sheetViews.forEach((id, index) => {
-    const part = items.slice(index * perView, (index + 1) * perView);
-    context.subscriptions.push(vscode.window.registerTreeDataProvider(id, { getTreeItem: (item) => item, getChildren: () => part }));
-  });
+  // Side-by-side views (every view package.json contributes) in a maximized panel, in pages. Measured at 200% (gate 3
+  // dry run, 1080p screen): a view's list is 382 CSS px tall (17 rows of 22 px) and a view is 228 px wide, so three
+  // views fit the 904 px panel and a page holds 51 drawings. spellboundReview.iconSheetPage turns the page; every view
+  // header says which page is shown.
+  const ROWS_PER_VIEW = 17;
+  const perPage = ROWS_PER_VIEW * sheetViews.length;
+  const pages = Math.max(1, Math.ceil(items.length / perPage));
+  let page = 0;
+  const pageChanged = new vscode.EventEmitter();
+  const sheets = sheetViews.map((id, index) => vscode.window.createTreeView(id, { treeDataProvider: {
+    onDidChangeTreeData: pageChanged.event,
+    getTreeItem: (item) => item,
+    getChildren: () => items.slice(page * perPage + index * ROWS_PER_VIEW, page * perPage + (index + 1) * ROWS_PER_VIEW),
+  } }));
+  const describePage = () => { for (const sheet of sheets) sheet.description = `page ${page + 1} of ${pages}`; };
+  describePage();
+  context.subscriptions.push(pageChanged, ...sheets);
 
+  const folder = vscode.workspace.workspaceFolders?.[0];
   const controller = vscode.tests.createTestController('spellboundReview', 'Spellbound review');
   const pass = controller.createTestItem('pass', 'moonwater brews');
   const fail = controller.createTestItem('fail', 'nightshade spills');
-  controller.items.replace([pass, fail]);
+  // Gate 3: two tests with a location, so brews.spec.js shows testing-run-icon in the gutter before a run and
+  // testing-passed-icon after it. The failing test has no location, so no failure peek opens over that editor.
+  const located = folder ? ['moonwater settles', 'starlight glows'].map((label, index) => {
+    const item = controller.createTestItem(`brew-${index}`, label, vscode.Uri.joinPath(folder.uri, 'brews.spec.js'));
+    item.range = new vscode.Range(index + 1, 0, index + 1, 40);
+    return item;
+  }) : [];
+  controller.items.replace([pass, fail, ...located]);
   controller.createRunProfile('Run', vscode.TestRunProfileKind.Run, (request) => {
     const run = controller.createTestRun(request);
     run.passed(pass, 5);
     run.failed(fail, new vscode.TestMessage('The cauldron spilled.'), 7);
+    for (const item of located) run.passed(item, 3);
     run.end();
   }, true);
 
   // One problem of each severity on notes.md, so the Problems tree and the status bar show error, warning and info.
   const diagnostics = vscode.languages.createDiagnosticCollection('spellbound-review');
-  const folder = vscode.workspace.workspaceFolders?.[0];
   if (folder) {
     const line = (n) => new vscode.Range(n, 0, n, 9);
     diagnostics.set(vscode.Uri.joinPath(folder.uri, 'notes.md'), [
@@ -112,7 +133,19 @@ function activate(context) {
       pick.onDidHide(() => pick.dispose());
       pick.show();
     }),
-    vscode.commands.registerCommand('spellboundReview.scm', (state) => scmState(state)));
+    vscode.commands.registerCommand('spellboundReview.scm', (state) => scmState(state)),
+    vscode.commands.registerCommand('spellboundReview.iconSheetPage', () => {
+      page = (page + 1) % pages;
+      describePage();
+      pageChanged.fire();
+    }),
+    // Gate 3: one breakpoint of each kind (breakpoints.json), replacing whatever the previous scene left.
+    vscode.commands.registerCommand('spellboundReview.breakpoints', () => {
+      if (!folder) return;
+      vscode.debug.removeBreakpoints(vscode.debug.breakpoints);
+      vscode.debug.addBreakpoints(breakpointPlan.map(({ file, line, enabled = true, condition, logMessage }) => new vscode.SourceBreakpoint(
+        new vscode.Location(vscode.Uri.joinPath(folder.uri, file), new vscode.Position(line - 1, 0)), enabled, condition, undefined, logMessage)));
+    }));
 }
 
 module.exports = { activate };

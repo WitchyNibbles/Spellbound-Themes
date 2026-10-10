@@ -2,7 +2,7 @@
   "name": "spellbound-review-helper",
   "displayName": "Spellbound review helper",
   "description": "Review-only helper for the Spellbound gate screenshots. Not part of the published extension.",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "publisher": "witchynibbles-review",
   "engines": { "vscode": "^1.100.0" },
   "main": "./extension.js",
@@ -20,7 +20,9 @@
       { "command": "spellboundReview.severities", "title": "Spellbound Review: Toggle an info, a warning and an error notification, raised again on every theme change" },
       { "command": "spellboundReview.statusSignals", "title": "Spellbound Review: Toggle the Copilot-state and spinner status entries" },
       { "command": "spellboundReview.quickInput", "title": "Spellbound Review: Show a multi-step quick pick" },
-      { "command": "spellboundReview.scm", "title": "Spellbound Review: Put the fixture repository into a git state" }
+      { "command": "spellboundReview.scm", "title": "Spellbound Review: Put the fixture repository into a git state" },
+      { "command": "spellboundReview.iconSheetPage", "title": "Spellbound Review: Show the next page of the icon sheet" },
+      { "command": "spellboundReview.breakpoints", "title": "Spellbound Review: Set one breakpoint of each kind in the debug fixture" }
     ]
   }
 }

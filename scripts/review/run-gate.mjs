@@ -1,13 +1,27 @@
 // Builds, packages, captures on Windows VS Code, and assembles contact sheets.
-// Usage: node scripts/review/run-gate.mjs [--job review/jobs/gate-1.json] [--skip-variants]
+// Usage: see USAGE in args.mjs (node scripts/review/run-gate.mjs --help).
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync, spawnSync } from 'node:child_process';
+import { USAGE, filterJob, parseGateArgs } from './args.mjs';
 
 const root = path.resolve(import.meta.dirname, '..', '..');
-const args = process.argv.slice(2);
-const jobFile = args.includes('--job') ? args[args.indexOf('--job') + 1] : 'review/jobs/gate-1.json';
+// Arguments and the job are checked before anything is built or launched: a bad option, an unknown job file, scene
+// or scale stops here with the usage.
+let args;
+let job;
+try {
+  args = parseGateArgs(process.argv.slice(2));
+  if (args.help) {
+    console.log(USAGE);
+    process.exit(0);
+  }
+  job = filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), args);
+} catch (error) {
+  console.error(`${error.message}\n${USAGE}`);
+  process.exit(2);
+}
 const run = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 const out = path.join(root, 'review-out', run);
 const sh = (command, commandArgs, options = {}) => execFileSync(command, commandArgs, { encoding: 'utf8', ...options }).trim();
@@ -20,7 +34,6 @@ const codeDirWin = process.env.SPELLBOUND_CODE_DIR ?? `${localAppData}\\Programs
 const codeExe = path.join(toWsl(codeDirWin), 'Code.exe');
 const work = path.join(toWsl(localAppData), 'Temp', 'spellbound-review', run);
 const vsce = path.join(root, 'node_modules', '.bin', 'vsce');
-const job = JSON.parse(fs.readFileSync(path.join(root, jobFile), 'utf8'));
 
 // 1. Build and package the extension, plus a variant build for the gate questions.
 execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'inherit' });
@@ -30,7 +43,7 @@ const variantDir = path.join(root, 'icons', 'product-src-variants');
 const variantArgs = fs.existsSync(variantDir)
   ? fs.readdirSync(variantDir).filter((file) => file.endsWith('.svg')).map((file) => `--variant=${file.split('.')[0]}=icons/product-src-variants/${file}`)
   : [];
-if (!args.includes('--skip-variants') && variantArgs.length) execFileSync('node', ['scripts/review/stage-extension.mjs', out, ...variantArgs], { cwd: root, stdio: 'inherit' });
+if (!args.skipVariants && variantArgs.length) execFileSync('node', ['scripts/review/stage-extension.mjs', out, ...variantArgs], { cwd: root, stdio: 'inherit' });
 else job.passes = job.passes.filter((pass) => pass.name !== 'variants');
 
 // 2. Package the review helper with one row per drawing.
@@ -99,6 +112,7 @@ const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 manifest.run = run;
 manifest.repoCommit = sh('git', ['rev-parse', 'HEAD'], { cwd: root });
 manifest.repoDirty = sh('git', ['status', '--porcelain'], { cwd: root }) !== '';
+if (args.scales || args.scenes) manifest.dryRun = { scales: args.scales, scenes: args.scenes }; // a cut-down run is never gate evidence
 for (const capture of manifest.captures) capture.sha256 = crypto.createHash('sha256').update(fs.readFileSync(path.join(out, 'captures', capture.file))).digest('hex');
 fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
 execFileSync('node', ['scripts/review/contact-sheet.mjs', out], { cwd: root, stdio: 'inherit' });

@@ -127,6 +127,7 @@
     {
       "name": "terminal",
       "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
         { "press": "ctrl+alt+shift+p", "wait": 8000 },
         { "press": "ctrl+alt+shift+m", "wait": 1500 },
         { "press": "ctrl+alt+shift+s", "wait": 2500 },

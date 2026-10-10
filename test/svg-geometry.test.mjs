@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { filledAt, offGridPoints, parseGlyphSvg, pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
+import { filledAt, offGridPoints, outlineGap, parseGlyphSvg, pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
 
 test('signed area is positive for clockwise-on-screen paths', () => {
   assert.ok(signedArea(subpaths('M2 2h4v4H2z')[0]) > 0);
@@ -50,4 +50,22 @@ test('filledAt applies the nonzero rule the font pipeline uses', () => {
 test('a closing Z that lands on its own start is not a straight segment', () => {
   assert.deepEqual(offGridPoints('M11 9.828A3 3 0 1 1 11 4.172A3 3 0 0 0 11 9.828Z'), []); // crescent tips are arc ends
   assert.deepEqual(offGridPoints('M2.3 2L6 2L6 6Z').map(([x, y]) => `${x},${y}`), ['2.3,2', '2.3,2']); // a real closing line still counts
+});
+
+test('outlineGap: the shortest distance between separate or nested outlines, 0 where they cross, touch or overlap', () => {
+  const square = (x, y, size) => subpaths(`M${x} ${y}h${size}v${size}h-${size}z`);
+  assert.equal(outlineGap(square(0, 0, 2), square(5, 0, 2)), 3, 'side by side');
+  assert.equal(outlineGap(square(0, 0, 8), subpaths('M3 3v2h2v-2z')), 3, 'nested: the wall around a cut-out');
+  assert.equal(outlineGap(square(0, 0, 8), square(3, 3, 2)), 0, 'a solid inside a solid overlaps it');
+  assert.equal(outlineGap(subpaths('M0 0h8v8H0zM1 1v6h6V1z'), square(3, 3, 2)), 2, 'an accent inside a frame: the wall to the inner edge');
+  // Two long bars crossing as a plus: every corner is 4 units from the other bar, but the edges cross.
+  assert.equal(outlineGap(subpaths('M0 4h10v1H0z'), subpaths('M4 0h1v10H4z')), 0, 'crossing');
+  assert.equal(outlineGap(square(0, 0, 2), square(2, 1, 2)), 0, 'touching along an edge');
+  assert.equal(outlineGap(subpaths('M0 0L4 1L0 2z'), subpaths('M4 0h2v2h-2z')), 0, 'a vertex on the other outline');
+});
+
+test('outlineGap refuses an empty set, which would pass any clearance check vacuously', () => {
+  const square = subpaths('M0 0h2v2h-2z');
+  assert.throws(() => outlineGap([], square), /empty/);
+  assert.throws(() => outlineGap(square, []), /empty/);
 });

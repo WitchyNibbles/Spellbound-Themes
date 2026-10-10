@@ -214,6 +214,12 @@
       "default": null,
       "batch": "debug"
     },
+    "debug-breakpoint-log-unverified": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
     "debug-breakpoint-unverified": {
       "tier": "extra",
       "kind": "codicon",
@@ -228,6 +234,12 @@
     },
     "debug-continue": {
       "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-disconnect": {
+      "tier": "extra",
       "kind": "codicon",
       "default": null,
       "batch": "debug"

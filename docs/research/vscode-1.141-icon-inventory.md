@@ -506,7 +506,7 @@ Caveats:
 - Layout toggles: `src/vs/workbench/browser/actions/layoutActions.ts`, `src/vs/workbench/browser/parts/panel/panelActions.ts` and `src/vs/workbench/browser/parts/auxiliarybar/auxiliaryBarActions.ts`. In the 1.141 bundle, `LayoutControlMenu` items use `panel-left` / `panel-left-off`, `panel-layout-icon` / `-off`, `auxiliarybar-right-layout-icon` / `-off` and `configure-layout-icon`.
 - Local install used for extraction: `/mnt/c/Users/<user>/AppData/Local/Programs/Microsoft VS Code/2a59476c9b/resources/app/out/vs/workbench/workbench.desktop.main.js` (registerIcon is minified to `ze`, the resolver to `iIr`, the stylesheet to `qci`), `.../out/nls.messages.json` (descriptions) and `.../workbench.desktop.main.css` (`var(--vscode-icon-*-content)` consumers).
 - Git extension (SCM icons): `.../resources/app/extensions/git/package.json` and `dist/main.js`. Commit `$(check)`, refresh `$(refresh)`, stage `$(add)`, unstage `$(remove)`, discard `$(discard)`, open file `$(go-to-file)`, open changes `$(compare-changes)`, branch `$(git-branch)`, publish `$(cloud-upload)`, graph `$(git-fetch)` / `$(repo-pull)` / `$(repo-push)`.
-- The keys this repo relies on are pinned in `icons/product-icon-ids.json` (170 keys with kind, default and batch). `node scripts/extract-icon-ids.mjs [bundle]` diffs a local workbench bundle against that pin. The earlier `reg.tsv`/`registry.json` were never committed.
+- The keys this repo relies on are pinned in `icons/product-icon-ids.json` (172 keys with kind, default and batch). `node scripts/extract-icon-ids.mjs [bundle]` diffs a local workbench bundle against that pin. The earlier `reg.tsv`/`registry.json` were never committed.
 
 ## Out of scope for product icon themes
 

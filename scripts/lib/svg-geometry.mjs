@@ -64,6 +64,36 @@ export function signedArea(polygon) {
   return sum / 2;
 }
 
+const pointToSegment = ([px, py], [[ax, ay], [bx, by]]) => {
+  const [dx, dy] = [bx - ax, by - ay];
+  const t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy || 1)));
+  return Math.hypot(px - ax - t * dx, py - ay - t * dy);
+};
+const orientation = (o, a, b) => Math.sign((a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]));
+// True when two segments cross or touch. Collinear touching is caught by outlineGap's endpoint distances, which are 0.
+const segmentsCross = ([p, q], [r, s]) => orientation(p, q, r) * orientation(p, q, s) < 0 && orientation(r, s, p) * orientation(r, s, q) < 0;
+const segmentsOf = (polygons) => polygons.flatMap((poly) => poly.map((point, index) => [point, poly[(index + 1) % poly.length]]));
+// Positive winding at a point: inside the polygons' ink. Measured against a hole alone (winding -1), nothing is ink.
+const inked = (polygons, point) => polygons.reduce((sum, poly) => sum + (pointInPolygon(point, poly) ? Math.sign(signedArea(poly)) : 0), 0) > 0;
+// A solid outline of p (clockwise) with a vertex inside q's ink overlaps q.
+const overlaps = (p, q) => p.some((poly) => signedArea(poly) > 0 && poly.some((point) => inked(q, point)));
+
+// Shortest distance between two sets of outlines (polygons from subpaths): 0 where an edge of one crosses or touches an
+// edge of the other, or where a solid outline of one lies inside the other's ink; else the smallest endpoint-to-segment
+// distance either way. For nested outlines (a cut-out inside a fill, an accent inside a frame's hole) this is the wall
+// between them. Section 4's clearances are measured with it. Measure against an outline before knockOut: the pieces
+// knockOut returns abut along the cut, so a point on that seam measures 0.
+export function outlineGap(a, b) {
+  if (!a.length || !b.length) throw new Error('outlineGap: an empty set of outlines has no distance (a filtered set that matched nothing would pass any clearance check)');
+  const [edgesA, edgesB] = [segmentsOf(a), segmentsOf(b)];
+  if (edgesA.some((edge) => edgesB.some((other) => segmentsCross(edge, other)))) return 0;
+  if (overlaps(a, b) || overlaps(b, a)) return 0;
+  return Math.min(
+    ...edgesA.flatMap(([p, q]) => edgesB.flatMap((edge) => [pointToSegment(p, edge), pointToSegment(q, edge)])),
+    ...edgesB.flatMap(([p, q]) => edgesA.flatMap((edge) => [pointToSegment(p, edge), pointToSegment(q, edge)])),
+  );
+}
+
 export function pointInPolygon([x, y], polygon) {
   let inside = false;
   for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i, i += 1) {

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { drawings, parts } from '../scripts/glyphs/batch-1.mjs';
-import { svgDocument } from '../scripts/glyphs/primitives.mjs';
+import { frame, rect, svgDocument } from '../scripts/glyphs/primitives.mjs';
 import { filledAt } from '../scripts/lib/svg-geometry.mjs';
 
 test('batch-1 exposes the shared parts that the status batch builds on', () => {
@@ -28,4 +28,8 @@ test('parts.star is the four-point ✦: tips at outer, waist at inner, centred o
 test('parts.bell leaves the top-right corner (x10-15, y1-6) empty for the bell-dot ✦', () => {
   const bell = parts.bell();
   for (let x = 10.25; x < 15; x += 0.25) for (let y = 1.25; y < 6; y += 0.25) assert.ok(!filledAt(bell, [x, y]), `${x},${y}`);
+});
+
+test('parts.flame is the candle flame, unchanged', () => {
+  assert.equal(drawings.candle(), svgDocument(frame(6, 9, 4, 6, { r: 0 }), rect(7, 8, 2, 1), parts.flame(8, 1, 7, 2)));
 });
