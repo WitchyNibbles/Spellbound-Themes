@@ -1,6 +1,6 @@
 // Glyph primitives on the 16-unit grid. 'cw' = solid (clockwise on screen), 'ccw' = hole.
 // The font pipeline fills with nonzero winding, so a hole must be wound opposite to its container (spec section 4).
-import { signedArea } from '../lib/svg-geometry.mjs';
+import { signedArea, subpaths } from '../lib/svg-geometry.mjs';
 
 const fmt = (value) => Number(value.toFixed(3)).toString();
 const pt = ([x, y]) => `${fmt(x)} ${fmt(y)}`;
@@ -64,3 +64,37 @@ export function leaf([x1, y1], [x2, y2], width, dir = 'cw') {
 
 export const svgDocument = (...parts) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" d="${parts.flat(Infinity).join('')}"/></svg>\n`;
+
+// Sutherland-Hodgman clip of one closed polygon against the half-plane a*x + b*y >= c. The result keeps the winding.
+function clipHalfPlane(points, [a, b, c]) {
+  const side = ([x, y]) => a * x + b * y - c;
+  const out = [];
+  points.forEach((q, index) => {
+    const p = points.at(index - 1);
+    const [sp, sq] = [side(p), side(q)];
+    if ((sp >= 0) !== (sq >= 0)) {
+      const t = sp / (sp - sq);
+      out.push([p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])]);
+    }
+    if (sq >= 0) out.push(q);
+  });
+  return out;
+}
+
+const polygonArea = (points) => (points.length < 3 ? 0 : Math.abs(signedArea(points)));
+
+// Knockout: removes the convex region where every half-plane [a, b, c] (a*x + b*y >= c) holds, so an accent can sit in
+// a gap cut out of a shared part. Path strings that do not reach the region come back unchanged. The others are
+// flattened (arcs become short straight segments) and split into disjoint pieces, one per half-plane, each keeping
+// the winding of its source subpath, so solids stay solid and holes stay holes. A counter-wound "eraser" subpath
+// cannot do this: over empty space it winds to -1, and the font pipeline fills any nonzero winding.
+export function knockOut(paths, region) {
+  return [paths].flat(Infinity).flatMap((d) => {
+    const polygons = subpaths(d);
+    if (polygons.every((poly) => polygonArea(region.reduce(clipHalfPlane, poly)) < 1e-6)) return [d];
+    return polygons
+      .flatMap((poly) => region.map(([a, b, c], index) => [...region.slice(0, index), [-a, -b, -c]].reduce(clipHalfPlane, poly)))
+      .filter((piece) => polygonArea(piece) > 1e-6)
+      .map((piece) => `M${piece.map(pt).join('L')}Z`);
+  });
+}

@@ -3,10 +3,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { extractRegistrations } from '../scripts/extract-icon-ids.mjs';
+import { defaultBundle, extractRegistrations } from '../scripts/extract-icon-ids.mjs';
 
-const BUNDLE = process.env.VSCODE_WORKBENCH_JS ?? '/mnt/c/Users/<user>/AppData/Local/Programs/Microsoft VS Code/2a59476c9b/resources/app/out/vs/workbench/workbench.desktop.main.js';
-const registrations = fs.existsSync(BUNDLE) ? extractRegistrations(fs.readFileSync(BUNDLE, 'utf8')) : null;
+const BUNDLE = defaultBundle();
+const registrations = BUNDLE && fs.existsSync(BUNDLE) ? extractRegistrations(fs.readFileSync(BUNDLE, 'utf8')) : null;
 
 test('the registered IDs that inherit circle-filled are exactly the audited ones', (t) => {
   if (!registrations) return t.skip('VS Code bundle not available');

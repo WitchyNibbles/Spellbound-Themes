@@ -1,4 +1,4 @@
-// Review fixture: a missing function (quick-fix light bulb on line 11), a type error (status bar error count), foldable blocks.
+// Review fixture: missing functions (quick-fix light bulb inline on line 11, in the gutter on line 16), a type error (status bar error count), foldable blocks.
 export interface Potion {
   name: string;
   strength: number;
@@ -12,3 +12,6 @@ export function brew(potion: Potion): string {
 }
 
 export const moonwater: Potion = { name: 'moonwater', strength: 'five' };
+export const wand = 'oak';
+export const charm = summonCharm();
+export const robe = 'night';

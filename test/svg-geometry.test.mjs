@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { offGridPoints, parseGlyphSvg, pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
+import { filledAt, offGridPoints, parseGlyphSvg, pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
 
 test('signed area is positive for clockwise-on-screen paths', () => {
   assert.ok(signedArea(subpaths('M2 2h4v4H2z')[0]) > 0);
@@ -37,4 +37,17 @@ test('parseGlyphSvg reads root attributes, elements and path data', () => {
   assert.equal(parsed.width, '16');
   assert.deepEqual(parsed.elements, ['svg', 'path']);
   assert.equal(parsed.paths[0].d, 'M1 1h2v2H1z');
+});
+
+test('filledAt applies the nonzero rule the font pipeline uses', () => {
+  const frame = ['M2 2h12v12H2z', 'M4 4v8h8V4z']; // 12x12 square with a counter-wound 8x8 hole
+  assert.equal(filledAt(frame, [3, 8]), true);
+  assert.equal(filledAt(frame, [8, 8]), false);
+  assert.equal(filledAt(frame, [15, 8]), false);
+  assert.equal(filledAt(['M2 2h12v12H2z', 'M4 4h8v8H4z'], [8, 8]), true); // same-direction "hole" stays solid
+});
+
+test('a closing Z that lands on its own start is not a straight segment', () => {
+  assert.deepEqual(offGridPoints('M11 9.828A3 3 0 1 1 11 4.172A3 3 0 0 0 11 9.828Z'), []); // crescent tips are arc ends
+  assert.deepEqual(offGridPoints('M2.3 2L6 2L6 6Z').map(([x, y]) => `${x},${y}`), ['2.3,2', '2.3,2']); // a real closing line still counts
 });

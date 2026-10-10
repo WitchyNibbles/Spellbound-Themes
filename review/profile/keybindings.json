@@ -16,5 +16,20 @@
   { "key": "ctrl+alt+shift+r", "command": "testing.runAll" },
   { "key": "ctrl+alt+shift+t", "command": "workbench.action.debug.stop" },
   { "key": "ctrl+alt+shift+y", "command": "workbench.action.quickOpen", "args": "notes.md" },
-  { "key": "ctrl+alt+shift+m", "command": "workbench.action.toggleMaximizedPanel" }
+  { "key": "ctrl+alt+shift+m", "command": "workbench.action.toggleMaximizedPanel" },
+  { "key": "ctrl+alt+shift+b", "command": "workbench.action.quickOpen", "args": "spells.ts:16:24" },
+  { "key": "ctrl+alt+shift+o", "command": "workbench.actions.view.problems" },
+  { "key": "ctrl+alt+shift+f", "command": "actions.find" },
+  { "key": "ctrl+alt+shift+d", "command": "git.openChange" },
+  { "key": "ctrl+alt+shift+c", "command": "workbench.action.closeActiveEditor" },
+  { "key": "ctrl+alt+shift+k", "command": "spellboundReview.quickInput" },
+  { "key": "ctrl+alt+shift+n", "command": "spellboundReview.severities" },
+  { "key": "ctrl+alt+shift+j", "command": "spellboundReview.statusSignals" },
+  { "key": "ctrl+alt+shift+v", "command": "workbench.view.scm" },
+  { "key": "ctrl+alt+shift+g", "command": "spellboundReview.scm", "args": "staged" },
+  { "key": "ctrl+alt+shift+l", "command": "spellboundReview.scm", "args": "conflict" },
+  { "key": "ctrl+alt+shift+h", "command": "spellboundReview.scm", "args": "changes" },
+  { "key": "ctrl+alt+shift+p", "command": "workbench.action.terminal.newWithProfile", "args": { "profileName": "Spellbound PowerShell" } },
+  { "key": "ctrl+alt+shift+s", "command": "workbench.action.terminal.sendSequence", "args": { "text": "Write-Output 'moonwater brews'\r" } },
+  { "key": "ctrl+alt+shift+x", "command": "workbench.action.terminal.sendSequence", "args": { "text": "Write-Error 'nightshade spilled'\r" } }
 ]

@@ -448,6 +448,24 @@
       "default": null,
       "batch": "1"
     },
+    "git-branch-changes": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "git-branch-conflicts": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "git-branch-staged-changes": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
     "go-to-file": {
       "tier": "core",
       "kind": "codicon",
@@ -460,6 +478,24 @@
       "default": "light-bulb",
       "batch": "1"
     },
+    "gutter-lightbulb-aifix-auto-fix": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "lightbulb-sparkle-autofix",
+      "batch": "1"
+    },
+    "gutter-lightbulb-auto-fix": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "lightbulb-autofix",
+      "batch": "1"
+    },
+    "gutter-lightbulb-sparkle": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "lightbulb-sparkle",
+      "batch": "1"
+    },
     "info": {
       "tier": "core",
       "kind": "codicon",
@@ -468,6 +504,24 @@
     },
     "light-bulb": {
       "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "lightbulb-autofix": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "lightbulb-sparkle": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "lightbulb-sparkle-autofix": {
+      "tier": "extra",
       "kind": "codicon",
       "default": null,
       "batch": "1"
@@ -615,6 +669,12 @@
       "kind": "codicon",
       "default": null,
       "batch": "chrome"
+    },
+    "ports-forwarded-with-process-icon": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "circle-filled",
+      "batch": "status"
     },
     "preserve-case": {
       "tier": "core",

@@ -74,6 +74,14 @@ export function pointInPolygon([x, y], polygon) {
   return inside;
 }
 
+// Nonzero fill test at one point, the rule svgicons2svgfont and svg2ttf apply (curves flattened as in subpaths). Exact for
+// simple (non-self-intersecting) subpaths, which is all the primitives produce.
+export function filledAt(ds, point) {
+  let winding = 0;
+  for (const polygon of ds.flatMap((d) => subpaths(d))) if (pointInPolygon(point, polygon)) winding += Math.sign(signedArea(polygon));
+  return winding !== 0;
+}
+
 const containedIn = (inner, outer) => Math.abs(signedArea(inner)) < Math.abs(signedArea(outer))
   && inner.every((point) => pointInPolygon(point, outer));
 const centroid = (polygon) => polygon.reduce(([sx, sy], [x, y]) => [sx + x / polygon.length, sy + y / polygon.length], [0, 0]);
@@ -102,13 +110,15 @@ export function pathBounds(ds) {
 
 const onHalfGrid = (value) => Math.abs(value * 2 - Math.round(value * 2)) < 1e-3;
 
-// End points of straight segments that are neither whole nor .5 (soft warning in section 8).
+// End points of straight segments that are neither whole nor .5 (soft warning in section 8). A zero-length segment
+// is skipped: normalizeHVZ turns the Z of a curve-only subpath (a crescent) into a line onto its own start point.
 export function offGridPoints(d) {
   const data = new SVGPathData(d).toAbs().normalizeHVZ();
   const points = [];
   let pen = null;
   for (const command of data.commands) {
-    if (command.type === SVGPathData.LINE_TO && pen) {
+    const zeroLength = pen && Math.abs(command.x - pen[0]) < EPSILON && Math.abs(command.y - pen[1]) < EPSILON;
+    if (command.type === SVGPathData.LINE_TO && pen && !zeroLength) {
       for (const point of [pen, [command.x, command.y]]) if (!onHalfGrid(point[0]) || !onHalfGrid(point[1])) points.push(point);
     }
     if ('x' in command && 'y' in command) pen = [command.x, command.y];

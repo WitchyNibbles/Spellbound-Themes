@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { crescent, disc, frame, leaf, polygon, rect, ring, roundRect, svgDocument } from '../scripts/glyphs/primitives.mjs';
+import { crescent, disc, frame, knockOut, leaf, polygon, rect, ring, roundRect, svgDocument } from '../scripts/glyphs/primitives.mjs';
 import { pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
 import { glyphRuleProblems } from '../scripts/lib/checks/product-icons.mjs';
 
@@ -38,4 +38,18 @@ test('frames and rings come out with real holes', () => {
 
 test('svgDocument output satisfies the glyph rules', () => {
   assert.deepEqual(glyphRuleProblems(svgDocument(frame(2, 2, 12, 12), disc(8, 8, 2))).errors, []);
+});
+
+test('knockOut removes a convex region, keeps holes as holes and leaves other paths untouched', () => {
+  const region = [[1, 0, 7], [0, -1, -5]]; // x >= 7 and y <= 5: the frame's top-right corner
+  const far = rect(12, 12, 2, 2);
+  const kept = knockOut([frame(2, 2, 8, 8, { r: 0 }), far], region);
+  assert.equal(kept.at(-1), far);
+  assert.deepEqual(kept.slice(0, -1).map((d) => Math.sign(signedArea(subpaths(d)[0]))), [1, 1, -1, -1], 'two solid pieces, two hole pieces');
+  assert.deepEqual(windingProblems([kept.join('')]), []);
+  assert.deepEqual(glyphRuleProblems(svgDocument(kept)).errors, []);
+  assert.deepEqual(subpaths(kept.join('')).flat().filter(([x, y]) => x > 7 + 1e-9 && y < 5 - 1e-9), []);
+  assert.deepEqual(roundedBounds(kept.join('')), { minX: 2, maxX: 14, minY: 2, maxY: 14 });
+  // The wall pieces left of x = 7 and below y = 5 are still there: the frame is open only at the corner.
+  assert.deepEqual(roundedBounds(kept.slice(0, -1).join('')), { minX: 2, maxX: 10, minY: 2, maxY: 10 });
 });

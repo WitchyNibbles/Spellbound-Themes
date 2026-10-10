@@ -5,7 +5,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const DEFAULT_BUNDLE = '/mnt/c/Users/<user>/AppData/Local/Programs/Microsoft VS Code/2a59476c9b/resources/app/out/vs/workbench/workbench.desktop.main.js';
+// The pinned 1.141 build in a per-user Windows install (%LOCALAPPDATA%\Programs\Microsoft VS Code), seen from WSL.
+export const BUNDLE_IN_USER_DIR = 'AppData/Local/Programs/Microsoft VS Code/2a59476c9b/resources/app/out/vs/workbench/workbench.desktop.main.js';
+
+// VSCODE_WORKBENCH_JS wins; otherwise the first Windows user directory that holds the pinned build, or null.
+export function defaultBundle({ env = process.env, usersDir = '/mnt/c/Users' } = {}) {
+  if (env.VSCODE_WORKBENCH_JS) return env.VSCODE_WORKBENCH_JS;
+  const users = fs.existsSync(usersDir) ? fs.readdirSync(usersDir).sort() : [];
+  return users.map((user) => path.join(usersDir, user, BUNDLE_IN_USER_DIR)).find((file) => fs.existsSync(file)) ?? null;
+}
+
 const escapeName = (name) => name.replace(/\$/g, '\\$');
 
 export function extractRegistrations(source) {
@@ -49,7 +58,8 @@ export function diffPinned(pinned, registrations) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const bundle = process.argv[2] ?? process.env.VSCODE_WORKBENCH_JS ?? DEFAULT_BUNDLE;
+  const bundle = process.argv[2] ?? defaultBundle();
+  if (!bundle) throw new Error('VS Code 1.141 bundle not found: pass its path or set VSCODE_WORKBENCH_JS');
   const pinnedPath = path.resolve(import.meta.dirname, '..', 'icons', 'product-icon-ids.json');
   const pinned = JSON.parse(fs.readFileSync(pinnedPath, 'utf8'));
   const { missing, changed, unpinned } = diffPinned(pinned, extractRegistrations(fs.readFileSync(bundle, 'utf8')));

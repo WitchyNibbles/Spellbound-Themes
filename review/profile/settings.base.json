@@ -18,5 +18,8 @@
   "telemetry.telemetryLevel": "off",
   "git.openRepositoryInParentFolders": "never",
   "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
-  "terminal.integrated.fontFamily": "'Maple Mono NF', Consolas, monospace"
+  "terminal.integrated.fontFamily": "'Maple Mono NF', Consolas, monospace",
+  "terminal.integrated.profiles.windows": {
+    "Spellbound PowerShell": { "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "args": ["-NoLogo"] }
+  }
 }

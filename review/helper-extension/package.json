@@ -2,14 +2,25 @@
   "name": "spellbound-review-helper",
   "displayName": "Spellbound review helper",
   "description": "Review-only helper for the Spellbound gate screenshots. Not part of the published extension.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "witchynibbles-review",
   "engines": { "vscode": "^1.100.0" },
   "main": "./extension.js",
   "activationEvents": ["onStartupFinished"],
+  "extensionDependencies": ["vscode.git"],
   "contributes": {
     "viewsContainers": { "panel": [{ "id": "spellboundReview", "title": "Icon sheet", "icon": "media/sheet.svg" }] },
-    "views": { "spellboundReview": [{ "id": "spellboundReview.iconSheet", "name": "Icon sheet" }, { "id": "spellboundReview.iconSheet2", "name": "Icon sheet (cont.)" }] },
-    "commands": [{ "command": "spellboundReview.notify", "title": "Spellbound Review: Show a long notification" }]
+    "views": { "spellboundReview": [
+      { "id": "spellboundReview.iconSheet", "name": "Icon sheet" },
+      { "id": "spellboundReview.iconSheet2", "name": "Icon sheet (cont.)" },
+      { "id": "spellboundReview.iconSheet3", "name": "Icon sheet (end)" }
+    ] },
+    "commands": [
+      { "command": "spellboundReview.notify", "title": "Spellbound Review: Show a long notification" },
+      { "command": "spellboundReview.severities", "title": "Spellbound Review: Toggle an info, a warning and an error notification, raised again on every theme change" },
+      { "command": "spellboundReview.statusSignals", "title": "Spellbound Review: Toggle the Copilot-state and spinner status entries" },
+      { "command": "spellboundReview.quickInput", "title": "Spellbound Review: Show a multi-step quick pick" },
+      { "command": "spellboundReview.scm", "title": "Spellbound Review: Put the fixture repository into a git state" }
+    ]
   }
 }

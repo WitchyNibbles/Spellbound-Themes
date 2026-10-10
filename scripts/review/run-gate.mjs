@@ -50,9 +50,29 @@ fs.cpSync(path.join(root, 'review', 'workspace'), workspace, { recursive: true }
 const git = (...gitArgs) => execFileSync('git', ['-c', 'user.name=review', '-c', 'user.email=review@localhost', ...gitArgs], { cwd: workspace, stdio: 'ignore' });
 git('init', '-q', '-b', 'moonlit-review');
 git('config', 'core.fileMode', 'false'); // Windows-side writes drop WSL mode bits; the terminal's git must not list them
+// Windows git checks files out as written (LF). With its default core.autocrlf true, a merge --abort wrote README.md back
+// with CRLF, the next scale's restore put LF back, and the stale index size made the next merge refuse to run.
+git('config', 'core.autocrlf', 'false');
 git('add', '-A');
 git('commit', '-q', '-m', 'review fixture');
-fs.appendFileSync(path.join(workspace, 'spells.ts'), '\n// stirred during review\n'); // modified -> amber
+// Gate 2 git states: the git extension (Windows git) needs an identity to merge, a branch that conflicts with this one
+// on README.md (git-branch-conflicts, spellboundReview.scm), and an upstream, so the status bar shows sync, not Publish.
+git('config', 'user.name', 'review');
+git('config', 'user.email', 'review@localhost');
+const readmePath = path.join(workspace, 'README.md');
+const readme = fs.readFileSync(readmePath, 'utf8');
+git('checkout', '-q', '-b', 'rival-brew');
+fs.writeFileSync(readmePath, readme.replace('This folder is a fixture', 'This folder is a rival fixture'));
+git('commit', '-q', '-am', 'rival brew');
+git('checkout', '-q', 'moonlit-review');
+fs.writeFileSync(readmePath, readme.replace('This folder is a fixture', 'This folder is a moonlit fixture'));
+git('commit', '-q', '-am', 'moonlit brew');
+git('init', '-q', '--bare', '../origin.git'); // a relative URL, so WSL git and Windows git both resolve it
+git('remote', 'add', 'origin', '../origin.git');
+git('push', '-q', '-u', 'origin', 'moonlit-review');
+const spellsPath = path.join(workspace, 'spells.ts');
+fs.writeFileSync(spellsPath, fs.readFileSync(spellsPath, 'utf8').replace('// Review fixture:', '// Review fixture, stirred:')); // diff-remove + diff-insert
+fs.appendFileSync(spellsPath, '\n// stirred during review\n'); // modified -> amber
 fs.writeFileSync(path.join(workspace, 'new-spell.ts'), 'export const fresh = true;\n'); // untracked -> mint
 
 // 4. Fill machine paths and theme signatures, then capture under VS Code's Electron in Node mode.

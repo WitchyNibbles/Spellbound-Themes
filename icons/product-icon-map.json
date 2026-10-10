@@ -101,13 +101,6 @@
         "circle-filled"
       ]
     },
-    "candle": {
-      "codepoint": "E112",
-      "ids": [
-        "light-bulb",
-        "gutter-lightbulb"
-      ]
-    },
     "skull": {
       "codepoint": "E113",
       "ids": [
@@ -213,6 +206,175 @@
       "ids": [
         "terminal",
         "terminal-view-icon"
+      ]
+    },
+    "candle": {
+      "codepoint": "E112",
+      "ids": [
+        "light-bulb",
+        "gutter-lightbulb",
+        "gutter-lightbulb-sparkle",
+        "gutter-lightbulb-auto-fix",
+        "gutter-lightbulb-aifix-auto-fix",
+        "lightbulb-sparkle",
+        "lightbulb-autofix",
+        "lightbulb-sparkle-autofix"
+      ]
+    },
+    "arrow-right": {
+      "codepoint": "E117",
+      "ids": [
+        "arrow-right"
+      ]
+    },
+    "arrow-left": {
+      "codepoint": "E118",
+      "ids": [
+        "arrow-left",
+        "quick-input-back"
+      ]
+    },
+    "arrow-down": {
+      "codepoint": "E119",
+      "ids": [
+        "find-next-match",
+        "diff-editor-next-change"
+      ]
+    },
+    "arrow-up": {
+      "codepoint": "E11A",
+      "ids": [
+        "find-previous-match",
+        "diff-editor-previous-change"
+      ]
+    },
+    "add": {
+      "codepoint": "E11B",
+      "ids": [
+        "add",
+        "plus",
+        "terminal-new",
+        "diff-insert"
+      ]
+    },
+    "remove": {
+      "codepoint": "E11C",
+      "ids": [
+        "remove",
+        "diff-remove"
+      ]
+    },
+    "check": {
+      "codepoint": "E11D",
+      "ids": [
+        "check"
+      ]
+    },
+    "ellipsis": {
+      "codepoint": "E11E",
+      "ids": [
+        "ellipsis",
+        "more",
+        "toolbar-more"
+      ]
+    },
+    "warning-triangle": {
+      "codepoint": "E120",
+      "ids": [
+        "warning",
+        "dialog-warning"
+      ]
+    },
+    "info-disc": {
+      "codepoint": "E121",
+      "ids": [
+        "info",
+        "dialog-info"
+      ]
+    },
+    "terminal-error": {
+      "codepoint": "E122",
+      "ids": [
+        "terminal-decoration-error"
+      ]
+    },
+    "bell-dot": {
+      "codepoint": "E124",
+      "ids": [
+        "bell-dot"
+      ]
+    },
+    "moon-gate-small": {
+      "codepoint": "E125",
+      "ids": [
+        "remote"
+      ]
+    },
+    "sync-arrows": {
+      "codepoint": "E126",
+      "ids": [
+        "sync"
+      ]
+    },
+    "loading-crescent": {
+      "codepoint": "E127",
+      "ids": [
+        "loading"
+      ]
+    },
+    "braces": {
+      "codepoint": "E128",
+      "ids": [
+        "bracket"
+      ]
+    },
+    "cat-slash": {
+      "codepoint": "E129",
+      "ids": [
+        "copilot-unavailable"
+      ]
+    },
+    "cat-asleep": {
+      "codepoint": "E12A",
+      "ids": [
+        "copilot-snooze"
+      ]
+    },
+    "cat-star": {
+      "codepoint": "E12B",
+      "ids": [
+        "copilot-dot"
+      ]
+    },
+    "cat-warning": {
+      "codepoint": "E12C",
+      "ids": [
+        "copilot-warning"
+      ]
+    },
+    "sprig-changes": {
+      "codepoint": "E12D",
+      "ids": [
+        "git-branch-changes"
+      ]
+    },
+    "sprig-staged": {
+      "codepoint": "E12E",
+      "ids": [
+        "git-branch-staged-changes"
+      ]
+    },
+    "sprig-conflicts": {
+      "codepoint": "E12F",
+      "ids": [
+        "git-branch-conflicts"
+      ]
+    },
+    "status-dot": {
+      "codepoint": "E123",
+      "ids": [
+        "terminal-decoration-success",
+        "ports-forwarded-with-process-icon"
       ]
     }
   }

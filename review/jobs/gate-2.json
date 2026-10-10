@@ -1,0 +1,154 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "passes": [
+    { "name": "main", "vsix": ["spellbound-main.vsix"], "scales": [1, 1.25, 1.5, 2] },
+    { "name": "variants", "vsix": ["spellbound-variants.vsix"], "scales": [1, 2], "scenes": ["status-signals", "icon-sheet"] }
+  ],
+  "scenes": [
+    {
+      "name": "workbench",
+      "setup": [
+        { "press": "ctrl+alt+shift+4", "wait": 800 },
+        { "press": "ctrl+alt+shift+w", "wait": 2000 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 }, { "press": "Enter", "wait": 1500 }, { "insert": "✦ " },
+        { "press": "ctrl+alt+shift+1", "wait": 800 }, { "press": "Enter", "wait": 5000 },
+        { "waitFor": "!!document.querySelector('.part.editor .lightBulbWidget[class*=codicon-lightbulb-]')", "timeout": 20000 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-git-branch-changes')", "timeout": 20000 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-sync')", "timeout": 20000 }
+      ],
+      "variants": [
+        { "name": "default", "settings": {} },
+        { "name": "compact", "settings": { "workbench.activityBar.compact": true } }
+      ],
+      "crops": [
+        { "name": "activitybar", "selector": ".part.activitybar" },
+        { "name": "tabs", "selector": ".part.editor .tabs-and-actions-container" },
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 320 },
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420 },
+        { "name": "statusbar", "selector": ".part.statusbar" },
+        { "name": "chat", "selector": ".part.auxiliarybar" },
+        { "name": "titlebar", "selector": ".part.titlebar" }
+      ]
+    },
+    {
+      "name": "bulb-gutter",
+      "setup": [
+        { "press": "ctrl+alt+shift+b", "wait": 800 }, { "press": "Enter", "wait": 4000 },
+        { "waitFor": "!!document.querySelector('.part.editor .margin [class*=codicon-gutter-lightbulb]')", "timeout": 20000 }
+      ],
+      "crops": [{ "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 420 }]
+    },
+    {
+      "name": "problems",
+      "setup": [
+        { "press": "ctrl+alt+shift+o", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.panel .marker-icon.codicon-info, .part.panel .marker-icon .codicon-info') && !!document.querySelector('.part.panel .codicon-error')", "timeout": 20000 }
+      ],
+      "crops": [{ "name": "panel", "selector": ".part.panel" }, { "name": "statusbar", "selector": ".part.statusbar" }],
+      "teardown": [{ "press": "ctrl+alt+shift+e", "wait": 800 }]
+    },
+    {
+      "name": "find",
+      "setup": [
+        { "press": "ctrl+alt+shift+1", "wait": 800 }, { "press": "Enter", "wait": 1500 },
+        { "press": "ctrl+alt+shift+f", "wait": 800 }, { "insert": "potion", "wait": 800 },
+        { "waitFor": "!!document.querySelector('.find-widget.visible .codicon-find-next-match')", "timeout": 10000 }
+      ],
+      "crops": [{ "name": "widget", "selector": ".part.editor .find-widget.visible" }],
+      "teardown": [{ "press": "Escape", "wait": 500 }]
+    },
+    {
+      "name": "diff",
+      "setup": [
+        { "press": "ctrl+alt+shift+d", "wait": 2500 },
+        { "waitFor": "!!document.querySelector('.monaco-diff-editor .codicon-diff-insert') && !!document.querySelector('.monaco-diff-editor .codicon-diff-remove')", "timeout": 20000 },
+        { "waitFor": "!!document.querySelector('.part.editor .codicon-diff-editor-next-change')", "timeout": 10000 }
+      ],
+      "crops": [{ "name": "editor", "selector": ".part.editor", "maxHeight": 300 }],
+      "teardown": [{ "press": "ctrl+alt+shift+c", "wait": 800 }]
+    },
+    {
+      "name": "quick-input",
+      "setup": [
+        { "press": "ctrl+alt+shift+k", "wait": 1200 },
+        { "waitFor": "!!document.querySelector('.quick-input-widget .codicon-quick-input-back')", "timeout": 10000 }
+      ],
+      "crops": [{ "name": "widget", "selector": ".quick-input-widget" }],
+      "teardown": [{ "press": "Escape", "wait": 500 }]
+    },
+    {
+      "name": "notifications",
+      "setup": [
+        { "press": "ctrl+alt+shift+n", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.notifications-toasts .codicon-error') && !!document.querySelector('.notifications-toasts .codicon-warning') && !!document.querySelector('.notifications-toasts .codicon-info')", "timeout": 10000 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-bell-dot')", "timeout": 10000 }
+      ],
+      "crops": [{ "name": "toasts", "selector": ".notifications-toasts" }, { "name": "statusbar", "selector": ".part.statusbar" }],
+      "teardown": [{ "press": "ctrl+alt+shift+n", "wait": 300 }, { "press": "Escape", "wait": 500 }]
+    },
+    {
+      "name": "status-signals",
+      "setup": [
+        { "press": "ctrl+alt+shift+j", "wait": 800 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-copilot-warning')", "timeout": 10000 }
+      ],
+      "crops": [{ "name": "statusbar", "selector": ".part.statusbar" }],
+      "teardown": [{ "press": "ctrl+alt+shift+j", "wait": 500 }]
+    },
+    {
+      "name": "scm-staged",
+      "setup": [
+        { "press": "ctrl+alt+shift+v", "wait": 1200 },
+        { "press": "ctrl+alt+shift+g", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-git-branch-staged-changes')", "timeout": 20000 }
+      ],
+      "crops": [{ "name": "statusbar", "selector": ".part.statusbar" }, { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420 }],
+      "teardown": [
+        { "press": "ctrl+alt+shift+h", "wait": 1500 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-git-branch-changes')", "timeout": 20000 }
+      ]
+    },
+    {
+      "name": "scm-conflict",
+      "setup": [
+        { "press": "ctrl+alt+shift+l", "wait": 2500 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-git-branch-conflicts')", "timeout": 20000 }
+      ],
+      "crops": [{ "name": "statusbar", "selector": ".part.statusbar" }, { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420 }],
+      "teardown": [
+        { "press": "ctrl+alt+shift+h", "wait": 2000 },
+        { "waitFor": "!!document.querySelector('.part.statusbar .codicon-git-branch-changes')", "timeout": 20000 },
+        { "press": "ctrl+alt+shift+4", "wait": 800 }
+      ]
+    },
+    {
+      "name": "terminal",
+      "setup": [
+        { "press": "ctrl+alt+shift+p", "wait": 8000 },
+        { "press": "ctrl+alt+shift+m", "wait": 1500 },
+        { "press": "ctrl+alt+shift+s", "wait": 2500 },
+        { "press": "ctrl+alt+shift+x", "wait": 2500 },
+        { "waitFor": "!!document.querySelector('.terminal-command-decoration.codicon-terminal-decoration-success') && !!document.querySelector('.terminal-command-decoration.codicon-terminal-decoration-error')", "timeout": 30000 }
+      ],
+      "crops": [{ "name": "panel", "selector": ".part.panel" }],
+      "teardown": [{ "press": "ctrl+alt+shift+m", "wait": 800 }, { "press": "ctrl+alt+shift+e" }]
+    },
+    {
+      "name": "icon-sheet",
+      "setup": [{ "press": "ctrl+alt+shift+7", "wait": 1500 }, { "press": "ctrl+alt+shift+m", "wait": 1500 }],
+      "crops": [{ "name": "panel", "selector": ".part.panel" }],
+      "teardown": [{ "press": "ctrl+alt+shift+m", "wait": 800 }, { "press": "ctrl+alt+shift+e" }]
+    }
+  ],
+  "commitSheets": [
+    "main-workbench-activitybar", "main-workbench-tabs", "main-workbench-code", "main-workbench-sidebar",
+    "main-workbench-statusbar", "main-workbench-titlebar", "main-workbench-chat", "main-bulb-gutter-code",
+    "main-problems-panel", "main-find-widget", "main-diff-editor", "main-quick-input-widget", "main-notifications-toasts",
+    "main-notifications-statusbar", "main-status-signals-statusbar", "main-scm-staged-statusbar", "main-scm-staged-sidebar",
+    "main-scm-conflict-statusbar", "main-terminal-panel", "main-icon-sheet-panel", "variants-status-signals-statusbar",
+    "variants-icon-sheet-panel"
+  ]
+}

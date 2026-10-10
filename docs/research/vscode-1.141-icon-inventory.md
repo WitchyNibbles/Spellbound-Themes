@@ -270,6 +270,23 @@ Five more registered IDs appear only when the side bars swap sides or in Customi
 
 Decisions 4 and 5 also pin five codicons that no table above lists: `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified`, `copilot-snooze` and `copilot-dot`.
 
+Review gate 1 (spec section 11.1) pins ten more keys, found in the gate captures and in the code-action and git sources:
+
+| ID (iconDefinitions key) | Kind / default | Where it appears |
+|---|---|---|
+| `gutter-lightbulb-sparkle` | registered, default `lightbulb-sparkle` | Gutter light bulb when an AI fix is offered and no preferred fix (with chat on, the usual quick-fix case) |
+| `gutter-lightbulb-auto-fix` | registered, default `lightbulb-autofix` | Gutter light bulb with a preferred quick fix and no AI fix |
+| `gutter-lightbulb-aifix-auto-fix` | registered, default `lightbulb-sparkle-autofix` | Gutter light bulb with both a preferred quick fix and an AI fix |
+| `lightbulb-sparkle` | codicon | Inline light bulb, AI fix offered; also the inline-edit chat status label |
+| `lightbulb-autofix` | codicon | Inline light bulb, preferred quick fix; also the "accept detected language" status entry |
+| `lightbulb-sparkle-autofix` | codicon (same character as `lightbulb-sparkle`) | Inline light bulb, preferred quick fix and AI fix |
+| `git-branch-changes` | codicon | Status bar branch (git extension) with working-tree or untracked changes |
+| `git-branch-staged-changes` | codicon | Status bar branch with staged changes |
+| `git-branch-conflicts` | codicon | Status bar branch while a merge or rebase is in progress |
+| `ports-forwarded-with-process-icon` | registered, default `circle-filled` | Ports view: a forwarded port with a running process |
+
+The light-bulb widget draws in the gutter only when the line is not indented, the lines above and below are neither blank nor indented, and no other glyph-margin decoration sits on the line; otherwise it draws inline in the text and uses the plain codicons. `light-bulb` and `gutter-lightbulb` were pinned in phase 1. `gutter-lightbulb-sparkle-filled` (registered, default `sparkle-filled`: every action on the line is an AI action) and the codicon `sparkle-filled` stay unpinned for now; gate 2 decided that `gutter-lightbulb-sparkle-filled` joins the editor batch on the ✧ cluster at gate 4 (spec section 11.2).
+
 ## Extended tier: seen regularly but in narrower situations
 
 ### Activity Bar and side bar containers (1)
@@ -489,7 +506,7 @@ Caveats:
 - Layout toggles: `src/vs/workbench/browser/actions/layoutActions.ts`, `src/vs/workbench/browser/parts/panel/panelActions.ts` and `src/vs/workbench/browser/parts/auxiliarybar/auxiliaryBarActions.ts`. In the 1.141 bundle, `LayoutControlMenu` items use `panel-left` / `panel-left-off`, `panel-layout-icon` / `-off`, `auxiliarybar-right-layout-icon` / `-off` and `configure-layout-icon`.
 - Local install used for extraction: `/mnt/c/Users/<user>/AppData/Local/Programs/Microsoft VS Code/2a59476c9b/resources/app/out/vs/workbench/workbench.desktop.main.js` (registerIcon is minified to `ze`, the resolver to `iIr`, the stylesheet to `qci`), `.../out/nls.messages.json` (descriptions) and `.../workbench.desktop.main.css` (`var(--vscode-icon-*-content)` consumers).
 - Git extension (SCM icons): `.../resources/app/extensions/git/package.json` and `dist/main.js`. Commit `$(check)`, refresh `$(refresh)`, stage `$(add)`, unstage `$(remove)`, discard `$(discard)`, open file `$(go-to-file)`, open changes `$(compare-changes)`, branch `$(git-branch)`, publish `$(cloud-upload)`, graph `$(git-fetch)` / `$(repo-pull)` / `$(repo-push)`.
-- The keys this repo relies on are pinned in `icons/product-icon-ids.json` (160 keys with kind, default and batch). `node scripts/extract-icon-ids.mjs [bundle]` diffs a local workbench bundle against that pin. The earlier `reg.tsv`/`registry.json` were never committed.
+- The keys this repo relies on are pinned in `icons/product-icon-ids.json` (170 keys with kind, default and batch). `node scripts/extract-icon-ids.mjs [bundle]` diffs a local workbench bundle against that pin. The earlier `reg.tsv`/`registry.json` were never committed.
 
 ## Out of scope for product icon themes
 
@@ -503,7 +520,7 @@ Checked against the 1.141 bundle (`workbench.desktop.main.js` and `workbench.des
 
 Mapping `circle-filled` to the ✦ dirty mark also changes:
 
-- Registered IDs that inherit it: only `ports-forwarded-with-process-icon` (Ports view, extended tier, stays on the inherited ✦ unless mapped).
+- Registered IDs that inherit it: only `ports-forwarded-with-process-icon` (Ports view, extended tier). Since gate 1 (G4) it is pinned in the `status` batch and shares the small-dot drawing of `terminal-decoration-success`.
 - Not inherited, although the bundle calls `registerIcon("terminal-decoration-success", circleFilled)`: the codicon table registers `terminal-decoration-success` first, with its own copy of the `circle-filled` character (60017), and the first registration wins (rule 5). The terminal gutter success mark therefore stays on the stock Codicon dot until the `status` batch maps `terminal-decoration-success` by its own key. `debug-hint` is a codicon copy of 60017 in the same way. The phase-1 plan (Review Focus 5) expected the gutter to inherit the ✦; it does not.
 - CSS consumers of `--vscode-icon-circle-filled-*`: the dirty editor tab action and the dirty Open Editors row (both wanted).
 - Direct uses of the glyph in the workbench code: the dirty-file indicator in the Quick Open history list (wanted, same meaning), chat "thinking" rows and their spinner item, agent-session status and read indicators, the merge editor's "Accept (result is dirty)" toggle state, the colour swatches in the terminal "change color" quick pick, profile list items, and the "Start Extension Host Profile" and "Profile Local Agent Host Process" actions.

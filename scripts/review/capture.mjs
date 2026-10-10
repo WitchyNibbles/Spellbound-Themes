@@ -167,8 +167,10 @@ const capturesDir = path.join(work, 'captures');
 const workspaceDir = path.join(work, 'workspace');
 const pristineDir = path.join(work, 'workspace.pristine');
 if (!fs.existsSync(pristineDir)) fs.cpSync(workspaceDir, pristineDir, { recursive: true });
-// Working files only (git keeps its object files read-only on Windows, and the repository never changes), and only
-// files whose content changed: a rewritten file loses its WSL mode bits and mtime, which the terminal listing shows.
+// Working files only (git keeps its object files read-only on Windows), and only files whose content changed: a
+// rewritten file loses its WSL mode bits and mtime, which the terminal listing shows. Gate 2 scenes change the index and
+// the merge state through the git extension; their teardowns (spellboundReview.scm "changes") put them back, and a
+// failed teardown stops the run.
 function restoreWorkspace(relative = '') {
   for (const entry of fs.readdirSync(path.join(pristineDir, relative), { withFileTypes: true })) {
     if (entry.name === '.git') continue;

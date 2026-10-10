@@ -4,6 +4,7 @@
 - Reproduce: `npm run review:gate` (Windows VS Code 1.141 driven over CDP from VS Code's own Electron; see docs/superpowers/plans/2026-10-10-spellbound-2-phase-1.md, Part D)
 - Raw captures (not committed): review-out/2026-10-10T02-14-08/captures. `manifest.json` here lists all 768 with their sha256: main pass 4 scales × 144, variants pass 2 scales × 96. 0 warnings.
 - Committed here: the 14 `commitSheets` from `review/jobs/gate-1.json`, `windows-terminal-ll.png`, and two evidence strips cut from raw full captures (`evidence-debug-stop.png` from `main/{1,2}/debug/<theme>/default/full.png`, `evidence-lightbulb.png` from `main/{1,2}/workbench/<theme>/default/full.png`). In those strips the 100% column is upscaled 2x (nearest neighbour) and the 200% column is 1:1.
+- Redacted before publishing (2026-10-10): in main-terminal-panel and windows-terminal-ll.png, the file-owner column of the `ll` listings and the Windows user directory in the 100% prompt path are pixelated. The 125% and 150% prompts abbreviate the path (`/mn/c/U/m/…`, `…mp/sp/…`) and keep at most the directory's first letter. The colour measurements below were taken on the raw captures before that.
 
 ## Preconditions (plan Task 18, Step 1)
 - `npm test`: 128 of 128 pass. `npm run validate`: passes with `base`, `color-themes`, `product-pipeline` and `product-batch:1` enforced. The other stages are pending, as staged validation allows.

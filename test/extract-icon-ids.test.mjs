@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { diffPinned, extractRegistrations } from '../scripts/extract-icon-ids.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { BUNDLE_IN_USER_DIR, defaultBundle, diffPinned, extractRegistrations } from '../scripts/extract-icon-ids.mjs';
 
 // The shape of the minified 1.141 bundle: codicons via fe(id, char|alias), workbench icons via ze(id, default, ...).
 const bundle = 'var A={add:fe("add",6e4),files:fe("files",60001),chevronDown:fe("chevron-down",60002),'
@@ -34,4 +37,22 @@ test('diffPinned reports missing, changed and unpinned IDs', () => {
 
 test('throws a clear error on an unrecognised bundle', () => {
   assert.throws(() => extractRegistrations('nothing here'), /Could not locate/);
+});
+
+test('defaultBundle takes VSCODE_WORKBENCH_JS first, else finds the per-user install without a hard-coded user name', () => {
+  const users = fs.mkdtempSync(path.join(os.tmpdir(), 'users-'));
+  assert.equal(defaultBundle({ env: {}, usersDir: users }), null, 'no install: null');
+  const bundle = path.join(users, 'someone', BUNDLE_IN_USER_DIR);
+  fs.mkdirSync(path.dirname(bundle), { recursive: true });
+  fs.writeFileSync(bundle, '');
+  fs.mkdirSync(path.join(users, 'Public'));
+  assert.equal(defaultBundle({ env: {}, usersDir: users }), bundle);
+  assert.equal(defaultBundle({ env: { VSCODE_WORKBENCH_JS: '/x/workbench.js' }, usersDir: users }), '/x/workbench.js');
+  fs.rmSync(users, { recursive: true });
+});
+
+test('no tracked script or test hard-codes a Windows user directory', () => {
+  for (const file of ['scripts/extract-icon-ids.mjs', 'test/circle-filled-audit.test.mjs']) {
+    assert.doesNotMatch(fs.readFileSync(new URL(`../${file}`, import.meta.url), 'utf8'), /\/mnt\/c\/Users\/[A-Za-z]/, file);
+  }
 });

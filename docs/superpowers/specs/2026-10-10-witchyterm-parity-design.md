@@ -21,7 +21,7 @@ Make the VS Code collection look as good as witchyterm and read as the same bran
 In:
 
 - Color themes: new Moonlit Candle; semantic and typography fixes to Moonlit, Daydream and Coven Contrast.
-- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 160 keys in total. Work is sized by distinct drawings, not by keys.
+- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 170 keys in total. Work is sized by distinct drawings, not by keys.
 - File icon theme: full redraw, ~30 file types, ~15 folder names, special file names, dark/light/high-contrast sets resolved by a build step from one source per drawing.
 - Build and validation scripts for all of the above.
 - README, CHANGELOG, Marketplace screenshots, version 2.0.0.
@@ -29,7 +29,7 @@ In:
 Out:
 
 - Any extension code (`main`/activation). The package stays declarative. A moon-phase status bar item or sabbat accents are a possible later idea, not part of this work.
-- The ~97 extended-tier icon IDs from the inventory keep falling back to Codicons, except the extended-tier IDs that section 5.1 maps on purpose (`more`, `plus`, `dialog-*`, `copilot-warning`, `debug-breakpoint-unverified`).
+- The ~97 extended-tier icon IDs from the inventory keep falling back to Codicons, except the extended-tier IDs that section 5.1 maps on purpose (`more`, `plus`, `dialog-*`, `copilot-warning`, `debug-breakpoint-unverified`, `ports-forwarded-with-process-icon` and the `gutter-lightbulb-*` / `lightbulb-*` keys added at gate 1).
 - Brand logos of any language or tool.
 - Changing witchyterm itself, except proposing glossary additions (section 7) to it.
 - `engines.vscode` stays `^1.100.0`. Older hosts ignore keys they do not know.
@@ -114,7 +114,7 @@ The scheme's `black` `#1D1230` (1.11:1) and `brightBlack` `#6E5A80` (3.22:1) are
 ## 4. Glyph design system (product and file icons)
 
 - Grid: 16×16, viewBox `0 0 16 16`, 1px padding, strokes of 1 unit, matching Codicons so unmapped fallbacks blend in.
-- One filled accent shape per icon, on the part that carries the meaning (liquid, moon, flame, arrowhead, save lid, the active pane). Pure stroke glyphs (close, plus, minus, check, chevron) have no fill.
+- One filled accent shape per icon, on the part that carries the meaning (liquid, moon, flame, arrowhead, save lid, the active pane). Pure stroke glyphs (close, plus, minus, check, chevron) have no fill. Exception (gate 2): the witch hat is drawn solid, because a hollow cone under 4 units wide leaves cut-outs under 2 units.
 - Product icon SVGs contain filled paths only (strokes expanded to outlines), because the font pipeline rejects `stroke`.
 - File icons are full colour SVGs, objects per type (section 6), category coloured.
 
@@ -136,6 +136,7 @@ Pixel grid. The font is unhinted, so outline coordinates are drawn exactly as wr
 - A circle's centre is on a whole number when its diameter is even and on .5 when it is odd. Prefer even diameters (4, 8, 10, 12, 14) centred on (8,8).
 - (8,8) is a pixel boundary, so an odd-width central feature cannot sit exactly in the middle. Put it on pixel column 7 (x 7–8), as Codicon `add` does, and use the same side in every glyph.
 - No radius, sliver or gap under 1 unit.
+- Accepted off-grid points (gate 2): the corners of the gear's four 45° teeth, the four band ends of `sync` at 235° and 55°, and the points where the `copilot-unavailable` knockout band cuts the cat head's straight edges. Snapping them would distort the shape or break the 1-unit clearance.
 - Snapping guarantees crisp edges only at whole device scales (100%, 200%). At 125% and 150% it only keeps the blur from getting worse.
 
 Keylines (taken from the measured Codicon bounds):
@@ -155,9 +156,9 @@ Filled accents and cut-outs:
 - Dot-like accents (liquid, round dots) are at least 3×3.
 - Shape-bearing accents (crescent, triangle, diamond, drop, flame, leaf) are at least 4×4 and preferably 5×5. A crescent is at least 2 units thick at its widest point.
 - The search lens and the gear hub are enlarged to hold the crescent. Both a crescent variant and a plain-dot variant are drawn, and the author picks per icon at the review gate (section 5.3).
-- Star accents (✦, ⋆) get a solid core; their minimum size is set by a 16px render check of the real glyph.
+- Star accents (✦, ⋆) get a solid core; their minimum size is set by a 16px render check of the real glyph. Set at gate 2: a ✦ badge is 5×5 with a waist of 1 (`parts.star(…, 2.5, 1)`), a 3-px `+` at 16px and a star at 24px; a waist of 1.25 or more turns it into a round dot. The one smaller star is the 3×3 `copilot-dot` pip.
 - Clearance between an accent and a stroke is one full, pixel-aligned unit.
-- A cut-out inside a fill is at least 2 units in both directions. The exception is a straight, pixel-aligned slot at least 4 units long (the `i` stem, the `=` bars).
+- A cut-out inside a fill is at least 2 units in both directions. The exception is a straight, pixel-aligned slot at least 4 units long (the `i` stem, the `=` bars). A second exception (gate 2): the `terminal-decoration-error` ✕ arms are 1.41 units across, like `close`, because a 2-unit ✕ closed up and read as a ring at 16px.
 - Cut-outs must be real holes: a subpath wound opposite to its parent, or a boolean subtract applied before export. The font pipeline (svgicons2svgfont, svg2ttf) ignores `fill-rule` and fills with nonzero winding, so an `evenodd` hole drawn in the same direction as its parent renders solid. Four 1.2.1 sources rely on `evenodd` (`explorer-view-icon`, `debug-alt`, `extensions-view-icon`, `search-view-icon`) and are already wrong in the shipped font; the 2.0 redraw replaces them.
 
 Spin-safe and overlay-safe (normative):
@@ -179,7 +180,8 @@ Font build:
 
 - Metaphors only for views, identity and status signals. Universal actions keep familiar silhouettes in the house style.
 - Keys follow `docs/research/vscode-1.141-icon-inventory.md`. Alias IDs that do not inherit (for example `tree-item-expanded`, `toolbar-more`, `menu-submenu`, `quick-input-back`, `dialog-*`, `plus`) get their own explicit entries.
-- Keys beyond the 132 core-tier IDs, included on purpose: `account`, `debug-alt`, `run`, `settings-gear`, `gear`, `ellipsis`, `trash` (helper codicons used directly), `more`, `plus`, `dialog-close`, `dialog-error`, `dialog-info`, `dialog-warning` (extended-tier aliases), and three registered IDs the inventory omits: `timeline-view-icon`, `debug-stackframe-dot` and `copilot-unavailable`. Added by the author decisions (section 11): `debug-breakpoint-unverified`, `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` (debug batch); `copilot-warning`, `copilot-snooze`, `copilot-dot` (status batch); `panel-right`, `panel-right-off`, `auxiliarybar-left-layout-icon`, `auxiliarybar-left-off-layout-icon`, `panel-bottom` (editor batch). Total: 160 keys (132 core + 28 extras).
+- Keys beyond the 132 core-tier IDs, included on purpose: `account`, `debug-alt`, `run`, `settings-gear`, `gear`, `ellipsis`, `trash` (helper codicons used directly), `more`, `plus`, `dialog-close`, `dialog-error`, `dialog-info`, `dialog-warning` (extended-tier aliases), and three registered IDs the inventory omits: `timeline-view-icon`, `debug-stackframe-dot` and `copilot-unavailable`. Added by the author decisions (section 11): `debug-breakpoint-unverified`, `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` (debug batch); `copilot-warning`, `copilot-snooze`, `copilot-dot` (status batch); `panel-right`, `panel-right-off`, `auxiliarybar-left-layout-icon`, `auxiliarybar-left-off-layout-icon`, `panel-bottom` (editor batch).
+- Added at review gate 1 (section 11.1): `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix` and the inline light-bulb codicons `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` (batch 1, claimed by the candle; G5 as amended in section 11.1: with chat on, every quick-fix bulb is one of these, in the gutter or inline); `git-branch-changes`, `git-branch-staged-changes`, `git-branch-conflicts` (status batch, sprig variants; G6) and `ports-forwarded-with-process-icon` (status batch, the `terminal-decoration-success` dot; G4). Total: 170 keys (132 core + 38 extras). `gutter-lightbulb-sparkle-filled` (the gutter mark when every action on the line is an AI action) stays stock until gate 4, where it joins the editor batch on the ✧ cluster (section 11.2) and the total becomes 171.
 - Dropped keys from 1.2.1: `home`, `activity-bar-left`, `activity-bar-right`, `menu`, `copy`, `edit`, `save` (not core-tier). `file`/`folder` are replaced by `symbol-file`/`symbol-folder`. `split-vertical` stays: it is a core ID (the Alt state of Split Editor), and it was given a glyph in the design interview. The legacy `layout-sidebar-left`, `layout-sidebar-right` and `layout-panel` keys are dropped too; the registered toggle keys in section 5.2 replace them.
 - Several IDs share one glyph drawing. The map format is drawing-based: each drawing has one SVG source and one codepoint, and lists the IDs that use it. Codepoints are stored in the map, are never reused within a release, and are not derived from an ID's position in a list.
 - A product icon theme cannot rotate a glyph per ID (only tree twisties are rotated by VS Code's CSS). Every orientation used is its own pre-rotated drawing, so "one chevron" means separate down, right and up drawings, each ID taking the orientation of its Codicon default.
@@ -190,18 +192,18 @@ Activity bar and identity:
 
 | IDs | Glyph | Filled part |
 | :- | :- | :- |
-| `explorer-view-icon` | grimoire, no sticky notes | crescent clasp |
+| `explorer-view-icon` | grimoire, no sticky notes | crescent clasp, upper left, clear of the Explorer badge (gate 1, G7) |
 | `search-view-icon`, `search` | magnifier with an enlarged lens ("scrying glass") holding a plain dot (gate 1, G2) | disc |
 | `source-control-view-icon` | herb sprig laid out like a branch graph | leaves (commit nodes) |
-| `run-view-icon`, `debug-alt` | spider on a thread | play triangle on its body |
+| `run-view-icon`, `debug-alt` | spider on a thread: round body, eight splayed legs, no play mark (gate 1, G7) | body |
 | `test-view-icon` | flask | liquid |
 | `extensions-view-icon` | four rune tiles in the Codicon layout, one lifted | lifted tile |
-| `remote-explorer-view-icon` | moon-gate arch | crescent |
-| `accounts-view-bar-icon`, `account` | witch hat, wide brim, bent tip | band |
+| `remote-explorer-view-icon` | moon-gate arch with a 2-unit wall (gate 1, G7) | crescent |
+| `accounts-view-bar-icon`, `account` | witch hat silhouette, pointed curved brim, bent tip (gate 1, G7); every part solid (gate 2, section 4) | band, set off by a 1-unit notch |
 | `settings-view-bar-icon`, `settings-gear`, `gear`, `extensions-manage`, `notifications-configure` | gear silhouette with an enlarged hub | plain dot in the hub (gate 1, G2) |
 | `chat-view-icon`, `copilot` | cat head | eyes |
-| `copilot-unavailable` (status bar, shown by default in Markdown and plain-text files because Copilot completions are off there; drawn with the status batch) | cat head with a slash | eyes |
-| `timeline-view-icon` | owl face | eyes |
+| `copilot-unavailable` (status bar, shown by default in Markdown and plain-text files because Copilot completions are off there; drawn with the status batch) | cat head with a slash | left eye; the knockout band around the slash takes the right one (gate 2) |
+| `timeline-view-icon` | owl face: eye rings, ear tufts, beak (gate 1, G7) | eyes |
 | `terminal`, `terminal-view-icon` | terminal frame with `❯` | crescent |
 
 `debug-alt` is also the default of the five Run-view section icons, so the spider shows on all of them. That spread is accepted.
@@ -218,7 +220,7 @@ Shared chrome:
 | `close`, `widget-close`, `panel-close`, `notifications-clear`, `dialog-close` | crossed strokes |
 | `add`, `plus`, `terminal-new`, `diff-insert`, `remove`, `diff-remove` | strokes |
 | `check` | stroke |
-| `toolbar-more`, `ellipsis`, `more` | three filled dots |
+| `toolbar-more`, `ellipsis`, `more` | three filled 3×3 dots, 2 units apart, x 1–14 (gate 2; one unit past the action keyline) |
 
 Panel and views:
 
@@ -239,15 +241,18 @@ Status and signals:
 | `error`, `dialog-error`, `testing-failed-icon` | skull | skull, eyes cut out |
 | `warning`, `dialog-warning` | triangle with `!` | triangle, `!` cut out |
 | `info`, `dialog-info` | circle with `i` | disc, `i` cut out |
-| `terminal-decoration-error` | small ✕ in a disc | disc |
-| `terminal-decoration-success` | small dot | dot |
-| `bell` / `bell-dot` | hand bell / bell with ✦ | ✦ |
+| `terminal-decoration-error` | small ✕ in a disc | disc, ✕ cut out 1.41 across (gate 2, section 4) |
+| `terminal-decoration-success`, `ports-forwarded-with-process-icon` | small dot, 6 units (gate 1, G4) | dot |
+| `bell` / `bell-dot` | hand bell / bell with a 5×5 ✦ beside the handle (gate 2) | ✦ |
 | `remote` | small moon gate | crescent |
 | `git-branch` | small herb sprig | leaves |
+| `git-branch-changes` / `git-branch-staged-changes` / `git-branch-conflicts` | small herb sprig with a solid ✦ / ✓ / ! badge in the lower right (gate 1, G6) | badge |
 | `sync` | two arrows chasing round | heads |
 | `bracket` | `{ }` | |
 | `loading` | crescent moon (spun by VS Code) | crescent |
-| `copilot-snooze`, `copilot-dot`, `copilot-warning` | cat head variants, like `copilot-unavailable`: closed eyes / star / warning drawing decided at the status-batch gate | eyes (star for `copilot-dot`) |
+| `copilot-snooze` | cat head with closed eyes, drawn as 2-unit lids | lids |
+| `copilot-dot` | cat head with both eyes and a 3×3 ✦ pip between the ears (gate 2) | eyes, pip |
+| `copilot-warning` | solid cat head with `!` cut out (gate 2) | head, `!` cut out |
 
 Debug and testing (the moon means "here"):
 
@@ -275,10 +280,10 @@ Editor, find, layout, SCM:
 
 | IDs | Glyph | Filled part |
 | :- | :- | :- |
-| `light-bulb`, `gutter-lightbulb` | candle | flame |
+| `light-bulb`, `gutter-lightbulb`, `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix`, `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` | candle | flame |
 | `circle-filled` (dirty tab dot) | ✦ (audit every other use of `circle-filled` before changing it) | ✦ |
 | `pinned` / `pinned-dirty` | hatpin, round head / ✦ head | head |
-| `sparkle` | three-star cluster ✧ | largest star |
+| `sparkle`; `gutter-lightbulb-sparkle-filled` from gate 4 (section 11.2) | three-star cluster ✧ | largest star |
 | `new-file` / `new-folder` | page / folder with `+` | corner / tab |
 | `go-to-file`, `symbol-file`, `symbol-folder` | page with arrow, page, folder | corner / tab |
 | `collapse-all`, `list-tree`, `discard`, `refresh` | usual shapes | main shape |
@@ -515,3 +520,17 @@ Taken at review gate 1 (`docs/qa/2.0-gate-1/README.md`), all as recommended.
 - G6 `git-branch-changes`, `git-branch-staged-changes` and `git-branch-conflicts` are sprig variants in the `status` batch.
 - G7 Batch-1 redraws, first in phase 2: spider (round body, eight splayed legs, no play mark; it read as the stock beetle), owl (ear tufts and large eye discs; it read as a second cat), witch hat (bent tip and a band notch; it read as a triangle on a bar), moon gate (thicker arch, stronger crescent cut), grimoire (crescent moved to the upper left, clear of the Explorer badge that VS Code draws at the lower right).
 - G8 Batch 1 is approved with these changes. The phase-1 colour choices listed in the gate README stand.
+
+### 11.2 Gate 2 decisions (2026-10-10)
+
+Taken at review gate 2 (`docs/qa/2.0-gate-2/README.md`), all as recommended.
+
+- G9 (D5) `copilot-warning`: the solid cat head with the `!` cut out. At 16px it cannot be mistaken for another Copilot state; the outline cat's 2-unit `!` was easy to miss.
+- G10 `toolbar-more`, `ellipsis`, `more`: 3×3 dots, 13 units wide. The Codicon-sized 2×2 dots were below the dot-accent minimum.
+- G11 `gutter-lightbulb-sparkle-filled` is pinned to the ✧ cluster in the editor batch at gate 4 (171 keys then). It stays stock until then.
+- G12 The witch hat stays a solid silhouette, an exception to the one-accent rule (section 4).
+- G13 Status readings approved as drawn, and sections 4 and 5.2 updated: `copilot-unavailable` keeps the left eye, `copilot-dot` keeps both eyes and adds a ✦ pip between the ears, and the `terminal-decoration-error` ✕ is a 1.41-unit cut-out.
+- G14 The ✦ on `bell-dot` and `sprig-changes` stays a 5×5 ✦ (a `+` at 16px, a star at 24px), not a plain dot.
+- G15 The 3×3 `copilot-dot` pip keeps its size.
+- G16 (G3) The remaining off-grid points in `gear`, `sync` and `copilot-unavailable` are accepted as drawn (section 4). The `copilot-unavailable` knockout band stays at 2x − y = 6.75 to 14.25.
+- G17 Batch 1 as redrawn and snapped, the chrome batch and the status batch are approved with G9–G16.
