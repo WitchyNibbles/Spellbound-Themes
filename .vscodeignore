@@ -13,3 +13,7 @@ src/**
 .codex/**
 .devgod/**
 test.py
+test/**
+review/**
+review-out/**
+icons/product-src-variants/**

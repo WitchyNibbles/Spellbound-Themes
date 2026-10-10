@@ -1,0 +1,22 @@
+{
+  "workbench.iconTheme": "witchynibbles-icons",
+  "workbench.productIconTheme": "witchynibbles-product-icons",
+  "workbench.experimental.modernUI": true,
+  "workbench.activityBar.compact": false,
+  "workbench.secondarySideBar.defaultVisibility": "visible",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  "editor.showFoldingControls": "always",
+  "editor.lightbulb.enabled": "on",
+  "security.workspace.trust.enabled": false,
+  "window.newWindowDimensions": "maximized",
+  "window.restoreWindows": "none",
+  "update.mode": "none",
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "telemetry.telemetryLevel": "off",
+  "git.openRepositoryInParentFolders": "never",
+  "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+  "terminal.integrated.fontFamily": "'Maple Mono NF', Consolas, monospace"
+}

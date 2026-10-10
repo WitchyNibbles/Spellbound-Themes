@@ -1,0 +1,9 @@
+{
+  "fontId": "witchynibbles-product-icons",
+  "fontFamily": "WitchyNibbles Product Icons",
+  "retiredCodepoints": [],
+  "drawings": {
+    "corner": { "codepoint": "E100", "ids": ["corner-a", "corner-b"] },
+    "ring": { "codepoint": "E101", "ids": ["ring"] }
+  }
+}

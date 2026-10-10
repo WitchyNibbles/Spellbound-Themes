@@ -24,7 +24,7 @@
     "editorBracketMatch.border": "#176B9A",
     "editorOverviewRuler.border": "#DCC7E5",
     "editorOverviewRuler.modifiedForeground": "#176B9A",
-    "editorOverviewRuler.addedForeground": "#197F91",
+    "editorOverviewRuler.addedForeground": "#0E7553",
     "editorOverviewRuler.deletedForeground": "#B52776",
     "editorOverviewRuler.errorForeground": "#B51E55",
     "editorOverviewRuler.warningForeground": "#9A5A00",
@@ -33,7 +33,7 @@
     "editorInfo.foreground": "#176B9A",
     "editorHint.foreground": "#7042B2",
     "editorGutter.modifiedBackground": "#176B9A",
-    "editorGutter.addedBackground": "#197F91",
+    "editorGutter.addedBackground": "#0E7553",
     "editorGutter.deletedBackground": "#B52776",
     "editorGutter.commentRangeForeground": "#735F7D",
     "activityBar.background": "#F5ECFA",
@@ -96,7 +96,7 @@
     "list.focusForeground": "#26172F",
     "input.background": "#FFF9FD",
     "input.foreground": "#26172F",
-    "input.border": "#DCC7E5",
+    "input.border": "#8E78A6",
     "input.placeholderForeground": "#735F7D",
     "focusBorder": "#176B9A",
     "button.background": "#B52776",
@@ -108,7 +108,7 @@
     "scrollbarSlider.hoverBackground": "#7042B2",
     "scrollbarSlider.activeBackground": "#B52776",
     "gitDecoration.modifiedResourceForeground": "#176B9A",
-    "gitDecoration.addedResourceForeground": "#197F91",
+    "gitDecoration.addedResourceForeground": "#0E7553",
     "gitDecoration.deletedResourceForeground": "#B52776",
     "gitDecoration.untrackedResourceForeground": "#7042B2",
     "gitDecoration.conflictingResourceForeground": "#B51E55",
@@ -122,7 +122,7 @@
     "minimap.findMatchHighlight": "#B52776",
     "minimap.errorHighlight": "#B51E55",
     "minimap.warningHighlight": "#9A5A00",
-    "minimapGutter.addedBackground": "#197F91",
+    "minimapGutter.addedBackground": "#0E7553",
     "minimapGutter.modifiedBackground": "#176B9A",
     "minimapGutter.deletedBackground": "#B52776",
     "notifications.background": "#F5ECFA",
@@ -140,7 +140,7 @@
     "notebook.cellBorderColor": "#DCC7E5",
     "notebook.cellEditorBackground": "#FFF9FD",
     "notebook.focusedCellBorder": "#B52776",
-    "notebookStatusSuccessIcon.foreground": "#197F91",
+    "notebookStatusSuccessIcon.foreground": "#0E7553",
     "notebookStatusRunningIcon.foreground": "#176B9A",
     "notebookStatusErrorIcon.foreground": "#B51E55",
     "notebook.outputContainerBackgroundColor": "#F5ECFA",
@@ -157,7 +157,9 @@
     "symbolIcon.classForeground": "#075B86",
     "symbolIcon.variableForeground": "#26172F",
     "symbolIcon.propertyForeground": "#145C85",
-    "symbolIcon.keywordForeground": "#A21763"
+    "symbolIcon.keywordForeground": "#A21763",
+    "debugIcon.breakpointCurrentStackframeForeground": "#B52776",
+    "debugIcon.breakpointStackframeForeground": "#7042B2"
   },
   "tokenColors": [
     {
@@ -198,13 +200,30 @@
       "name": "Keywords",
       "scope": [
         "keyword",
-        "storage",
-        "storage.type",
-        "storage.modifier"
+        "storage.type"
       ],
       "settings": {
         "foreground": "#A21763",
         "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Storage",
+      "scope": [
+        "storage"
+      ],
+      "settings": {
+        "foreground": "#A21763"
+      }
+    },
+    {
+      "name": "Storage modifiers",
+      "scope": [
+        "storage.modifier"
+      ],
+      "settings": {
+        "foreground": "#A21763",
+        "fontStyle": "italic"
       }
     },
     {
@@ -216,8 +235,7 @@
         "meta.function-call"
       ],
       "settings": {
-        "foreground": "#075B86",
-        "fontStyle": "bold"
+        "foreground": "#075B86"
       }
     },
     {
@@ -259,8 +277,7 @@
         "constant.other"
       ],
       "settings": {
-        "foreground": "#9A185C",
-        "fontStyle": "bold"
+        "foreground": "#9A185C"
       }
     },
     {
@@ -272,7 +289,8 @@
         "keyword.operator.comparison"
       ],
       "settings": {
-        "foreground": "#4F2B7E"
+        "foreground": "#4F2B7E",
+        "fontStyle": ""
       }
     },
     {
@@ -295,8 +313,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#075B86",
-        "fontStyle": "bold"
+        "foreground": "#075B86"
       }
     },
     {

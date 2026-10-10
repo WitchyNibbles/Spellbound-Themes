@@ -1,0 +1,15 @@
+{
+  "name": "spellbound-review-helper",
+  "displayName": "Spellbound review helper",
+  "description": "Review-only helper for the Spellbound gate screenshots. Not part of the published extension.",
+  "version": "0.0.1",
+  "publisher": "witchynibbles-review",
+  "engines": { "vscode": "^1.100.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "viewsContainers": { "panel": [{ "id": "spellboundReview", "title": "Icon sheet", "icon": "media/sheet.svg" }] },
+    "views": { "spellboundReview": [{ "id": "spellboundReview.iconSheet", "name": "Icon sheet" }, { "id": "spellboundReview.iconSheet2", "name": "Icon sheet (cont.)" }] },
+    "commands": [{ "command": "spellboundReview.notify", "title": "Spellbound Review: Show a long notification" }]
+  }
+}

@@ -1,0 +1,968 @@
+{
+  "vscode": {
+    "version": "1.141.0",
+    "commit": "2a59476c9bfcb90b3ddc372c36762471b7dfad1c"
+  },
+  "ids": {
+    "account": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "accounts-view-bar-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "account",
+      "batch": "1"
+    },
+    "add": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "arrow-left": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "arrow-right": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "auxiliarybar-left-layout-icon": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "layout-sidebar-left",
+      "batch": "editor"
+    },
+    "auxiliarybar-left-off-layout-icon": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "layout-sidebar-left-off",
+      "batch": "editor"
+    },
+    "auxiliarybar-right-layout-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-sidebar-right",
+      "batch": "editor"
+    },
+    "auxiliarybar-right-off-layout-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-sidebar-right-off",
+      "batch": "editor"
+    },
+    "bell": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "bell-dot": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "bracket": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "breadcrumb-separator": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "case-sensitive": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "chat-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chat-sparkle",
+      "batch": "1"
+    },
+    "check": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "chevron-down": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "circle-filled": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "clear-all": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "panel"
+    },
+    "close": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "collapse-all": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "configure-layout-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout",
+      "batch": "editor"
+    },
+    "copilot": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "copilot-dot": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "copilot-snooze": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "copilot-unavailable": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "copilot-warning": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "debug-alt": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "debug-breakpoint": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "debug-breakpoint-conditional": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-conditional-disabled": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-conditional-unverified": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-disabled": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-log": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-log-disabled": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-breakpoint-unverified": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-console-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "debug-console",
+      "batch": "panel"
+    },
+    "debug-continue": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-hint": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-pause": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-restart": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-stackframe": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-stackframe-dot": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-stackframe-focused": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-start": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-step-into": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-step-out": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-step-over": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "debug-stop": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "dialog-close": {
+      "tier": "extra",
+      "kind": "alias",
+      "default": "close",
+      "batch": "1"
+    },
+    "dialog-error": {
+      "tier": "extra",
+      "kind": "alias",
+      "default": "error",
+      "batch": "1"
+    },
+    "dialog-info": {
+      "tier": "extra",
+      "kind": "alias",
+      "default": "info",
+      "batch": "status"
+    },
+    "dialog-warning": {
+      "tier": "extra",
+      "kind": "alias",
+      "default": "warning",
+      "batch": "status"
+    },
+    "diff-editor-next-change": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "arrow-down",
+      "batch": "chrome"
+    },
+    "diff-editor-previous-change": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "arrow-up",
+      "batch": "chrome"
+    },
+    "diff-insert": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "add",
+      "batch": "chrome"
+    },
+    "diff-remove": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "remove",
+      "batch": "chrome"
+    },
+    "discard": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "ellipsis": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "error": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "explorer-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "files",
+      "batch": "1"
+    },
+    "extensions-manage": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "gear",
+      "batch": "1"
+    },
+    "extensions-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "extensions",
+      "batch": "1"
+    },
+    "filter": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "panel"
+    },
+    "find-collapsed": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "find-expanded": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-down",
+      "batch": "1"
+    },
+    "find-next-match": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "arrow-down",
+      "batch": "chrome"
+    },
+    "find-previous-match": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "arrow-up",
+      "batch": "chrome"
+    },
+    "find-replace": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "replace",
+      "batch": "editor"
+    },
+    "find-replace-all": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "replace-all",
+      "batch": "editor"
+    },
+    "folding-collapsed": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "folding-expanded": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-down",
+      "batch": "1"
+    },
+    "gear": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "git-branch": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "go-to-file": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "gutter-lightbulb": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "light-bulb",
+      "batch": "1"
+    },
+    "info": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "light-bulb": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "list-tree": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "loading": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "markers-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "warning",
+      "batch": "panel"
+    },
+    "menu-submenu": {
+      "tier": "core",
+      "kind": "alias",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "more": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "new-file": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "new-folder": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "notifications-clear": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "close",
+      "batch": "1"
+    },
+    "notifications-clear-all": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "clear-all",
+      "batch": "panel"
+    },
+    "notifications-configure": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "gear",
+      "batch": "1"
+    },
+    "notifications-expand": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-up",
+      "batch": "1"
+    },
+    "output-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "output",
+      "batch": "panel"
+    },
+    "panel-bottom": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "layout-panel",
+      "batch": "editor"
+    },
+    "panel-close": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "close",
+      "batch": "1"
+    },
+    "panel-layout-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-panel",
+      "batch": "editor"
+    },
+    "panel-layout-icon-off": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-panel-off",
+      "batch": "editor"
+    },
+    "panel-left": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-sidebar-left",
+      "batch": "editor"
+    },
+    "panel-left-off": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "layout-sidebar-left-off",
+      "batch": "editor"
+    },
+    "panel-maximize": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "screen-full",
+      "batch": "panel"
+    },
+    "panel-right": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "layout-sidebar-right",
+      "batch": "editor"
+    },
+    "panel-right-off": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "layout-sidebar-right-off",
+      "batch": "editor"
+    },
+    "pinned": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "pinned-dirty": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "plus": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "preserve-case": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "quick-input-back": {
+      "tier": "core",
+      "kind": "alias",
+      "default": "arrow-left",
+      "batch": "chrome"
+    },
+    "refresh": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "regex": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "remote": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "remote-explorer-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "remote-explorer",
+      "batch": "1"
+    },
+    "remove": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "chrome"
+    },
+    "run": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "debug"
+    },
+    "run-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "debug-alt",
+      "batch": "1"
+    },
+    "search": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "search-hide-replace": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "search-replace-all": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "replace-all",
+      "batch": "editor"
+    },
+    "search-show-replace": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-down",
+      "batch": "1"
+    },
+    "search-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "search-large",
+      "batch": "1"
+    },
+    "settings-gear": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "settings-view-bar-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "settings-gear",
+      "batch": "1"
+    },
+    "source-control-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "source-control",
+      "batch": "1"
+    },
+    "sparkle": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "split-horizontal": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "split-vertical": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "symbol-class": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-constant": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-enum": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-field": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-file": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "symbol-folder": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "symbol-function": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-interface": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-keyword": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-method": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-module": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-namespace": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-property": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-snippet": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-string": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-text": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-variable": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "sync": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "terminal": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "1"
+    },
+    "terminal-decoration-error": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "terminal-decoration-success": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "terminal-kill": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "trash",
+      "batch": "panel"
+    },
+    "terminal-new": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "add",
+      "batch": "chrome"
+    },
+    "terminal-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "terminal",
+      "batch": "1"
+    },
+    "test-view-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "beaker",
+      "batch": "1"
+    },
+    "testing-failed-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "error",
+      "batch": "1"
+    },
+    "testing-passed-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "pass",
+      "batch": "debug"
+    },
+    "testing-run-all-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "run-all",
+      "batch": "debug"
+    },
+    "testing-run-icon": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "run",
+      "batch": "debug"
+    },
+    "timeline-view-icon": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "history",
+      "batch": "1"
+    },
+    "toolbar-more": {
+      "tier": "core",
+      "kind": "alias",
+      "default": "more",
+      "batch": "chrome"
+    },
+    "trash": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "panel"
+    },
+    "tree-item-expanded": {
+      "tier": "core",
+      "kind": "alias",
+      "default": "chevron-down",
+      "batch": "1"
+    },
+    "view-pane-container-collapsed": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-right",
+      "batch": "1"
+    },
+    "view-pane-container-expanded": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "chevron-down",
+      "batch": "1"
+    },
+    "warning": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "status"
+    },
+    "whole-word": {
+      "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "editor"
+    },
+    "widget-close": {
+      "tier": "core",
+      "kind": "registered",
+      "default": "close",
+      "batch": "1"
+    }
+  }
+}

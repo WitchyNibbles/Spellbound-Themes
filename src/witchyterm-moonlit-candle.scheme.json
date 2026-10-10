@@ -1,0 +1,23 @@
+{
+  "name": "Moonlit Candle",
+  "background": "#0D0916",
+  "foreground": "#F3EAF7",
+  "cursorColor": "#FF67B7",
+  "selectionBackground": "#633B79",
+  "black": "#1D1230",
+  "red": "#FF6B9F",
+  "green": "#74E8B8",
+  "yellow": "#FFD477",
+  "blue": "#77D9FF",
+  "purple": "#B99AFF",
+  "cyan": "#74D7E8",
+  "white": "#E6DCEE",
+  "brightBlack": "#6E5A80",
+  "brightRed": "#FF8FB5",
+  "brightGreen": "#9DF2CE",
+  "brightYellow": "#FFE3A3",
+  "brightBlue": "#A3E6FF",
+  "brightPurple": "#D0B8FF",
+  "brightCyan": "#A0E9F2",
+  "brightWhite": "#FFFFFF"
+}

@@ -1,2 +1,5 @@
 # Set default behavior to automatically normalize line endings.
 * text=auto
+
+# cmd.exe batch files keep CRLF (review/workspace/.vscode/code-node.cmd runs on Windows).
+*.cmd text eol=crlf

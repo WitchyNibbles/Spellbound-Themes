@@ -1,0 +1,87 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "passes": [
+    { "name": "main", "vsix": ["spellbound-main.vsix"], "scales": [1, 1.25, 1.5, 2] },
+    { "name": "variants", "vsix": ["spellbound-variants.vsix"], "scales": [1, 2], "scenes": ["workbench", "debug"] }
+  ],
+  "scenes": [
+    {
+      "name": "workbench",
+      "setup": [
+        { "press": "ctrl+alt+shift+4", "wait": 800 },
+        { "press": "ctrl+alt+shift+w", "wait": 2000 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 }, { "press": "Enter", "wait": 1500 }, { "insert": "✦ " },
+        { "press": "ctrl+alt+shift+1", "wait": 800 }, { "press": "Enter", "wait": 5000 },
+        { "waitFor": "!!document.querySelector('.lightBulbWidget[class*=codicon-], .codicon-light-bulb, .codicon-gutter-lightbulb')", "timeout": 20000, "optional": true }
+      ],
+      "variants": [
+        { "name": "default", "settings": {} },
+        { "name": "compact", "settings": { "workbench.activityBar.compact": true } }
+      ],
+      "crops": [
+        { "name": "activitybar", "selector": ".part.activitybar" },
+        { "name": "tabs", "selector": ".part.editor .tabs-and-actions-container" },
+        { "name": "breadcrumbs", "selector": ".part.editor .breadcrumbs-control" },
+        { "name": "gutter", "selector": ".part.editor .monaco-editor .margin", "maxHeight": 320 },
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420 },
+        { "name": "statusbar", "selector": ".part.statusbar" },
+        { "name": "chat", "selector": ".part.auxiliarybar" },
+        { "name": "titlebar", "selector": ".part.titlebar" }
+      ]
+    },
+    {
+      "name": "debug",
+      "setup": [
+        { "press": "ctrl+alt+shift+u", "wait": 800 }, { "press": "Enter", "wait": 1200 }, { "press": "ctrl+alt+shift+2" },
+        { "press": "ctrl+alt+shift+q", "wait": 800 }, { "press": "Enter", "wait": 1200 }, { "press": "ctrl+alt+shift+2" },
+        { "press": "ctrl+alt+shift+5", "wait": 800 },
+        { "press": "ctrl+alt+shift+3" },
+        { "waitFor": "!!document.querySelector('.codicon-debug-stackframe, .codicon-debug-stackframe-focused')", "timeout": 40000 }
+      ],
+      "crops": [
+        { "name": "gutter", "selector": ".part.editor .monaco-editor .margin", "maxHeight": 260 },
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420 },
+        { "name": "activitybar", "selector": ".part.activitybar" },
+        { "name": "debug-toolbar", "selector": ".debug-toolbar" },
+        { "name": "statusbar", "selector": ".part.statusbar" }
+      ],
+      "teardown": [{ "press": "ctrl+alt+shift+t", "wait": 1500 }]
+    },
+    {
+      "name": "testing",
+      "setup": [{ "press": "ctrl+alt+shift+6", "wait": 1500 }, { "press": "ctrl+alt+shift+r", "wait": 2500 }],
+      "crops": [{ "name": "activitybar", "selector": ".part.activitybar" }, { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 300 }]
+    },
+    {
+      "name": "icon-sheet",
+      "setup": [{ "press": "ctrl+alt+shift+7", "wait": 1500 }, { "press": "ctrl+alt+shift+m", "wait": 1500 }],
+      "crops": [{ "name": "panel", "selector": ".part.panel" }],
+      "teardown": [{ "press": "ctrl+alt+shift+m", "wait": 800 }, { "press": "ctrl+alt+shift+e" }]
+    },
+    {
+      "name": "notifications",
+      "setup": [{ "press": "ctrl+alt+shift+0", "wait": 1500 }],
+      "crops": [{ "name": "toasts", "selector": ".notifications-toasts" }, { "name": "statusbar", "selector": ".part.statusbar" }],
+      "teardown": [{ "press": "Escape" }]
+    },
+    {
+      "name": "terminal",
+      "setup": [{ "press": "ctrl+alt+shift+8", "wait": 7000 }, { "press": "ctrl+alt+shift+9", "wait": 3000 }],
+      "variants": [
+        { "name": "contrast-4.5", "settings": {} },
+        { "name": "contrast-1", "settings": { "terminal.integrated.minimumContrastRatio": 1 } }
+      ],
+      "crops": [{ "name": "panel", "selector": ".part.panel" }],
+      "teardown": [{ "press": "ctrl+alt+shift+e" }]
+    }
+  ],
+  "commitSheets": [
+    "main-workbench-activitybar", "main-workbench-tabs", "main-workbench-breadcrumbs", "main-workbench-gutter",
+    "main-workbench-statusbar", "main-workbench-chat", "main-workbench-sidebar", "main-debug-gutter",
+    "main-debug-sidebar", "main-icon-sheet-panel", "main-notifications-toasts", "main-terminal-panel",
+    "variants-workbench-activitybar", "variants-debug-gutter"
+  ]
+}

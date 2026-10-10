@@ -1,6 +1,8 @@
 node_modules/
 *.vsix
 .vscode/
+!review/workspace/.vscode/
 .vscode-test/
 .playwright-mcp/
 .DS_Store
+review-out/

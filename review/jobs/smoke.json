@@ -1,0 +1,104 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "passes": [
+    {
+      "name": "main",
+      "vsix": [
+        "spellbound-main.vsix"
+      ],
+      "scales": [
+        1.25
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "name": "workbench",
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 800
+        },
+        {
+          "press": "ctrl+alt+shift+w",
+          "wait": 2000
+        },
+        {
+          "press": "ctrl+alt+shift+y",
+          "wait": 800
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "insert": "✦ "
+        },
+        {
+          "press": "ctrl+alt+shift+1",
+          "wait": 800
+        },
+        {
+          "press": "Enter",
+          "wait": 5000
+        },
+        {
+          "waitFor": "!!document.querySelector('.lightBulbWidget[class*=codicon-], .codicon-light-bulb, .codicon-gutter-lightbulb')",
+          "timeout": 20000,
+          "optional": true
+        }
+      ],
+      "variants": [
+        {
+          "name": "default",
+          "settings": {}
+        },
+        {
+          "name": "compact",
+          "settings": {
+            "workbench.activityBar.compact": true
+          }
+        }
+      ],
+      "crops": [
+        {
+          "name": "activitybar",
+          "selector": ".part.activitybar"
+        },
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        },
+        {
+          "name": "breadcrumbs",
+          "selector": ".part.editor .breadcrumbs-control"
+        },
+        {
+          "name": "gutter",
+          "selector": ".part.editor .monaco-editor .margin",
+          "maxHeight": 320
+        },
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        },
+        {
+          "name": "statusbar",
+          "selector": ".part.statusbar"
+        },
+        {
+          "name": "chat",
+          "selector": ".part.auxiliarybar"
+        },
+        {
+          "name": "titlebar",
+          "selector": ".part.titlebar"
+        }
+      ]
+    }
+  ]
+}

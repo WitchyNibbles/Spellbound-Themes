@@ -157,7 +157,9 @@
     "symbolIcon.classForeground": "#A8E7FF",
     "symbolIcon.variableForeground": "#F8F2FF",
     "symbolIcon.propertyForeground": "#9CCBFF",
-    "symbolIcon.keywordForeground": "#FF67B7"
+    "symbolIcon.keywordForeground": "#FF67B7",
+    "debugIcon.breakpointCurrentStackframeForeground": "#FF67B7",
+    "debugIcon.breakpointStackframeForeground": "#D0B8FF"
   },
   "tokenColors": [
     {
@@ -198,13 +200,30 @@
       "name": "Keywords",
       "scope": [
         "keyword",
-        "storage",
-        "storage.type",
-        "storage.modifier"
+        "storage.type"
       ],
       "settings": {
         "foreground": "#FF67B7",
         "fontStyle": "bold"
+      }
+    },
+    {
+      "name": "Storage",
+      "scope": [
+        "storage"
+      ],
+      "settings": {
+        "foreground": "#FF67B7"
+      }
+    },
+    {
+      "name": "Storage modifiers",
+      "scope": [
+        "storage.modifier"
+      ],
+      "settings": {
+        "foreground": "#FF67B7",
+        "fontStyle": "italic"
       }
     },
     {
@@ -216,8 +235,7 @@
         "meta.function-call"
       ],
       "settings": {
-        "foreground": "#77D9FF",
-        "fontStyle": "bold"
+        "foreground": "#77D9FF"
       }
     },
     {
@@ -259,8 +277,7 @@
         "constant.other"
       ],
       "settings": {
-        "foreground": "#FF9BD7",
-        "fontStyle": "bold"
+        "foreground": "#FF9BD7"
       }
     },
     {
@@ -272,7 +289,8 @@
         "keyword.operator.comparison"
       ],
       "settings": {
-        "foreground": "#D3B4FF"
+        "foreground": "#D3B4FF",
+        "fontStyle": ""
       }
     },
     {
@@ -295,8 +313,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#A8E7FF",
-        "fontStyle": "bold"
+        "foreground": "#A8E7FF"
       }
     },
     {

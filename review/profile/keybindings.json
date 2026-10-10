@@ -1,0 +1,20 @@
+[
+  { "key": "ctrl+alt+shift+1", "command": "workbench.action.quickOpen", "args": "spells.ts:11:12" },
+  { "key": "ctrl+alt+shift+2", "command": "editor.debug.action.toggleBreakpoint" },
+  { "key": "ctrl+alt+shift+3", "command": "workbench.action.debug.start" },
+  { "key": "ctrl+alt+shift+4", "command": "workbench.view.explorer" },
+  { "key": "ctrl+alt+shift+5", "command": "workbench.view.debug" },
+  { "key": "ctrl+alt+shift+6", "command": "workbench.view.extension.test" },
+  { "key": "ctrl+alt+shift+7", "command": "spellboundReview.iconSheet.focus" },
+  { "key": "ctrl+alt+shift+8", "command": "workbench.action.terminal.new" },
+  { "key": "ctrl+alt+shift+9", "command": "workbench.action.terminal.sendSequence", "args": { "text": "ll\r" } },
+  { "key": "ctrl+alt+shift+0", "command": "spellboundReview.notify" },
+  { "key": "ctrl+alt+shift+q", "command": "workbench.action.quickOpen", "args": "debug-target.js:4" },
+  { "key": "ctrl+alt+shift+u", "command": "workbench.action.quickOpen", "args": "debug-target.js:6" },
+  { "key": "ctrl+alt+shift+w", "command": "workbench.action.chat.open" },
+  { "key": "ctrl+alt+shift+e", "command": "workbench.action.closePanel" },
+  { "key": "ctrl+alt+shift+r", "command": "testing.runAll" },
+  { "key": "ctrl+alt+shift+t", "command": "workbench.action.debug.stop" },
+  { "key": "ctrl+alt+shift+y", "command": "workbench.action.quickOpen", "args": "notes.md" },
+  { "key": "ctrl+alt+shift+m", "command": "workbench.action.toggleMaximizedPanel" }
+]

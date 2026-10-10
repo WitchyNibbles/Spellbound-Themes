@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Brew",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/debug-target.js",
+      "runtimeExecutable": "${workspaceFolder}\\.vscode\\code-node.cmd",
+      "console": "internalConsole"
+    }
+  ]
+}
