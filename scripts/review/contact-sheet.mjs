@@ -1,6 +1,7 @@
 // One HTML page per (pass, scene, crop): rows = theme and variant, columns = scale, each scale followed by the same
-// captures in grayscale (spec 6.3), images at 1:1 device pixels. The agent-browser session that renders the sheets is
-// closed at the end, also when a sheet fails.
+// captures in grayscale (spec 6.3), images at 1:1 device pixels. The sheets render in an agent-browser session of their
+// own, named in every call whatever AGENT_BROWSER_SESSION says, and only that session is closed at the end, also when a
+// sheet fails (final review M10: the default session may be the author's or another agent's).
 // Usage: node scripts/review/contact-sheet.mjs <run-dir>
 import fs from 'node:fs';
 import path from 'node:path';
@@ -10,7 +11,8 @@ const runDir = path.resolve(process.argv[2]);
 const manifest = JSON.parse(fs.readFileSync(path.join(runDir, 'captures', 'manifest.json'), 'utf8'));
 const sheets = path.join(runDir, 'sheets');
 fs.mkdirSync(sheets, { recursive: true });
-const browser = (...args) => execFileSync('agent-browser', args, { stdio: 'inherit' });
+const session = `spellbound-sheets-${process.pid}`;
+const browser = (...args) => execFileSync('agent-browser', ['--session', session, ...args], { stdio: 'inherit' });
 const groups = Object.groupBy(manifest.captures.filter((capture) => capture.crop !== 'full'), (capture) => `${capture.pass}-${capture.scene}-${capture.crop}`);
 
 try {

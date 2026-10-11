@@ -1,8 +1,8 @@
 {
   "name": "witchynibbles-theme-collection",
   "displayName": "WitchyNibbles Spellbound Themes",
-  "description": "Moonlit purple, neon pink, and electric blue themes for focused coding.",
-  "version": "1.2.1",
+  "description": "Moonlit Candle: candle-gold accents and lavender light on a moonlit night, plus Moonlit, Daydream and Coven Contrast, with original file and product icons.",
+  "version": "2.0.0",
   "publisher": "EimiMartinez",
   "author": {
     "name": "WitchyNibbles"
@@ -23,14 +23,18 @@
     "theme",
     "dark theme",
     "light theme",
+    "high contrast",
     "witchy",
-    "pastel",
-    "neon",
+    "moonlit candle",
+    "candle",
+    "gold",
     "purple",
-    "pink"
+    "file icons",
+    "product icons",
+    "icon theme"
   ],
   "galleryBanner": {
-    "color": "#110d24",
+    "color": "#0D0916",
     "theme": "dark"
   },
   "icon": "assets/witchynibbles.png",

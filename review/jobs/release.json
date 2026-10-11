@@ -1,0 +1,399 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "workspace": "review/workspace-release",
+  "settings": {
+    "window.newWindowDimensions": "default"
+  },
+  "passes": [
+    {
+      "name": "main",
+      "vsix": [
+        "spellbound-main.vsix"
+      ],
+      "scales": [
+        1
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "name": "showcase",
+      "settings": {
+        "workbench.view.alwaysShowHeaderActions": true,
+        "explorer.compactFolders": false,
+        "search.quickOpen.includeHistory": false,
+        "workbench.editorAssociations": {
+          "*.svg": "default"
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "assets/moon.svg",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "moon.svg",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "tests/familiars.test.ts",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "familiars.test.ts",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "src/spellbook.py",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "spellbook.py",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "src/styles.css",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "styles.css",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "insert": " ",
+          "wait": 500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "src/familiars.ts",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "familiars.ts",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); const tabs = document.querySelector('.part.editor .tabs-and-actions-container'); if (!list || !tabs) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); const ts = row(\"familiars.ts-name-file-icon\")?.querySelector('.monaco-icon-label'); return rows.length === 19 && [\".github-name-folder-icon\",\"assets-name-folder-icon\",\"moon.svg-name-file-icon\",\"docs-name-folder-icon\",\"scripts-name-folder-icon\",\"src-name-folder-icon\",\"familiars.json-name-file-icon\",\"familiars.ts-name-file-icon\",\"spellbook.py-name-file-icon\",\"styles.css-name-file-icon\",\"tests-name-folder-icon\",\"familiars.test.ts-name-file-icon\",\".env.example-name-file-icon\",\".gitignore-name-file-icon\",\"changelog.md-name-file-icon\",\"license-name-file-icon\",\"package.json-name-file-icon\",\"readme.md-name-file-icon\",\"tsconfig.json-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && row(\"src-name-folder-icon\").getAttribute('aria-expanded') === 'true' && tabs.querySelectorAll('.tab').length === 3 && tabs.querySelectorAll('.tab.dirty').length === 1 && !!ts && new RegExp(\"\\\\.witchynibbles-theme-collection-2\\\\.0\\\\.0\\\\/icons\\\\/file-icons\\\\/(dark|light|high-contrast)\\\\/gem-cut\\\\.svg\").test(getComputedStyle(ts, '::before').backgroundImage.toLowerCase()) && !!document.activeElement?.closest('.part.editor'); })()",
+          "timeout": 20000
+        }
+      ],
+      "crops": [
+        {
+          "name": "workbench",
+          "selector": ".monaco-workbench"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "src/styles.css",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "styles.css",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "ctrl+alt+F3",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "icon-sheet",
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+7",
+          "wait": 1500
+        },
+        {
+          "press": "ctrl+alt+shift+m",
+          "wait": 1500
+        },
+        {
+          "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 1 of 3')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()",
+          "timeout": 10000
+        }
+      ],
+      "crops": [
+        {
+          "name": "panel",
+          "selector": ".part.panel"
+        }
+      ]
+    },
+    {
+      "name": "icon-sheet-2",
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F4",
+          "wait": 1500
+        },
+        {
+          "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 2 of 3')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()",
+          "timeout": 10000
+        }
+      ],
+      "crops": [
+        {
+          "name": "panel",
+          "selector": ".part.panel"
+        }
+      ]
+    },
+    {
+      "name": "icon-sheet-3",
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F4",
+          "wait": 1500
+        },
+        {
+          "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 3 of 3')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()",
+          "timeout": 10000
+        }
+      ],
+      "crops": [
+        {
+          "name": "panel",
+          "selector": ".part.panel"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "ctrl+alt+shift+F4",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+m",
+          "wait": 800
+        },
+        {
+          "press": "ctrl+alt+shift+e"
+        }
+      ]
+    },
+    {
+      "name": "terminal",
+      "settings": {
+        "terminal.integrated.profiles.windows": {
+          "Spellbound ritual": {
+            "path": "C:\\Windows\\System32\\wsl.exe",
+            "args": [
+              "-e",
+              "fish",
+              "-i",
+              "-c",
+              "source scripts/ritual.fish"
+            ]
+          }
+        },
+        "terminal.integrated.defaultProfile.windows": "Spellbound ritual",
+        "terminal.integrated.minimumContrastRatio": 1,
+        "terminal.integrated.fontSize": 16,
+        "terminal.integrated.lineHeight": 1.1,
+        "workbench.panel.showLabels": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "ctrl+alt+shift+7",
+          "wait": 1500
+        },
+        {
+          "press": "ctrl+alt+shift+m",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(document.querySelector('.part.panel')?.getBoundingClientRect().height ?? 0) > window.innerHeight / 2",
+          "timeout": 10000
+        },
+        {
+          "press": "ctrl+alt+shift+8",
+          "wait": 8000
+        },
+        {
+          "waitFor": "!!document.querySelector('.part.panel .xterm')",
+          "timeout": 20000
+        },
+        {
+          "wait": 4000
+        }
+      ],
+      "crops": [
+        {
+          "name": "panel",
+          "selector": ".part.panel"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "ctrl+alt+shift+m",
+          "wait": 800
+        },
+        {
+          "press": "ctrl+alt+shift+e"
+        }
+      ]
+    }
+  ],
+  "commitSheets": []
+}

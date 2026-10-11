@@ -14,10 +14,19 @@ export function parseArgs(argv) {
     const arg = argv[index];
     if (arg === '--release') options.release = true;
     else if (arg === '--verbose') options.verbose = true;
-    else if (arg === '--only') options.only = String(argv[++index] ?? '').split(',').filter(Boolean);
-    else throw new Error(`Unknown option: ${arg}`);
+    else if (arg === '--only') {
+      options.only = String(argv[++index] ?? '').split(',').map((stage) => stage.trim()).filter(Boolean);
+      if (!options.only.length) throw new Error('--only needs at least one stage, for example --only color-themes');
+    } else throw new Error(`Unknown option: ${arg}`);
   }
   return options;
+}
+
+// A stage no check uses would enforce nothing, and the run would still pass (final review M6).
+export function checkOnlyStages(only, known) {
+  for (const stage of only) {
+    if (!known.includes(stage)) throw new Error(`Unknown stage '${stage}' for --only (stages: ${known.join(', ')})`);
+  }
 }
 
 export function isEnforced(stage, { enforce = [], release = false, only = null }) {

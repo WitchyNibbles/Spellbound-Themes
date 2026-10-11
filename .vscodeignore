@@ -20,3 +20,12 @@ icons/product-src-variants/**
 icons/file-src/**
 .superpowers/**
 .claude/**
+# Release 2.0.0 (decision R1): only what VS Code reads at run time. The README images load from GitHub; the icon sources,
+# maps and pinned ID lists are build inputs.
+assets/screenshots/**
+icons/README.md
+icons/product-src/**
+icons/product-icon-map.json
+icons/product-icon-ids.json
+icons/product-icon-baseline-1.2.1.json
+icons/file-icon-map.json

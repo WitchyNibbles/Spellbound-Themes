@@ -31,13 +31,13 @@ drawings.snake = () => fileIconDocument(
 // gem-rough (js, mjs, cjs; spec 6 and G43: a rough crystal cluster, narrow and tall, pointed at the top, with shorter
 // points leaning out). Fix round 1: the first drawing (a tall outlined crystal beside a short solid one on a shared
 // baseline) read as a two-bar chart or a bottle at 16px, so the cluster is three solid, pointed, faceted crystals.
-// The outline part holds the tall crystal and the small one: the tall one is x7-11, y1-15, a 2:1 spire (4 units tall,
-// 2 across each side) over vertical walls, its lower left cut at 45 degrees; the small one is x12-14, pointed at
-// (13,8), its lower right cut at 45 degrees, one unit clear of the tall one. The accent, painted last, is the
-// leaning crystal: solid, x2-6, y7-15, pointed at (3,7) with a 2:1 left shoulder and a 45-degree right shoulder, its
-// lower left cut at 45 degrees. It keeps one unit from the tall crystal (G42: it sits beside it). Every point is
-// sharp (no flat tops), every foot is cut, and no two crystals share a baseline or a point height, so the group
-// reads as a cluster and not as bars.
+// The first part, solid like the accent, holds the tall crystal and the small one: the tall one is x7-11, y1-15, a
+// 2:1 spire (4 units tall, 2 across each side) over vertical walls, its lower left cut at 45 degrees; the small one
+// is x12-14, pointed at (13,8), its lower right cut at 45 degrees, one unit clear of the tall one. The accent,
+// painted last, is the leaning crystal: solid, x2-6, y7-15, pointed at (3,7) with a 2:1 left shoulder and a 45-degree
+// right shoulder, its lower left cut at 45 degrees. It keeps one unit from the tall crystal (G42: it sits beside it).
+// Every point is sharp (no flat tops), every foot is cut, and no two crystals share a baseline or a point height, so
+// the group reads as a cluster and not as bars.
 drawings['gem-rough'] = () => fileIconDocument(
   painted('code',
     polygon([[7, 13], [7, 5], [9, 1], [11, 5], [11, 15], [9, 15]]), // the tall crystal

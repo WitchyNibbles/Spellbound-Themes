@@ -27,6 +27,7 @@ try {
   // down, so a scene only that pass captures stops here too (gate-4 review).
   job = resolveWaits(filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), { ...args, skipVariants: args.skipVariants || !variantArgs.length }));
   workspaceOf(job, root);
+  if (args.vsix && !fs.statSync(path.resolve(root, args.vsix), { throwIfNoEntry: false })?.isFile()) throw new Error(`--vsix ${args.vsix} is not a file`);
 } catch (error) {
   console.error(`${error.message}\n${USAGE}`);
   process.exit(2);
@@ -44,10 +45,12 @@ const codeExe = path.join(toWsl(codeDirWin), 'Code.exe');
 const work = path.join(toWsl(localAppData), 'Temp', 'spellbound-review', run);
 const vsce = path.join(root, 'node_modules', '.bin', 'vsce');
 
-// 1. Build and package the extension, plus a variant build for the gate questions.
+// 1. Build and package the extension (or take the VSIX given with --vsix, unchanged: the release check installs the
+//    packaged VSIX itself), plus a variant build for the gate questions.
 execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'inherit' });
 fs.mkdirSync(out, { recursive: true });
-execFileSync('node', ['scripts/review/stage-extension.mjs', out], { cwd: root, stdio: 'inherit' });
+if (args.vsix) fs.copyFileSync(path.resolve(root, args.vsix), path.join(out, 'spellbound-main.vsix'));
+else execFileSync('node', ['scripts/review/stage-extension.mjs', out], { cwd: root, stdio: 'inherit' });
 if (job.passes.some((pass) => pass.name === 'variants')) execFileSync('node', ['scripts/review/stage-extension.mjs', out, ...variantArgs], { cwd: root, stdio: 'inherit' });
 
 // 2. Package the review helper with one row per drawing.
@@ -60,7 +63,7 @@ execFileSync(vsce, ['package', '--no-dependencies', '--skip-license', '--allow-m
 // 3. Copy to the Windows side; Windows Node cannot read \\wsl.localhost paths.
 fs.mkdirSync(work, { recursive: true });
 for (const file of fs.readdirSync(out).filter((name) => name.endsWith('.vsix'))) fs.copyFileSync(path.join(out, file), path.join(work, file));
-fs.copyFileSync(path.join(root, 'scripts', 'review', 'capture.mjs'), path.join(work, 'capture.mjs'));
+for (const script of ['capture.mjs', 'cdp-guard.mjs']) fs.copyFileSync(path.join(root, 'scripts', 'review', script), path.join(work, script));
 fs.cpSync(path.join(root, 'review', 'profile'), path.join(work, 'profile'), { recursive: true });
 // The job's fixture, as the folder "workspace" (the window title and command centre read "workspace" in every gate).
 prepareWorkspace(root, job, path.join(work, 'workspace'));
@@ -89,6 +92,8 @@ const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 manifest.run = run;
 manifest.repoCommit = sh('git', ['rev-parse', 'HEAD'], { cwd: root });
 manifest.repoDirty = sh('git', ['status', '--porcelain'], { cwd: root }) !== '';
+// The copy this run installed, not the path given: that file can change during the run.
+if (args.vsix) manifest.installedVsix = { file: path.basename(args.vsix), sha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(out, 'spellbound-main.vsix'))).digest('hex') };
 if (args.scales || args.scenes) manifest.dryRun = { scales: args.scales, scenes: args.scenes }; // a cut-down run is never gate evidence
 for (const capture of manifest.captures) capture.sha256 = crypto.createHash('sha256').update(fs.readFileSync(path.join(out, 'captures', capture.file))).digest('hex');
 fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));

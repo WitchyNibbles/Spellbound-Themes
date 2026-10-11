@@ -18,8 +18,13 @@ export function checkPackage({ packageJson, exists, readFile }, report) {
   }
 }
 
+// The release stage is enforced for good (R3), so any later release version passes: MAJOR.MINOR.PATCH, 2.0.0 or later,
+// with no pre-release part (the Marketplace takes none). The banner is the 2.0 one exactly.
+const RELEASE_VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
+
 export function checkReleaseMetadata(packageJson, report) {
-  if (packageJson.version !== '2.0.0') report.fail('release', `package.json version must be 2.0.0 at release (found ${packageJson.version})`);
+  const [, major] = RELEASE_VERSION.exec(packageJson.version ?? '') ?? [];
+  if (!(Number(major) >= 2)) report.fail('release', `package.json version must be a release version (MAJOR.MINOR.PATCH) of 2.0.0 or later (found ${packageJson.version})`);
   const banner = packageJson.galleryBanner?.color;
   if (banner?.toUpperCase() !== '#0D0916') report.fail('release', `package.json galleryBanner.color must be #0D0916 at release (found ${banner})`);
 }

@@ -1,7 +1,7 @@
 # Spellbound Themes 2.0: witchyterm parity
 
 - **Date:** 2026-10-10
-- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5); gate 5 decided (section 11.6); gate 6 decided (section 11.7)
+- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5); gate 5 decided (section 11.6); gate 6 decided (section 11.7); release decided (section 11.8)
 - **Inspiration:** `../witchyterm` (Moonlit Candle for Claude Code, Windows Terminal, fish/Tide), whose palette lives in `witchyterm/witchy/palette.py`
 - **Research:** `docs/research/vscode-1.141-icon-inventory.md` (every product icon ID visible in a normal VS Code 1.141 session, with resolution rules)
 
@@ -690,3 +690,17 @@ Taken at review gate 6 (`docs/qa/2.0-gate-6/README.md`), all as recommended.
 - G56 The new gate-6 touching accents are accepted under G42: the tsx stone, the html key's bit, the fish's head, the cabinet's cornice, the beads, the padlock body, the crate's struts, the scroll's top roll, the compass hinge.
 - G57 The 19 section-4/6.2 rule exceptions of the set are accepted and listed in section 4.
 - G58 Gate 6 is approved. The file icons (section 6) are complete. The release (section 9) is next, as its own plan (`docs/superpowers/plans/2026-10-11-spellbound-2-release.md`).
+
+### 11.8 Release decisions (2026-10-11)
+
+Taken while planning the release (docs/superpowers/plans/2026-10-11-spellbound-2-release.md), approved by the author under the standing instruction to take the recommended option, with these execution changes: the Marketplace images were taken in VS Code's default window, which measured 1440×900 at 100%; the file icons' high-contrast set is documented as designed for dark high-contrast themes (VS Code also uses it with light high-contrast themes, where some icons have low contrast).
+
+- R1 The VSIX ships runtime files only; the icon sources, maps, pinned ID lists, `icons/README.md` and the screenshots stay in the repository (the README images load from GitHub).
+- R2 The extension icon is 256×256.
+- R3 `npm run validate` enforces the `release` stage.
+- R4 The Marketplace images are taken in VS Code's default window at 100%.
+- R5 The terminal image runs witchyterm's `ll --no-user` and the 16 colours in both terminals over the same folder, with no prompt; Windows Terminal is captured over a `#0D0916` backdrop.
+- R6 The product icon image is the review icon sheet's three pages, stacked.
+- R7 `scripts/verify-icon-release.py` stays the 1.2.1 record; `scripts/verify-live-readme-images.py` checks 2.0.0 and later.
+- R8 The README carries the section-7 glossary; the proposal to witchyterm is the author's.
+- R9 The description and keywords of section 9.

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { createReport, formatResult, loadStageConfig, parseArgs } from './lib/report.mjs';
+import { checkOnlyStages, createReport, formatResult, loadStageConfig, parseArgs } from './lib/report.mjs';
 import { checkPackage, checkReleaseMetadata } from './lib/checks/package.mjs';
 import { checkFileIconTheme } from './lib/checks/file-icons.mjs';
 import { checkFileIconPipeline, checkSelectionContrast } from './lib/checks/file-icon-pipeline.mjs';
@@ -10,7 +10,16 @@ import { checkBuildFlags, checkFontGeometry, checkGlyphSources, checkPinnedCover
 import { PRODUCT_FONT } from './lib/product-icon-map.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
-const options = { ...loadStageConfig(root), ...parseArgs(process.argv.slice(2)) };
+let options;
+try {
+  const stages = loadStageConfig(root);
+  options = { ...stages, ...parseArgs(process.argv.slice(2)) };
+  // The stage file lists every stage a check uses (each phase appends its stage when its work lands).
+  if (options.only) checkOnlyStages(options.only, stages.enforce);
+} catch (error) {
+  console.error(`✗ ${error.message}`);
+  process.exit(2);
+}
 const report = createReport(options);
 const exists = (relative) => fs.existsSync(path.join(root, relative));
 const readFile = (relative) => fs.readFileSync(path.join(root, relative));

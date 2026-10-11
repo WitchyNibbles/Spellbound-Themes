@@ -18,7 +18,8 @@ const exists = (file) => fs.existsSync(path.join(root, file));
 const GATES = ['review/jobs/gate-1.json', 'review/jobs/gate-2.json', 'review/jobs/gate-3.json', 'review/jobs/gate-4.json'];
 const GATE_5 = 'review/jobs/gate-5.json';
 const GATE_6 = 'review/jobs/gate-6.json';
-const JOBS = [...GATES, GATE_5, GATE_6, 'review/jobs/smoke.json'];
+const RELEASE = 'review/jobs/release.json';
+const JOBS = [...GATES, GATE_5, GATE_6, RELEASE, 'review/jobs/smoke.json'];
 const PLAIN_KEYS = new Set(['Enter', 'Escape', 'Tab', 'Backspace']);
 
 test('every file the harness needs exists', () => {
@@ -31,6 +32,7 @@ test('every file the harness needs exists', () => {
     'review/helper-extension/media/sheet.svg', ...JOBS,
     'scripts/review/stage-extension.mjs', 'scripts/review/capture.mjs', 'scripts/review/run-gate.mjs', 'scripts/review/contact-sheet.mjs',
     'scripts/review/args.mjs', 'scripts/review/privacy-scan.mjs', 'scripts/review/waits.mjs', 'scripts/review/workspace.mjs',
+    'scripts/review/cdp-guard.mjs',
   ]) assert.ok(exists(file), file);
 });
 
@@ -168,11 +170,11 @@ test('the smoke job is the gate job cut down to one pass at 125% and the workben
   for (const key of ['expectVersion', 'port', 'mode', 'helperVsix']) assert.equal(smoke[key], gate[key], key);
 });
 
-test('capture.mjs imports only Node built-ins, because it runs from a Windows temp folder', () => {
+test('capture.mjs imports only Node built-ins and the guard copied beside it, because it runs from a Windows temp folder', () => {
   const source = read('scripts/review/capture.mjs');
   const specifiers = [...source.matchAll(/^\s*import\s[^'"]*['"]([^'"]+)['"]/gm)].map((match) => match[1]);
   assert.ok(specifiers.length > 0);
-  for (const specifier of specifiers) assert.match(specifier, /^node:/, specifier);
+  for (const specifier of specifiers) assert.match(specifier, /^(node:|\.\/cdp-guard\.mjs$)/, specifier);
   assert.doesNotMatch(source, /\/IM\b/i, 'never kill VS Code by image name');
 });
 
@@ -746,7 +748,7 @@ test('a capture timeout names the scene and step and describes the focus without
   }
 });
 
-test('the contact sheet adds a grayscale copy of every capture beside each scale, and closes its agent-browser session', () => {
+test('the contact sheet adds a grayscale copy of every capture beside each scale, and uses and closes only its own agent-browser session', () => {
   // Spec 6.3: every drawing stays identifiable in grayscale, so each scale gets a second column of the same captures with
   // filter: grayscale(1). Gate 4: the session the sheets open stayed open after every gate run; it is closed even when a
   // screenshot fails. A fake agent-browser on PATH records the calls.
@@ -754,15 +756,20 @@ test('the contact sheet adds a grayscale copy of every capture beside each scale
   try {
     const bin = path.join(dir, 'bin');
     fs.mkdirSync(bin);
-    fs.writeFileSync(path.join(bin, 'agent-browser'), '#!/bin/sh\necho "$*" >> "$SHEET_LOG"\nif [ "$1" = screenshot ] && [ -n "$SHEET_FAIL" ]; then exit 1; fi\nexit 0\n', { mode: 0o755 });
+    // The fake takes the session flag first, as the real one does, then the command.
+    fs.writeFileSync(path.join(bin, 'agent-browser'), '#!/bin/sh\necho "$*" >> "$SHEET_LOG"\nif [ "$3" = screenshot ] && [ -n "$SHEET_FAIL" ]; then exit 1; fi\nexit 0\n', { mode: 0o755 });
     const run = path.join(dir, 'run');
     fs.mkdirSync(path.join(run, 'captures'), { recursive: true });
     const capture = (scale, crop) => ({ pass: 'main', scale, scene: 'tabs', theme: 'daydream', variant: 'default', crop, file: `main/${scale}/tabs/daydream/default/${crop}.png` });
     fs.writeFileSync(path.join(run, 'captures', 'manifest.json'), JSON.stringify({ vscodeVersion: '1.141.0', mode: 'device-scale', run: 'r', repoCommit: '0123456789', repoDirty: true,
       captures: [capture(1, 'full'), capture(1, 'tabs'), capture(2, 'tabs')] }));
+    // Final review M10: without AGENT_BROWSER_SESSION the sheets drove and closed the default session, which may be the
+    // author's or another agent's. Each run names its own session in every call, whatever the environment says.
     const sheet = (env) => spawnSync(process.execPath, ['scripts/review/contact-sheet.mjs', run],
-      { cwd: root, encoding: 'utf8', timeout: 20000, env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, SHEET_LOG: path.join(dir, 'log'), ...env } });
-    const calls = () => fs.readFileSync(path.join(dir, 'log'), 'utf8').trim().split('\n');
+      { cwd: root, encoding: 'utf8', timeout: 20000, env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, SHEET_LOG: path.join(dir, 'log'), AGENT_BROWSER_SESSION: 'someone-elses', ...env } });
+    const log = () => fs.readFileSync(path.join(dir, 'log'), 'utf8').trim().split('\n');
+    const sessions = () => new Set(log().map((call) => call.split(' ').slice(0, 2).join(' ')));
+    const calls = () => log().map((call) => call.split(' ').slice(2).join(' '));
 
     const ok = sheet({});
     assert.equal(ok.status, 0, ok.stderr);
@@ -772,11 +779,15 @@ test('the contact sheet adds a grayscale copy of every capture beside each scale
     assert.deepEqual(images, [['../captures/main/1/tabs/daydream/default/tabs.png', false], ['../captures/main/1/tabs/daydream/default/tabs.png', true],
       ['../captures/main/2/tabs/daydream/default/tabs.png', false], ['../captures/main/2/tabs/daydream/default/tabs.png', true]]);
     assert.equal(calls().at(-1), 'close', 'the session is closed after the last sheet');
+    assert.equal(sessions().size, 1, 'one session for every call');
+    assert.match([...sessions()][0], /^--session spellbound-sheets-\d+$/);
+    assert.ok(!calls().some((call) => call.includes('--all')), 'never closes every session');
 
     fs.rmSync(path.join(dir, 'log'));
     const failed = sheet({ SHEET_FAIL: '1' });
     assert.notEqual(failed.status, 0, 'a failed screenshot fails the sheet step');
     assert.deepEqual(calls().slice(-2).map((call) => call.split(' ')[0]), ['screenshot', 'close'], 'and still closes the session');
+    assert.equal(sessions().size, 1, 'its own session');
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
@@ -941,4 +952,32 @@ test('every launch parks the page pointer on the empty stretch of the activity b
   const park = capture.indexOf("await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: park.x, y: park.y });");
   assert.ok(park > capture.indexOf("label: 'the WitchyNibbles product icons'") && park < capture.indexOf('for (const scene of job.scenes'), 'after the launch, before the first scene');
   assert.equal(json('review/profile/settings.base.json')['extensions.ignoreRecommendations'], true);
+});
+
+// ---- Release 2.0.0 ----
+test('a job\'s own settings hold from the launch on, under each scene\'s settings, and never pick a theme', () => {
+  // The release job opens VS Code's default-size window instead of the review's maximized one: window.newWindowDimensions
+  // is read when the window opens, so it must be in the settings written before the launch.
+  const capture = read('scripts/review/capture.mjs');
+  assert.match(capture, /const settingsFor = \(theme, extra = \{\}\) => JSON\.stringify\(\{ \.\.\.baseSettings, \.\.\.zoom, \.\.\.job\.settings, 'workbench\.colorTheme': theme\.label, \.\.\.extra \}, null, 2\);/);
+  const launchWrite = capture.indexOf("writeUserFile(userDataDir, 'settings.json', settingsFor(job.themes[0]));");
+  assert.ok(launchWrite > 0 && launchWrite < capture.indexOf('const session = await launch('), 'written before the launch');
+  for (const file of JOBS) {
+    for (const key of ['workbench.colorTheme', 'workbench.iconTheme', 'workbench.productIconTheme']) assert.ok(!(key in (json(file).settings ?? {})), `${file} keeps ${key}`);
+  }
+});
+
+test('run-gate installs the VSIX given with --vsix in the main pass unchanged, records its sha256, and stops before building when it is missing', () => {
+  const runGate = read('scripts/review/run-gate.mjs');
+  assert.match(runGate, /if \(args\.vsix\) fs\.copyFileSync\(path\.resolve\(root, args\.vsix\), path\.join\(out, 'spellbound-main\.vsix'\)\);\nelse execFileSync\('node', \['scripts\/review\/stage-extension\.mjs', out\]/);
+  // Final review M2: the sha256 is that of the copy the run installed (out/spellbound-main.vsix), not of the path given,
+  // which can change during a run of an hour or more.
+  assert.match(runGate, /manifest\.installedVsix = \{ file: path\.basename\(args\.vsix\), sha256: crypto\.createHash\('sha256'\)\.update\(fs\.readFileSync\(path\.join\(out, 'spellbound-main\.vsix'\)\)\)\.digest\('hex'\) \};/);
+  assert.doesNotMatch(runGate, /readFileSync\(path\.resolve\(root, args\.vsix\)\)/);
+  const missing = spawnSync(process.execPath, ['scripts/review/run-gate.mjs', '--job', 'review/jobs/smoke.json', '--vsix', 'no-such.vsix'], { cwd: root, encoding: 'utf8' });
+  assert.equal(missing.status, 2);
+  assert.match(missing.stderr, /--vsix no-such\.vsix is not a file/);
+  const notVsix = spawnSync(process.execPath, ['scripts/review/run-gate.mjs', '--job', 'review/jobs/smoke.json', '--vsix', 'README.md'], { cwd: root, encoding: 'utf8' });
+  assert.equal(notVsix.status, 2);
+  assert.match(notVsix.stderr, /--vsix takes a \.vsix file/);
 });

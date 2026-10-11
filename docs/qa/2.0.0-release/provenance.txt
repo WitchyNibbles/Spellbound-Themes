@@ -1,0 +1,14 @@
+# Provenance of the 2.0.0 Marketplace images: scripts/release/release-images.py input lines, relative to review-out/<run>/
+# run 2026-10-11T17-12-20 (VS Code 1.141.0, full run, witchynibbles-theme-collection-2.0.0.vsix sha256 2b69726a4670d076ab35f513d49b3b51a643dec6b13cb78f95222fe4451e5b5c)
+# themes -> assets/screenshots/{moonlit-candle,moonlit,daydream,coven-contrast}.png (1440x900 each, in this order)
+input captures/main/1/showcase/moonlit-candle/default/full.png sha256 b9fce5295a5707125977b66ffebd123b6a6947e5127e69c294cc0df683e50d73 size 1440x900 crop 0,0,1440,900
+input captures/main/1/showcase/moonlit/default/full.png sha256 f80efcd9295e461f9c7e2d6fdab2426ba3d6c517f2c674cd78cb35c24ae369f6 size 1440x900 crop 0,0,1440,900
+input captures/main/1/showcase/daydream/default/full.png sha256 b6809ab2cf89c6ef4cf4d2f611630f98513b71511bc2aacb2d5b6bf5a1812450 size 1440x900 crop 0,0,1440,900
+input captures/main/1/showcase/coven-contrast/default/full.png sha256 ef68275641a17a05e544805d07f3291adb98f866151b2a46ca0a94985851cd9c size 1440x900 crop 0,0,1440,900
+# sheet -> assets/screenshots/product-icons.png (1382x1100, pages stacked top to bottom; each cut 8 px below its content, the panel border and view separators not counted as content)
+input captures/main/1/icon-sheet/moonlit-candle/default/panel.png sha256 f2c5049c25caa545c9e6568e9ba3f6fad7425c6c8e21eb4fa8e2ba26f077ee22 size 1384x833 crop 0,0,1382,440
+input captures/main/1/icon-sheet-2/moonlit-candle/default/panel.png sha256 a25bcf0b77d175513c93b7d30c22a30333fcffd6af4369ea3b52ebe4bc318acd size 1384x833 crop 0,0,1382,440
+input captures/main/1/icon-sheet-3/moonlit-candle/default/panel.png sha256 4952a97454c1b767f92e139fdb53faa7916090cc2082ca89dcacdf698aa041e9 size 1384x833 crop 0,0,1382,220
+# terminal -> assets/screenshots/terminal.png (1318x578: VS Code 647 px, gutter 24 px, Windows Terminal 647 px). The VS Code panel is cut 8 px below its last row (the cursor block) and to the Windows Terminal capture's width; windows-terminal.png is scripts/review/windows-terminal.ps1's capture over the same run's workspace (dpi=96 size=647x502), kept beside the run as review-out/<run>/windows-terminal.png
+input captures/main/1/terminal/moonlit-candle/default/panel.png sha256 f2c6a8ded5159c2832a26f0f5b8d5bf923ec8e2cc53c2631bf7aea7aeead24b2 size 1384x833 crop 0,0,647,578
+input windows-terminal.png sha256 53ab36c45ba528d8486d1b2291f912dcc49119f290fcbe8f9009d7acff187120 size 647x502 crop 0,0,647,502

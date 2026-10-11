@@ -19,10 +19,18 @@ const job = () => ({
 });
 
 test('parseGateArgs reads --job, --skip-variants, --scales and --scenes', () => {
-  assert.deepEqual(parseGateArgs([]), { job: 'review/jobs/gate-1.json', skipVariants: false, help: false, scales: null, scenes: null });
+  assert.deepEqual(parseGateArgs([]), { job: 'review/jobs/gate-1.json', skipVariants: false, help: false, scales: null, scenes: null, vsix: null });
   assert.deepEqual(parseGateArgs(['--job', 'review/jobs/gate-3.json', '--skip-variants', '--scales=1,2', '--scenes', 'debug,icon-sheet']),
-    { job: 'review/jobs/gate-3.json', skipVariants: true, help: false, scales: [1, 2], scenes: ['debug', 'icon-sheet'] });
+    { job: 'review/jobs/gate-3.json', skipVariants: true, help: false, scales: [1, 2], scenes: ['debug', 'icon-sheet'], vsix: null });
   assert.equal(parseGateArgs(['--help']).help, true);
+});
+
+test('parseGateArgs reads --vsix, the package the release check installs, and refuses an empty one', () => {
+  assert.equal(parseGateArgs(['--job', 'review/jobs/release.json', '--vsix', 'witchynibbles-theme-collection-2.0.0.vsix']).vsix, 'witchynibbles-theme-collection-2.0.0.vsix');
+  assert.throws(() => parseGateArgs(['--vsix=']), /--vsix needs a file/);
+  // Final review M2: any regular file passed, so a README given by mistake reached the install step.
+  for (const file of ['README.md', 'witchynibbles-theme-collection-2.0.0.zip', 'vsix']) assert.throws(() => parseGateArgs(['--vsix', file]), /--vsix takes a \.vsix file/, file);
+  assert.equal(parseGateArgs(['--vsix', 'out/Release.VSIX']).vsix, 'out/Release.VSIX');
 });
 
 test('parseGateArgs rejects unknown options, stray arguments, bad scales and empty lists', () => {

@@ -2,9 +2,10 @@
 // a full gate run with the default job.
 import { parseArgs } from 'node:util';
 
-export const USAGE = `Usage: node scripts/review/run-gate.mjs [--job <file>] [--skip-variants] [--scales <list>] [--scenes <list>]
+export const USAGE = `Usage: node scripts/review/run-gate.mjs [--job <file>] [--skip-variants] [--scales <list>] [--scenes <list>] [--vsix <file>]
   --job <file>       gate job (default review/jobs/gate-1.json)
   --skip-variants    capture only the main pass
+  --vsix <file>      install this VSIX in the main pass instead of a staged build (release: the packaged VSIX itself)
   --scales <list>    dry run: only these scales, for example --scales=1 or --scales=1,2
   --scenes <list>    dry run: only these scenes, in job order, for example --scenes=terminal,icon-sheet
   --help             print this text`;
@@ -26,6 +27,7 @@ export function parseGateArgs(argv) {
       'skip-variants': { type: 'boolean', default: false },
       scales: { type: 'string' },
       scenes: { type: 'string' },
+      vsix: { type: 'string' },
       help: { type: 'boolean', default: false },
     },
   });
@@ -34,7 +36,9 @@ export function parseGateArgs(argv) {
     if (!(scale > 0)) throw new Error(`--scales takes numbers such as 1,1.25; got '${item}'`);
     return scale;
   }) ?? null;
-  return { job: values.job, skipVariants: values['skip-variants'], help: values.help, scales, scenes: list('scenes', values.scenes) };
+  if (values.vsix !== undefined && !values.vsix.trim()) throw new Error('--vsix needs a file');
+  if (values.vsix !== undefined && !/\.vsix$/i.test(values.vsix)) throw new Error(`--vsix takes a .vsix file (got ${values.vsix})`);
+  return { job: values.job, skipVariants: values['skip-variants'], help: values.help, scales, scenes: list('scenes', values.scenes), vsix: values.vsix ?? null };
 }
 
 // Cuts a gate job down for a dry run. Scene order and each scene's steps stay as in the job file. With skipVariants

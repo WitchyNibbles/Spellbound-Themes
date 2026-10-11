@@ -218,7 +218,7 @@ const palettes = {
   },
   dark: {
     name: 'WitchyNibbles Moonlit', type: 'dark',
-    c: { editor: '#0D0916', panel: '#171025', sidebar: '#120C1F', terminal: '#08060D', foreground: '#F8F2FF', onAccent: '#160A20', muted: '#A99AB9', border: '#38234D', line: '#1D1230', whitespace: '#503762', selection: '#633B79AA', selectionMuted: '#45295C88', accent: '#F04EAB', pink: '#FF67B7', purple: '#B99AFF', blue: '#77D9FF', cyan: '#74D7E8', warning: '#FFB86B', success: '#74E8B8', error: '#FF6B9F', inserted: '#267E9A55', removed: '#B32F6B55', insertedLine: '#267E9A33', removedLine: '#B32F6B33', parameter: '#F6B5DD', punctuation: '#D3B4FF', currentStackframe: '#FF67B7', stackframe: '#B99AFF', ...terminalFromScheme(witchyterm, 'full') } // author decision 2
+    c: { editor: '#0D0916', panel: '#171025', sidebar: '#120C1F', foreground: '#F8F2FF', onAccent: '#160A20', muted: '#A99AB9', border: '#38234D', line: '#1D1230', whitespace: '#503762', selection: '#633B79AA', selectionMuted: '#45295C88', accent: '#F04EAB', pink: '#FF67B7', purple: '#B99AFF', blue: '#77D9FF', cyan: '#74D7E8', warning: '#FFB86B', success: '#74E8B8', error: '#FF6B9F', inserted: '#267E9A55', removed: '#B32F6B55', insertedLine: '#267E9A33', removedLine: '#B32F6B33', parameter: '#F6B5DD', punctuation: '#D3B4FF', currentStackframe: '#FF67B7', stackframe: '#B99AFF', ...terminalFromScheme(witchyterm, 'full') } // author decision 2
   },
   light: {
     name: 'WitchyNibbles Daydream', type: 'light',

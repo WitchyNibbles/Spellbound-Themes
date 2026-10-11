@@ -68,9 +68,16 @@ test('missing keys and low-contrast colours are reported per set', () => {
   assert.match(messages, /light icon l uses #F3EAF7 at 1\.\d\d:1 on #F8F0FB \(needs 3:1\)/);
 });
 
-test('release metadata: version 2.0.0 and banner #0D0916', () => {
+test('release metadata: a release version from 2.0.0 on and banner #0D0916', () => {
   const messages = run((r) => checkReleaseMetadata({ version: '1.2.1', galleryBanner: { color: '#110d24' } }, r));
-  assert.deepEqual(messages, ['release: package.json version must be 2.0.0 at release (found 1.2.1)', 'release: package.json galleryBanner.color must be #0D0916 at release (found #110d24)']);
+  assert.deepEqual(messages, ['release: package.json version must be a release version (MAJOR.MINOR.PATCH) of 2.0.0 or later (found 1.2.1)', 'release: package.json galleryBanner.color must be #0D0916 at release (found #110d24)']);
+  // Final review M7: the release stage is enforced for good (R3), so a later version must pass it unchanged.
+  for (const version of ['2.0.0', '2.0.1', '2.1.0', '2.10.3', '3.0.0', '10.0.0']) {
+    assert.deepEqual(run((r) => checkReleaseMetadata({ version, galleryBanner: { color: '#0d0916' } }, r)), [], version);
+  }
+  for (const version of ['1.9.9', '1.99.0', '2.0', '2.0.0-beta.1', 'v2.0.0', '02.0.0', '2.0.0.1', '', undefined]) {
+    assert.equal(run((r) => checkReleaseMetadata({ version, galleryBanner: { color: '#0D0916' } }, r)).length, 1, String(version));
+  }
 });
 
 // ---- file-icons:pipeline (gate 5) ----
@@ -174,9 +181,9 @@ test('F9 names both selection keys in one line when the quick-input focus falls 
   assert.deepEqual(report.result().warnings, ['F9: Moonlit list.activeSelectionBackground and quickInputList.focusBackground #F04EAB: dark #A99AB9 (folder, folder-open, parchment) at 1.25:1 (under 3:1)']);
 });
 
-test('npm run validate enforces file-icons:pipeline and then file-icons (full key coverage, gate 6), after the product batches', () => {
+test('npm run validate enforces file-icons:pipeline, file-icons, then release (2.0.0, R3), after the product batches', () => {
   const { enforce } = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '..', 'scripts', 'validation-stage.json'), 'utf8'));
-  assert.deepEqual(enforce.slice(-2), ['file-icons:pipeline', 'file-icons']);
+  assert.deepEqual(enforce.slice(-3), ['file-icons:pipeline', 'file-icons', 'release']);
 });
 
 test('F9 checks a quick-input focus of its own, and the dark set against every dark color theme', () => {

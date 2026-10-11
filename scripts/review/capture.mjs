@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
+import { assertOwnBrowser, assertPortFree } from './cdp-guard.mjs';
 
 const job = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const work = job.workDir;
@@ -121,32 +122,52 @@ function writeUserFile(userDataDir, name, content) {
   fs.writeFileSync(path.join(userDataDir, 'User', name), content);
 }
 
+// By PID only. Never by image name: that would close the author's own VS Code.
+function killChild(child) {
+  try { execFileSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore' }); } catch { /* already gone */ }
+}
+
+// Final review I3: only the VS Code this run started is driven or closed. The port must be free before the launch, and the
+// browser that answers it afterwards must be the spawned process (its PID); its browser URL, which names that one browser
+// instance, is kept for the shutdown.
 async function launch({ userDataDir, extensionsDir, scale }) {
+  await assertPortFree(job.port);
   const args = [`--user-data-dir=${userDataDir}`, `--extensions-dir=${extensionsDir}`, `--remote-debugging-port=${job.port}`,
     '--disable-workspace-trust', '--skip-welcome', '--skip-release-notes', '--disable-telemetry', '--new-window'];
   if (job.mode === 'device-scale') args.push(`--force-device-scale-factor=${scale}`);
   args.push(path.join(work, 'workspace'));
   const child = spawn(codeExe, args, { env: cleanEnv(), stdio: 'ignore' });
-  const target = await waitFor(async () => {
-    const targets = await (await fetch(`http://127.0.0.1:${job.port}/json/list`)).json();
-    return targets.find((t) => t.type === 'page' && t.url.includes('workbench.html'));
-  }, { timeout: 90000, label: 'the VS Code workbench target' });
-  const cdp = await Cdp.connect(target.webSocketDebuggerUrl);
-  await waitFor(() => cdp.evaluate(`!!document.querySelector('.monaco-workbench .part.statusbar')`), { timeout: 90000, label: 'the workbench' });
-  return { child, cdp };
+  try {
+    const { webSocketDebuggerUrl: browserUrl } = await waitFor(async () => (await fetch(`http://127.0.0.1:${job.port}/json/version`)).json(),
+      { timeout: 90000, label: 'the VS Code debugging port' });
+    const browser = await Cdp.connect(browserUrl);
+    try {
+      await assertOwnBrowser((method) => browser.send(method), child.pid);
+    } finally {
+      browser.close();
+    }
+    const target = await waitFor(async () => {
+      const targets = await (await fetch(`http://127.0.0.1:${job.port}/json/list`)).json();
+      return targets.find((t) => t.type === 'page' && t.url.includes('workbench.html'));
+    }, { timeout: 90000, label: 'the VS Code workbench target' });
+    const cdp = await Cdp.connect(target.webSocketDebuggerUrl);
+    await waitFor(() => cdp.evaluate(`!!document.querySelector('.monaco-workbench .part.statusbar')`), { timeout: 90000, label: 'the workbench' });
+    return { child, cdp, browserUrl };
+  } catch (error) {
+    killChild(child);
+    throw error;
+  }
 }
 
-async function shutdown({ child, cdp }) {
+async function shutdown({ child, cdp, browserUrl }) {
   try {
-    const { webSocketDebuggerUrl } = await (await fetch(`http://127.0.0.1:${job.port}/json/version`)).json();
-    const browser = await Cdp.connect(webSocketDebuggerUrl);
+    const browser = await Cdp.connect(browserUrl);
     await Promise.race([browser.send('Browser.close').catch(() => {}), delay(5000)]);
     browser.close();
   } catch { /* fall back to the PID kill */ }
   cdp.close();
   await delay(2000);
-  // By PID only. Never by image name: that would close the author's own VS Code.
-  try { execFileSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore' }); } catch { /* already gone */ }
+  killChild(child);
 }
 
 // Tooltips (workbench hovers, editor hovers, the debug hover over a variable) that are on screen. Every screenshot waits
@@ -244,7 +265,8 @@ for (const pass of job.passes) {
     fs.rmSync(userDataDir, { recursive: true, force: true });
     if (!fs.existsSync(extensionsDir)) install(userDataDir, extensionsDir, [...pass.vsix, job.helperVsix].map((file) => path.join(work, file)));
     const zoom = job.mode === 'zoom' ? { 'window.zoomLevel': Math.log(scale) / Math.log(1.2) } : {};
-    const settingsFor = (theme, extra = {}) => JSON.stringify({ ...baseSettings, ...zoom, 'workbench.colorTheme': theme.label, ...extra }, null, 2);
+    // A job's own settings (release: a default-size window) hold from the launch on, under each scene's.
+    const settingsFor = (theme, extra = {}) => JSON.stringify({ ...baseSettings, ...zoom, ...job.settings, 'workbench.colorTheme': theme.label, ...extra }, null, 2);
     writeUserFile(userDataDir, 'settings.json', settingsFor(job.themes[0]));
     writeUserFile(userDataDir, 'keybindings.json', keybindings);
     restoreWorkspace();

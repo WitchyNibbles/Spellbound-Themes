@@ -1,0 +1,10 @@
+/* Candlelight for the familiars page. */
+:root {
+  --night: #0d0916;
+  --candle: #ffd477;
+}
+
+.familiar[data-awake="true"] {
+  color: var(--candle);
+  font-weight: 600;
+}
