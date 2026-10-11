@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import { filledAt, offGridPoints, outlineGap, parseGlyphSvg, pathBounds, signedArea, subpaths, windingProblems } from '../scripts/lib/svg-geometry.mjs';
 
 test('signed area is positive for clockwise-on-screen paths', () => {
@@ -68,4 +70,23 @@ test('outlineGap refuses an empty set, which would pass any clearance check vacu
   const square = subpaths('M0 0h2v2h-2z');
   assert.throws(() => outlineGap([], square), /empty/);
   assert.throws(() => outlineGap(square, []), /empty/);
+});
+
+// Gate 6: outlineGap overflowed the call stack once two outlines held a few hundred flattened points each (the owl file
+// icon's four rings measured together): it spread every point-to-segment distance into one Math.min call.
+test('outlineGap measures outlines of hundreds of points each without overflowing the stack', () => {
+  const ring = (cx, cy, r, n, clockwise = true) => {
+    const points = Array.from({ length: n }, (_, i) => [cx + r * Math.cos((2 * Math.PI * i) / n), cy + r * Math.sin((2 * Math.PI * i) / n)]);
+    return clockwise ? points : points.reverse();
+  };
+  assert.ok(Math.abs(outlineGap([ring(4, 8, 2, 400)], [ring(12, 8, 2, 400)]) - 4) < 1e-9, 'side by side: 4 between the rims');
+  const nested = outlineGap([ring(8, 8, 6, 400), ring(8, 8, 5, 400, false)], [ring(8, 8, 2, 400)]);
+  assert.ok(nested > 2.999 && nested <= 3, `nested: the wall from the frame's inner edge to the disc (measured ${nested})`);
+});
+
+test('outlineGap measures the owl file icon\'s eyes against its rings, tufts and beak in one call (G42: one unit)', () => {
+  const svg = fs.readFileSync(path.resolve(import.meta.dirname, '..', 'icons', 'file-src', 'owl.svg'), 'utf8');
+  const [outline, eyes] = parseGlyphSvg(svg).paths;
+  const gap = outlineGap(subpaths(outline.d), subpaths(eyes.d));
+  assert.ok(gap >= 1 - 0.01, `the eyes keep one unit from the rest of the owl (measured ${gap})`);
 });

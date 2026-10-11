@@ -88,10 +88,13 @@ export function outlineGap(a, b) {
   const [edgesA, edgesB] = [segmentsOf(a), segmentsOf(b)];
   if (edgesA.some((edge) => edgesB.some((other) => segmentsCross(edge, other)))) return 0;
   if (overlaps(a, b) || overlaps(b, a)) return 0;
-  return Math.min(
-    ...edgesA.flatMap(([p, q]) => edgesB.flatMap((edge) => [pointToSegment(p, edge), pointToSegment(q, edge)])),
-    ...edgesB.flatMap(([p, q]) => edgesA.flatMap((edge) => [pointToSegment(p, edge), pointToSegment(q, edge)])),
-  );
+  // A loop, not Math.min(...): spreading every distance into one call overflowed the stack once two outlines held a few
+  // hundred flattened points each (the owl file icon's four rings measured together).
+  let gap = Infinity;
+  for (const [from, to] of [[edgesA, edgesB], [edgesB, edgesA]]) {
+    for (const [p, q] of from) for (const edge of to) gap = Math.min(gap, pointToSegment(p, edge), pointToSegment(q, edge));
+  }
+  return gap;
 }
 
 export function pointInPolygon([x, y], polygon) {
