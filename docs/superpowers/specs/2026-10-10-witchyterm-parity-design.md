@@ -1,7 +1,7 @@
 # Spellbound Themes 2.0: witchyterm parity
 
 - **Date:** 2026-10-10
-- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11)
+- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5)
 - **Inspiration:** `../witchyterm` (Moonlit Candle for Claude Code, Windows Terminal, fish/Tide), whose palette lives in `witchyterm/witchy/palette.py`
 - **Research:** `docs/research/vscode-1.141-icon-inventory.md` (every product icon ID visible in a normal VS Code 1.141 session, with resolution rules)
 
@@ -340,11 +340,13 @@ Letterforms share one construction, used by the find toggles and the symbols ali
 | tests | `#74E8B8` | `#0E7553` | `#74E8B8` (13.98:1) |
 | config | `#A99AB9` | `#735F7D` | `#A99AB9` (8.01:1) |
 | docs | `#F3EAF7` | `#3B2A47` (11.72:1) | `#FFFFFF` |
-| assets | `#77D9FF` | chosen in phase 3 from Daydream's cyan role, at 3:1 | chosen in phase 3 from Coven's cyan role, at 3:1 |
+| assets | `#77D9FF` | `#176B9A` (5.23:1) | `#77D9FF` (13.15:1) |
+| muted (folder bodies, default parchment) | `#A99AB9` | `#735F7D` | `#A99AB9` |
 
 - The `highContrast` mint is a file-icon colour only; the Coven Contrast color theme stays free of green (section 3.2).
-- Production: one source SVG per drawing, with colour-role placeholders instead of hex values. A build step resolves each source into the dark, `light` and `highContrast` sets, and the 3:1 check runs on the resolved colours.
-- Review gate: before the full set is drawn, a file-icon gate like section 5.3 reviews a sample (one folder badge, one multi-colour special file and two or three common types) at 100% and 200%, plus a grayscale pass. The author approves before the rest is drawn.
+- The assets colour is each theme's blue role (`#77D9FF` is Moonlit Candle's blue; `#176B9A` Daydream's; `#77D9FF` Coven's) (F8). Muted takes the config values.
+- Production: one source SVG per drawing, with colour-role placeholders instead of hex values. A build step resolves each source into the dark, `light` and `highContrast` sets, and the 3:1 check runs on the resolved colours. Section 6.1 gives the pipeline.
+- Review gate: before the full set is drawn, a file-icon gate like section 5.3 reviews a sample (one folder badge, one multi-colour special file and two or three common types) at 100% and 200%, plus a grayscale pass. The author approves before the rest is drawn. Section 6.3 gives gates 5 and 6.
 
 - Logo rule: an object may echo a language's name, never its logo. No Python two-snake mark, React atom, Docker whale or PowerShell `>_` badge. The README states the icons are original and not affiliated with any language or tool.
 - The file icon theme sets `"showLanguageModeIcons": false`, so icons that other extensions contribute for languages (often logos) never show through. The theme keeps its own `languageIds` block from 1.2.1, and those entries still apply.
@@ -426,6 +428,61 @@ Folders: a muted folder outline with a small badge, with separate closed and ope
 | node_modules | cobweb | config |
 | cache, __pycache__ | pantry jar | config |
 
+### 6.1 Pipeline (planned 2026-10-11, F3)
+
+1. Drawings are code: `scripts/file-glyphs/<group>.mjs` export `drawings` (`name → () => svg`) and reuse the section-4 primitives (`scripts/glyphs/primitives.mjs`). Every painted part carries a role token instead of a hex value: `fill="{code}"`, `{data}`, `{style}`, `{tests}`, `{config}`, `{docs}`, `{assets}` or `{muted}`.
+2. `npm run draw:file-icons` writes one committed source per drawing to `icons/file-src/<drawing>.svg`. A test fails if a committed source drifts from its generator.
+3. `scripts/lib/file-icon-palette.mjs` is the one colour table (role → dark, `light`, `highContrast` hex, as in the table above).
+4. `icons/file-icon-map.json` lists, per drawing, its category and the keys it serves: `fileExtensions`, `fileNames`, `folderNames` and `languageIds`. A folder drawing pairs with its `-open` twin, which serves the same names in `folderNamesExpanded`.
+5. `npm run build:file-icons` resolves every source into `icons/file-icons/{dark,light,high-contrast}/<drawing>.svg` and regenerates `icons/file-icon-theme.json` from the map. `npm run build` runs it.
+6. The VSIX ships `icons/file-icons/**` and `icons/file-icon-theme.json`; `icons/file-src/**` stays out, like `icons/product-src-variants/**`.
+7. The 1.2.1 `witchy-*.svg` files and their icon definitions are deleted. The `languageIds` block (D11) is kept and points at the new drawings. Between gate 5 and gate 6, keys outside the sample fall back to the new default parchment and folder; nothing ships in between.
+
+### 6.2 House construction (planned 2026-10-11, F6, F7)
+
+- Section 4 applies in full: the 16-unit grid, 1-unit padding, pixel-aligned 1-unit strokes, the accent and cut-out minimums, 1-unit clearances, real holes.
+- Closed palette: every painted part uses one of the eight roles above. Interiors are transparent; no dark fills, `opacity`, `fill-opacity` or gradients.
+- An object is a 1-unit outline in its category colour plus one filled accent part. The accent may take another role (the multi-colour case, for example the gold seal on LICENSE or the moon on the portrait); at most one part per drawing does. Folder badges are solid silhouettes in their category colour on a muted folder.
+- Keylines: portrait objects 12×14 (x 2–14, y 1–15), landscape 14×12, round 14. Folder badges sit in a 7×7 box at x 8–15, y 8–15, with the folder outline knocked out 1 unit around the box.
+- Look-alikes in one category differ in silhouette (this section's 16px rules). Gate 5 sets the gem language with ts, knowing js and tsx follow.
+- 16px renders are judged against a 32×-supersampled reference, not a raw Path2D fill.
+- Every drawing stays identifiable in grayscale.
+
+The gate-5 sample (proposed geometry; the plan measures and may adjust it within these rules):
+
+| Drawing | Construction | Accent |
+| :- | :- | :- |
+| default parchment | muted portrait sheet, x 3–13, 4-unit folded corner top right | the fold |
+| default folder, closed and open | muted 14×11 body with a tab top left; the open folder adds a 2:1-slope front flap | the tab |
+| `src` folder, closed and open | the default folder with the badge box knocked out; solid grimoire badge with a cut spine notch | the badge |
+| LICENSE, LICENSE.md | ivory sheet with two text bars | gold (`{data}`) wax-seal disc, diameter 6, lower right |
+| ts, mts, cts | cut gem: flat table, wide crown, pointed pavilion, 14 wide | the table facet |
+| py, pyw | one 2-unit band in an S-coil | the head, at least 4×4 |
+| json, jsonc | 1-unit ring top left with two keys hanging at different lengths | the key bows |
+
+### 6.3 Review gates 5 and 6 (planned 2026-10-11, F2, F4, F5, F9)
+
+Harness changes (the gate-4 harness carries over):
+
+- A job may name its workspace (`"workspace"`); the default stays `review/workspace`, so the gate 1–4 jobs do not change. File-icon jobs use `review/workspace-files/`: one empty file per required extension and file name, and every required folder with one child so it can be expanded.
+- `scripts/review/run-gate.mjs` closes its agent-browser session after the contact sheet.
+- Quick-input waits require a focused result row, not only a visible widget.
+- The contact sheet adds a grayscale column (each capture again with `filter: grayscale(1)`).
+- `npm run file-icon-sheet` writes `review-out/file-icon-sheet/`: every resolved drawing at 16 and 32px on each theme's sidebar, on its `list.activeSelectionBackground` and on its `quickInputList.focusBackground`, at 1× and 2×, plus a grayscale copy.
+
+Gate 5 (`review/jobs/gate-5.json`): the pipeline and the sample of section 6.2, in all four color themes at 100% and 200%. Scenes:
+
+1. `explorer-closed`: the sample's files and folders, folders closed.
+2. `explorer-open`: `src` and a default folder expanded, LICENSE selected.
+3. `tabs`: ts, py, json and LICENSE open, one tab pinned (shows the gate-4 pushpin).
+4. `breadcrumbs`.
+5. `quick-open`: ts, py and json listed, one row focused.
+6. `symbols`: waits for `symbol-constructor`, `symbol-key`, `symbol-object` and `symbol-package` (G34; `PINNED_AFTER_GATE_4_RUN`).
+
+The gate-5 README asks the author to approve the house construction, each sample drawing, and how to handle a style-coloured icon on a selected row (F9), with the evidence shown.
+
+Gate 6: the remaining drawings, in batches (code; data and config; docs, assets and tests; folders), then the whole set judged together, with the same scenes over every fixture file and Explorer pages that scroll the full tree. Gate 6 is planned after the gate-5 decisions land, as its own plan.
+
 ## 7. Shared glossary
 
 witchyterm is the source of truth. Additions and changes from this work:
@@ -465,6 +522,8 @@ Committed data that the checks read:
 - A soft warning (not a failure) when straight-segment coordinates in a glyph source are neither whole numbers nor .5.
 - `scripts/build-product-icons.mjs` does not set `centerHorizontally` or `centerVertically`, and the built font keeps one scale: each glyph's bounding box equals its source path bounds at 64 font units per grid unit.
 - The file icon theme defines dark, `light` and `highContrast` sets for every type, special file name and folder in section 6, including the enumerated test, `.env` and lockfile keys and the folder aliases; every resolved icon colour reaches 3:1 on its sidebar background; `showLanguageModeIcons` is exactly `false`.
+- The file-icon checks are split into two stages (F3). `file-icons:pipeline`, enforced from gate 5: every source in `icons/file-src/` uses role tokens only (no hex), viewBox `0 0 16 16` with no `width`/`height`, and no `text`, `image`, `use`, `opacity`, `fill-opacity` or gradient; the resolved sets equal a fresh build; every resolved colour reaches 3:1 on its sidebar; `showLanguageModeIcons` is `false`. `file-icons` (full key coverage), enforced from gate 6.
+- A soft warning (not a failure) when a resolved file-icon colour is under 3:1 on its theme's `list.activeSelectionBackground` or `quickInputList.focusBackground` (F9). The dark set is checked against both Moonlit Candle and Moonlit.
 - At release: `galleryBanner.color` is `#0D0916` and the version is 2.0.0.
 
 Checks removed or changed in `scripts/validate.mjs` and `scripts/build-product-icons.mjs`:
@@ -587,3 +646,17 @@ Taken at review gate 4 (`docs/qa/2.0-gate-4/README.md`), all as recommended.
 - G38 `sparkle-filled` stays stock: pinning it would make the two states of the Search view's AI-results toggle identical.
 - G39 `symbol-file` and `symbol-folder` stay mapped.
 - G40 The editor batch and the symbols batch are approved with G31-G39, and the section-4 exceptions they carry are listed in section 4.
+
+### 11.5 File-icon planning decisions (2026-10-11)
+
+Taken while planning the file icons, all as recommended.
+
+- F1 The file-icon plans cover section 6 only; the release (section 9) is planned afterwards, because its Marketplace images need the finished icons.
+- F2 Two file-icon gates: gate 5 reviews the pipeline and a sample (default parchment, default folder closed and open, the `src` badge, LICENSE, ts, py, json); gate 6 reviews the remaining drawings in batches and then the whole set (section 6.3).
+- F3 Drawings are code with role tokens, committed as sources in `icons/file-src/`, resolved by `npm run build:file-icons` into three sets and the theme JSON; `file-icon-map.json` maps drawings to keys; the validation splits into `file-icons:pipeline` (gate 5) and `file-icons` (gate 6) (sections 6.1, 8).
+- F4 The gate surfaces are Explorer (closed, open, a selected row), tabs, breadcrumbs and quick open, in all four color themes at 100% and 200%, with a grayscale column and a static file-icon sheet; the fixture is `review/workspace-files/`, named by a new job `workspace` field (section 6.3).
+- F5 Deferred harness items taken in: the gate run closes its agent-browser session; quick-input waits require a focused row; gate 5 waits for the four G34 symbol pins and shows the pushpin on a pinned tab. Still deferred: the test-hygiene helpers, the per-theme Disconnect check, the `search-replace` teardown, and the gate 1–3 jobs reproducing their sheets.
+- F6 Closed palette: every painted part takes one of eight roles (seven categories and muted); transparent interiors; no dark fills, opacity or gradients (section 6.2).
+- F7 One outline in the category colour plus one filled accent per drawing, which may take another role; folder badges are solid silhouettes on a muted folder (section 6.2).
+- F8 Assets colours: `light` `#176B9A`, `highContrast` `#77D9FF`, each theme's blue role, as the dark `#77D9FF` is (section 6).
+- F9 Style-coloured icons on selected rows: Daydream's active selection is `#B52776` and Coven's is `#FF67B7`, each equal to that set's style colour. Validation warns below 3:1 on each theme's selection colours; gate 5 shows a selected and a focused row, and the author picks the fix from the evidence (sections 6.3, 8).
