@@ -73,11 +73,14 @@
     ]
   },
   "scripts": {
-    "build": "node scripts/build-themes.mjs && node scripts/build-product-icons.mjs",
+    "build": "node scripts/build-themes.mjs && node scripts/build-product-icons.mjs && node scripts/build-file-icons.mjs",
     "build:product-icons": "node scripts/build-product-icons.mjs",
+    "build:file-icons": "node scripts/build-file-icons.mjs",
     "draw:glyphs": "node scripts/draw-product-glyphs.mjs",
+    "draw:file-icons": "node scripts/draw-file-icons.mjs",
     "glyph-sheet": "node scripts/render-glyph-sheet.mjs",
-    "test": "node --test",
+    "file-icon-sheet": "node scripts/render-file-icon-sheet.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
     "validate": "node scripts/validate.mjs",
     "package": "npm run build && node scripts/validate.mjs --release && vsce package --no-dependencies --baseImagesUrl https://raw.githubusercontent.com/WitchyNibbles/Spellbound-Themes/main --baseContentUrl https://github.com/WitchyNibbles/Spellbound-Themes/blob/main && node scripts/normalize-vsix.mjs",
     "review:gate": "node scripts/review/run-gate.mjs"

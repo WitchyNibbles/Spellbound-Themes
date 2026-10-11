@@ -1,0 +1,155 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "workspace": "review/workspace-files",
+  "passes": [
+    {"name": "main", "vsix": ["spellbound-main.vsix"], "scales": [1, 2]}
+  ],
+  "scenes": [
+    {
+      "name": "explorer-closed",
+      "settings": {"files.exclude": {".claude": true, ".env": true, ".env.development": true, ".env.example": true, ".env.local": true, ".env.production": true, ".github": true, ".gitignore": true, ".venv": true, "CHANGELOG.md": true, "Cargo.lock": true, "Dockerfile": true, "README.md": true, "__pycache__": true, "__tests__": true, "assets": true, "bin": true, "cache": true, "conftest.py": true, "dist": true, "docs": true, "fixtures": true, "jest.config.cjs": true, "jest.config.js": true, "jest.config.json": true, "jest.config.mjs": true, "jest.config.ts": true, "jsconfig.json": true, "lib": true, "node_modules": true, "package-lock.json": true, "package.json": true, "poetry.lock": true, "pyproject.toml": true, "pytest.ini": true, "requirements.txt": true, "sample.cjs": true, "sample.css": true, "sample.db": true, "sample.env": true, "sample.fish": true, "sample.gif": true, "sample.htm": true, "sample.html": true, "sample.jpeg": true, "sample.jpg": true, "sample.js": true, "sample.jsonl": true, "sample.jsx": true, "sample.less": true, "sample.lock": true, "sample.md": true, "sample.mdx": true, "sample.mjs": true, "sample.otf": true, "sample.png": true, "sample.ps1": true, "sample.scss": true, "sample.sh": true, "sample.spec.cjs": true, "sample.spec.cts": true, "sample.spec.js": true, "sample.spec.jsx": true, "sample.spec.mjs": true, "sample.spec.mts": true, "sample.spec.ts": true, "sample.spec.tsx": true, "sample.sql": true, "sample.svg": true, "sample.test.cjs": true, "sample.test.cts": true, "sample.test.js": true, "sample.test.jsx": true, "sample.test.mjs": true, "sample.test.mts": true, "sample.test.ts": true, "sample.test.tsx": true, "sample.toml": true, "sample.tsx": true, "sample.ttf": true, "sample.txt": true, "sample.webp": true, "sample.woff": true, "sample.woff2": true, "sample.yaml": true, "sample.yml": true, "scripts": true, "test": true, "tests": true, "tsconfig.json": true, "workflows": true, "yarn.lock": true}},
+      "setup": [
+        {"press": "ctrl+alt+shift+4", "wait": 1200},
+        {"press": "alt+shift+F9", "wait": 500},
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"potions-name-folder-icon\", \"source-name-folder-icon\", \"src-name-folder-icon\", \"license-name-file-icon\", \"license.md-name-file-icon\", \"notes.unknown-name-file-icon\", \"sample.cts-name-file-icon\", \"sample.json-name-file-icon\", \"sample.jsonc-name-file-icon\", \"sample.mts-name-file-icon\", \"sample.py-name-file-icon\", \"sample.pyw-name-file-icon\", \"sample.ts-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()", "timeout": 10000}
+      ],
+      "crops": [
+        {"name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420}
+      ]
+    },
+    {
+      "name": "explorer-open",
+      "settings": {"files.exclude": {".claude": true, ".env": true, ".env.development": true, ".env.example": true, ".env.local": true, ".env.production": true, ".github": true, ".gitignore": true, ".venv": true, "CHANGELOG.md": true, "Cargo.lock": true, "Dockerfile": true, "README.md": true, "__pycache__": true, "__tests__": true, "assets": true, "bin": true, "cache": true, "conftest.py": true, "dist": true, "docs": true, "fixtures": true, "jest.config.cjs": true, "jest.config.js": true, "jest.config.json": true, "jest.config.mjs": true, "jest.config.ts": true, "jsconfig.json": true, "lib": true, "node_modules": true, "package-lock.json": true, "package.json": true, "poetry.lock": true, "pyproject.toml": true, "pytest.ini": true, "requirements.txt": true, "sample.cjs": true, "sample.css": true, "sample.db": true, "sample.env": true, "sample.fish": true, "sample.gif": true, "sample.htm": true, "sample.html": true, "sample.jpeg": true, "sample.jpg": true, "sample.js": true, "sample.jsonl": true, "sample.jsx": true, "sample.less": true, "sample.lock": true, "sample.md": true, "sample.mdx": true, "sample.mjs": true, "sample.otf": true, "sample.png": true, "sample.ps1": true, "sample.scss": true, "sample.sh": true, "sample.spec.cjs": true, "sample.spec.cts": true, "sample.spec.js": true, "sample.spec.jsx": true, "sample.spec.mjs": true, "sample.spec.mts": true, "sample.spec.ts": true, "sample.spec.tsx": true, "sample.sql": true, "sample.svg": true, "sample.test.cjs": true, "sample.test.cts": true, "sample.test.js": true, "sample.test.jsx": true, "sample.test.mjs": true, "sample.test.mts": true, "sample.test.ts": true, "sample.test.tsx": true, "sample.toml": true, "sample.tsx": true, "sample.ttf": true, "sample.txt": true, "sample.webp": true, "sample.woff": true, "sample.woff2": true, "sample.yaml": true, "sample.yml": true, "scripts": true, "source": true, "test": true, "tests": true, "tsconfig.json": true, "workflows": true, "yarn.lock": true}},
+      "setup": [
+        {"press": "ctrl+alt+shift+4", "wait": 1200},
+        {"press": "alt+shift+F9", "wait": 500},
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "src/index.ts", "wait": 300},
+        {"until": "quick-input-row", "file": "index.ts", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "potions/.keep", "wait": 300},
+        {"until": "quick-input-row", "file": ".keep", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "LICENSE", "wait": 300},
+        {"until": "quick-input-row", "file": "LICENSE", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F8", "wait": 1000},
+        {"waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); const license = row('license-name-file-icon'); return rows.length === 14 && [\"potions-name-folder-icon\", \"src-name-folder-icon\", \"license-name-file-icon\", \"license.md-name-file-icon\", \"notes.unknown-name-file-icon\", \"sample.cts-name-file-icon\", \"sample.json-name-file-icon\", \"sample.jsonc-name-file-icon\", \"sample.mts-name-file-icon\", \"sample.py-name-file-icon\", \"sample.pyw-name-file-icon\", \"sample.ts-name-file-icon\", \"index.ts-name-file-icon\", \".keep-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && ['src-name-folder-icon', 'potions-name-folder-icon'].every((name) => row(name).getAttribute('aria-expanded') === 'true') && license.classList.contains('selected') && license.classList.contains('focused') && view.contains(document.activeElement); })()", "timeout": 10000}
+      ],
+      "crops": [
+        {"name": "sidebar", "selector": ".part.sidebar", "maxHeight": 420}
+      ],
+      "teardown": [
+        {"press": "alt+shift+F5", "wait": 800},
+        {"press": "alt+shift+F9", "wait": 500}
+      ]
+    },
+    {
+      "name": "tabs",
+      "setup": [
+        {"press": "ctrl+alt+shift+F8", "wait": 500},
+        {"press": "ctrl+alt+shift+F9", "wait": 500},
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "sample.ts", "wait": 300},
+        {"until": "quick-input-row", "file": "sample.ts", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "sample.py", "wait": 300},
+        {"until": "quick-input-row", "file": "sample.py", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "sample.json", "wait": 300},
+        {"until": "quick-input-row", "file": "sample.json", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "LICENSE", "wait": 300},
+        {"until": "quick-input-row", "file": "LICENSE", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "ctrl+alt+F1", "wait": 800},
+        {"waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.ts-name-file-icon\", \"sample.py-name-file-icon\", \"sample.json-name-file-icon\", \"license-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4 && [...c.querySelectorAll('.tab.sticky:not(.dirty) > .tab-actions .codicon-pinned')].some((el) => inside(el) && !!el.closest('.tab').querySelector('.monaco-icon-label')?.classList.contains('license-name-file-icon')); })()", "timeout": 10000}
+      ],
+      "crops": [
+        {"name": "tabs", "selector": ".part.editor .tabs-and-actions-container"}
+      ],
+      "teardown": [
+        {"press": "ctrl+alt+F2", "wait": 500},
+        {"press": "alt+shift+F5", "wait": 800}
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "setup": [
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "src/index.ts", "wait": 300},
+        {"until": "quick-input-row", "file": "index.ts", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"waitFor": "(() => { const c = document.querySelector('.part.editor .breadcrumbs-control'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"index.ts-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.monaco-breadcrumb-item.folder').length === 1; })()", "timeout": 10000}
+      ],
+      "crops": [
+        {"name": "breadcrumbs", "selector": ".part.editor .breadcrumbs-control"}
+      ],
+      "teardown": [
+        {"press": "alt+shift+F5", "wait": 800}
+      ]
+    },
+    {
+      "name": "quick-open",
+      "settings": {"files.exclude": {".claude": true, ".env": true, ".env.development": true, ".env.example": true, ".env.local": true, ".env.production": true, ".github": true, ".gitignore": true, ".venv": true, "CHANGELOG.md": true, "Cargo.lock": true, "Dockerfile": true, "README.md": true, "__pycache__": true, "__tests__": true, "assets": true, "bin": true, "cache": true, "conftest.py": true, "dist": true, "docs": true, "fixtures": true, "jest.config.cjs": true, "jest.config.js": true, "jest.config.json": true, "jest.config.mjs": true, "jest.config.ts": true, "jsconfig.json": true, "lib": true, "node_modules": true, "package-lock.json": true, "package.json": true, "poetry.lock": true, "pyproject.toml": true, "pytest.ini": true, "requirements.txt": true, "sample.cjs": true, "sample.css": true, "sample.db": true, "sample.env": true, "sample.fish": true, "sample.gif": true, "sample.htm": true, "sample.html": true, "sample.jpeg": true, "sample.jpg": true, "sample.js": true, "sample.jsonl": true, "sample.jsx": true, "sample.less": true, "sample.lock": true, "sample.md": true, "sample.mdx": true, "sample.mjs": true, "sample.otf": true, "sample.png": true, "sample.ps1": true, "sample.scss": true, "sample.sh": true, "sample.spec.cjs": true, "sample.spec.cts": true, "sample.spec.js": true, "sample.spec.jsx": true, "sample.spec.mjs": true, "sample.spec.mts": true, "sample.spec.ts": true, "sample.spec.tsx": true, "sample.sql": true, "sample.svg": true, "sample.test.cjs": true, "sample.test.cts": true, "sample.test.js": true, "sample.test.jsx": true, "sample.test.mjs": true, "sample.test.mts": true, "sample.test.ts": true, "sample.test.tsx": true, "sample.toml": true, "sample.tsx": true, "sample.ttf": true, "sample.txt": true, "sample.webp": true, "sample.woff": true, "sample.woff2": true, "sample.yaml": true, "sample.yml": true, "scripts": true, "test": true, "tests": true, "tsconfig.json": true, "workflows": true, "yarn.lock": true}},
+      "setup": [
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "sample.", "wait": 300},
+        {"until": "quick-input-row", "timeout": 10000},
+        {"waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.ts-name-file-icon\", \"sample.py-name-file-icon\", \"sample.json-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))); })()", "timeout": 10000}
+      ],
+      "crops": [
+        {"name": "widget", "selector": ".quick-input-widget"}
+      ],
+      "teardown": [
+        {"press": "Escape", "wait": 500}
+      ]
+    },
+    {
+      "name": "symbols",
+      "setup": [
+        {"press": "ctrl+alt+shift+a", "wait": 500},
+        {"waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000},
+        {"press": "alt+shift+F7", "wait": 800},
+        {"insert": "fixtures/pins.grimoire", "wait": 300},
+        {"until": "quick-input-row", "file": "pins.grimoire", "timeout": 10000},
+        {"press": "Enter", "wait": 1500},
+        {"press": "ctrl+alt+F12", "wait": 1500},
+        {"waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-constructor', '.codicon-symbol-key', '.codicon-symbol-object', '.codicon-symbol-package'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000}
+      ],
+      "crops": [
+        {"name": "widget", "selector": ".quick-input-widget"}
+      ],
+      "teardown": [
+        {"press": "Escape", "wait": 500},
+        {"press": "alt+shift+F5", "wait": 800}
+      ]
+    }
+  ],
+  "commitSheets": [
+    "main-explorer-closed-sidebar",
+    "main-explorer-open-sidebar",
+    "main-tabs-tabs",
+    "main-breadcrumbs-breadcrumbs",
+    "main-quick-open-widget",
+    "main-symbols-widget"
+  ]
+}

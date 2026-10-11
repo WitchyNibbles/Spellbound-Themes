@@ -1,0 +1,973 @@
+{
+  "vscodeVersion": "1.141.0",
+  "vscodeCommitDir": "2a59476c9b",
+  "mode": "device-scale",
+  "startedAt": "2026-10-11T13:32:41.394Z",
+  "captures": [
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-closed/moonlit-candle/default/full.png",
+      "sha256": "d5ceb5bb0e9a70e565dacc6a40c6b884d255d692980a29e7fb1c0c6e7a5f9617"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-closed/moonlit-candle/default/sidebar.png",
+      "sha256": "bc146621fcf7e265b05b260086ce3f03e033ef870c5445981b0beff0da7e63fa"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-closed/moonlit/default/full.png",
+      "sha256": "8aa7e315553fc780e8e6d4f982e3f338efc952a092562715b307ddaad30a2693"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-closed/moonlit/default/sidebar.png",
+      "sha256": "a0b59a0617b632613adddd824a1018a2f3c02d8e4f3918c5842c002b99de2f54"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-closed/daydream/default/full.png",
+      "sha256": "d29bdcf10e31a5b65e5836a01dd5cbd9d752732d7857b29cc96d025d5b015b1f"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-closed/daydream/default/sidebar.png",
+      "sha256": "f7dc3f86daaec94dd590bfa22a4d0df3597fef67bb533fb45a0cb58c830c1fd6"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-closed/coven-contrast/default/full.png",
+      "sha256": "f0438c73fc108a580629bf7b3bf85f8bf38a46c24d3867fe726993fc153fdd8f"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-closed",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-closed/coven-contrast/default/sidebar.png",
+      "sha256": "4da108b07614283e440c28f84e7b3cfe2f830906faa67087242455c8f27b51c1"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-open/moonlit-candle/default/full.png",
+      "sha256": "6ebd5f30e0c25120507d8e003b90490feb74475e6f80b1918293ac7e728cc938"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-open/moonlit-candle/default/sidebar.png",
+      "sha256": "78a245c72bb2384de4f08a8ce9da0d5d34d50dbedfc91f6ee4aa670bc367c0ec"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-open/moonlit/default/full.png",
+      "sha256": "6a2551144941f1b3407e5e0bf5f3099ed8987fdaf9762ba141275281c089d1c9"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-open/moonlit/default/sidebar.png",
+      "sha256": "efe0f094c0da4f7082c77c3e7222660ff7c8b11820917f6a6afa804b13935dbc"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-open/daydream/default/full.png",
+      "sha256": "f237dfa0f984dbbfe0433a51ee1a528887fb8c7e8f109b69e1d849ad88f225bd"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-open/daydream/default/sidebar.png",
+      "sha256": "3e968ce27ffab5c98debc3cae0c7e72ddafaca4edc25323df37037c20fa314f8"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/explorer-open/coven-contrast/default/full.png",
+      "sha256": "a967e65be5bf0536a56dd6659130414d777fc17b743c3f8dacafc974f63389b2"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "explorer-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/1/explorer-open/coven-contrast/default/sidebar.png",
+      "sha256": "bd09f260309c5bf3e951cf905f3637a0b6f6b08ab941ab87e0a46a2280c46506"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/tabs/moonlit-candle/default/full.png",
+      "sha256": "283b00060f1a380272c2c20228c0eb18f7836a8049533015614e18ccca7e2661"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/1/tabs/moonlit-candle/default/tabs.png",
+      "sha256": "53baf19ffde04b71596cafc383111c3082d37d64412646c54106c9b9a24866c1"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/tabs/moonlit/default/full.png",
+      "sha256": "37f3c1b2a273c559d971d1ef24cf68a8d6bfbc8f706c5c8f185aa32e91ee4533"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/1/tabs/moonlit/default/tabs.png",
+      "sha256": "d9a1e81a6c208366bbcd591718f9e493a40fd7ec4823b9afc96ec900713ac4b4"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/tabs/daydream/default/full.png",
+      "sha256": "83b4695402e8731ae39f56a5e5a1c993afc2ecd55e016953b06e45526c7b3807"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/1/tabs/daydream/default/tabs.png",
+      "sha256": "3ee6bbcab05b2a2eae0ec3f6f9f4cbaea80c8c5cf6ed19258d5eced08d99f7cb"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/tabs/coven-contrast/default/full.png",
+      "sha256": "cc873562456b3610a9da486e201f16bddba7d2f1d20a340ff244fdc525b38fa0"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "tabs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/1/tabs/coven-contrast/default/tabs.png",
+      "sha256": "8c0c08b47a0f65f09af0345d5ff215fed2cb7689abab10bad9f3baedccd7f025"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/breadcrumbs/moonlit-candle/default/full.png",
+      "sha256": "cae71a1c56d1ecff50f48cd310e85c1824e48847a7566d7993154034d516f88f"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/1/breadcrumbs/moonlit-candle/default/breadcrumbs.png",
+      "sha256": "1117a387034e8ce511bb0b9235a594b325e98ab4f02d18c826b8c0d0006b077e"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/breadcrumbs/moonlit/default/full.png",
+      "sha256": "1954c9521ec3ca8e9e3e2bac307fa562bb64e61dfaab9e2f347a4afa033f21e3"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/1/breadcrumbs/moonlit/default/breadcrumbs.png",
+      "sha256": "1117a387034e8ce511bb0b9235a594b325e98ab4f02d18c826b8c0d0006b077e"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/breadcrumbs/daydream/default/full.png",
+      "sha256": "4e0f6bd85f4720dffbc9f22ec374383c681707c01fc8f5483638f84ec304a658"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/1/breadcrumbs/daydream/default/breadcrumbs.png",
+      "sha256": "7a93c7f3e12f3669abeaecc264e965162ec2cde959aa8b7c3e51d4d05d773428"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/breadcrumbs/coven-contrast/default/full.png",
+      "sha256": "d5c046bbe8bb8dd7b0691d2057cf9415edc584681c917cf05273a170dd4cb49c"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "breadcrumbs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/1/breadcrumbs/coven-contrast/default/breadcrumbs.png",
+      "sha256": "4e224bbf6ea188a4c7adbf94b1426ec1686bcb192f832ae75c28a0985efe31e9"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/quick-open/moonlit-candle/default/full.png",
+      "sha256": "7c711b549a39a73b0b4cf2e4fb4f543fddfe9094da33511af339f0636c9b5773"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/quick-open/moonlit-candle/default/widget.png",
+      "sha256": "3a3c9d92229e8a58e681a385b919b9dcd24abc270d183cdfba3065be09679ae4"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/quick-open/moonlit/default/full.png",
+      "sha256": "b730753f223452bedabd6a732ef151308fa242d421fa041db9021f014fa7f305"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/quick-open/moonlit/default/widget.png",
+      "sha256": "41e5db8f86934e814a4a5697db7cdd2836293b8eec6faaee2e57efc28bb55ed0"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/quick-open/daydream/default/full.png",
+      "sha256": "e9108a17b49c62e31a7cf5f98b6f24394c70b6c497ad15537e872b48db3780ab"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/quick-open/daydream/default/widget.png",
+      "sha256": "4c8a9d4a7e7776ad9f74e781281f542047bd87964f5af044a88ec76481e2fa1b"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/quick-open/coven-contrast/default/full.png",
+      "sha256": "5307a7b41ead5aacdda3420c89a449b5722be5a2ba794ed995a0e30e717ed67f"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "quick-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/quick-open/coven-contrast/default/widget.png",
+      "sha256": "b6abc812e8916d32dc393ad4769089aceef63cbae581150a413c0878077d5fc1"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/symbols/moonlit-candle/default/full.png",
+      "sha256": "477015efecc44131331b2d7e04d888e52eff72cef9f04b99b287451774315f6d"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/symbols/moonlit-candle/default/widget.png",
+      "sha256": "82f786cd17f95d4e65f0f805d7bcd491c559e894a5482b0aba2579a03783104e"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/symbols/moonlit/default/full.png",
+      "sha256": "63cbe9e565c21900dfb1ddb0f9f5fa7f637b11b57bfa77f985872e0e211d2203"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/symbols/moonlit/default/widget.png",
+      "sha256": "3be4a6cc26b2c30f755b6c3f9932757f44818f93a8cd7b584d87dbd08448a529"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/symbols/daydream/default/full.png",
+      "sha256": "ec2b22d209a854501d618f1a59a17de743a52a1f7e809f2dfd7b50cfbdfc21ef"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/symbols/daydream/default/widget.png",
+      "sha256": "8d536174859778549797b40b21972af028933ee91fd021939e7ae1b43f09be47"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/1/symbols/coven-contrast/default/full.png",
+      "sha256": "ce8035d34af0480853938e89e81a25fac4c2896646e85ebbaa751a56e943911d"
+    },
+    {
+      "pass": "main",
+      "scale": 1,
+      "scene": "symbols",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/1/symbols/coven-contrast/default/widget.png",
+      "sha256": "62376925c84d1a1a4e57079c37bb1caaed15080c72d336e010c819ffea743217"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-closed/moonlit-candle/default/full.png",
+      "sha256": "c7b1297ab4cf8bd2110cd1304bdafcaefea443f4ede11a72f3f230308ece1209"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-closed/moonlit-candle/default/sidebar.png",
+      "sha256": "8837451b239efa582b36d5c9425b79d30cd0e40351c128945e8beeb57bb4a9ab"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-closed/moonlit/default/full.png",
+      "sha256": "b6c13a64b47fe435fa5a9932c0801a00079a7944180373ab1554c3dbcfc700f5"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-closed/moonlit/default/sidebar.png",
+      "sha256": "b3c86f40481001ff7aea0231718b3a3479a60d18d17f5abab8388bd7fec581a0"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-closed/daydream/default/full.png",
+      "sha256": "7f8866a97e4c3c5410abb1bc81f5f4920b30e79741f0d39a1e08f0ccc8757367"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-closed/daydream/default/sidebar.png",
+      "sha256": "b6e457c578e415a86447f23ed954dfbe16cb98623a7c298b79d39160dc938324"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-closed/coven-contrast/default/full.png",
+      "sha256": "b070b47d74cc9c73f023cbe37d3c845aa45428be34e1bcc94c5041196dbac54b"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-closed",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-closed/coven-contrast/default/sidebar.png",
+      "sha256": "b1847f8d53e0dea0e049023f8968a0f470720d7cf2dcfdd6aecc3908c1e77bff"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-open/moonlit-candle/default/full.png",
+      "sha256": "58c8e8dd8b669bb9be13892ff0f3e3025e3ad86d9adea9cf81732d732f7ec73b"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-open/moonlit-candle/default/sidebar.png",
+      "sha256": "e9fabe00cf9eaa3a7bbd9dbc5ddead3c5f9540e3763c9ca84ee3ab1e8343b9f9"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-open/moonlit/default/full.png",
+      "sha256": "2c2ccc96e73e23d5bd496f0c43b48d0d042eea9eabac876829b08301490c6055"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-open/moonlit/default/sidebar.png",
+      "sha256": "4a875aa355a5888e89b570f512574f7fdd0231076befeb9fa69eb07efe415334"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-open/daydream/default/full.png",
+      "sha256": "21069fd047cf5b37c3e482d020f5e5a3a462c0a9f79bbcfeb5cac95da8f88715"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-open/daydream/default/sidebar.png",
+      "sha256": "11f6669abf2acd9e606c0ab4c730b4ed39f401a9b83b31e5044f47b8fea2cd6a"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/explorer-open/coven-contrast/default/full.png",
+      "sha256": "58f77b01dc951bec8d620347bb9b9237f1582a7c1dbd68b807744051693518b6"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "explorer-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "sidebar",
+      "file": "main/2/explorer-open/coven-contrast/default/sidebar.png",
+      "sha256": "c2dd30194d5f91e85c444997c6e388e354e78d182eba6a5fed2381f78920cefc"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/tabs/moonlit-candle/default/full.png",
+      "sha256": "7ff870e7f7504d2391be5d14d3233b39624dd49bac27db13c88ff99270642b35"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/2/tabs/moonlit-candle/default/tabs.png",
+      "sha256": "ad07fc0d10ce1d70567b206b898879365835afc0e35108411253318bf9f6f881"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/tabs/moonlit/default/full.png",
+      "sha256": "67889f7bd09a8050e2d5d5a44d59703cd92a49e50ac763a97f09de12c584a6a0"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/2/tabs/moonlit/default/tabs.png",
+      "sha256": "fbd8b73692ab3b7eef05f07452099cc9412e5fc24403950b0437aa2a9cbdfe46"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/tabs/daydream/default/full.png",
+      "sha256": "cfb305d56e6f977752ee7e7331c4be631750e816a410e52d173da7fe368522f1"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/2/tabs/daydream/default/tabs.png",
+      "sha256": "6ce4e6fc46e3968c70d636a3f8a80a85bbce7aaed4710657c17222b56c288c4c"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/tabs/coven-contrast/default/full.png",
+      "sha256": "36423b7335e7070ea00e800757a5f842e457d09b521829154c48132186258569"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "tabs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "tabs",
+      "file": "main/2/tabs/coven-contrast/default/tabs.png",
+      "sha256": "a73f1d2cd5af4679a2139294a5764fefbd34e334ba9a81df35a09b3ea5342ba1"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/breadcrumbs/moonlit-candle/default/full.png",
+      "sha256": "bffaa7135c68a885d98df9d9b584e6cb454435b1537aff9ff0a4a81097a7c11c"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/2/breadcrumbs/moonlit-candle/default/breadcrumbs.png",
+      "sha256": "ebffa444a399c18bafc2774b1d3d715dcdbcf1c0e8f9afa4a315470fa69a6147"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/breadcrumbs/moonlit/default/full.png",
+      "sha256": "9f41e0e75bb9444f3519cc9d4edc2a2011c222829f33d0b35ffbec3c1e107d19"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/2/breadcrumbs/moonlit/default/breadcrumbs.png",
+      "sha256": "ebffa444a399c18bafc2774b1d3d715dcdbcf1c0e8f9afa4a315470fa69a6147"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/breadcrumbs/daydream/default/full.png",
+      "sha256": "b3769425af7784c6b1d000a3196f1de6950091d2ba9d8867b67228e5f867cc28"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/2/breadcrumbs/daydream/default/breadcrumbs.png",
+      "sha256": "115907b223d95973dc201365a0932be2d177479dd077ddfafd0c0ce332248fa1"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/breadcrumbs/coven-contrast/default/full.png",
+      "sha256": "2f1878de7d78234df8399297af6ce2351f623eb79897d408ebe1f516fca607b7"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "breadcrumbs",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "breadcrumbs",
+      "file": "main/2/breadcrumbs/coven-contrast/default/breadcrumbs.png",
+      "sha256": "3467ab2be258527ee26c5f43b4821e718ec9867dc97fabd8bce18e2a6870b9bb"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/quick-open/moonlit-candle/default/full.png",
+      "sha256": "de87cd008afb3f7a198a984068770d4246f05d8f0d74dcb8ec1885bd0f059b58"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/quick-open/moonlit-candle/default/widget.png",
+      "sha256": "04f7eb3927ec9c1584c5196487f12d9fb3694add8597792b4fd29e6a714efcb3"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/quick-open/moonlit/default/full.png",
+      "sha256": "c0c849556be918cd94bbcaca683d779e3bfaf4585476e07ca9dbabc2128f74ce"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/quick-open/moonlit/default/widget.png",
+      "sha256": "b5a26e670f0837a122afb17dc600578a5c7af2726860fb96b77b9fe2f4190fe5"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/quick-open/daydream/default/full.png",
+      "sha256": "2344147ec9b094a46a4fa7599461a8270da01d15e1813b025d9e7debc7918170"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/quick-open/daydream/default/widget.png",
+      "sha256": "b0f5e392801d1a21e8532b40535942239630da47731b0fe8dc424caf200b4d5b"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/quick-open/coven-contrast/default/full.png",
+      "sha256": "394a44abb59f5b9d4e46a78df944fe01c7a89e9fcc05edd718a3f62b94ebd062"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "quick-open",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/quick-open/coven-contrast/default/widget.png",
+      "sha256": "5f75075c0eb23383e643e7e7933e100c70cdace747fde8e1d0c79bafbd785e86"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/symbols/moonlit-candle/default/full.png",
+      "sha256": "04e92712a3813b4009ad25b4e277ed25eae7fd861b206ef52b2b719dcc5f2872"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "moonlit-candle",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/symbols/moonlit-candle/default/widget.png",
+      "sha256": "38f80183be50e4f3a36d8b609be7acec2490129ae9ad8093d1e67ce32cb8bc4e"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/symbols/moonlit/default/full.png",
+      "sha256": "c35cf28b53eafbbe72d09ff59313b5ef524ef1edfb598d3ffee0e64e547cc34b"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "moonlit",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/symbols/moonlit/default/widget.png",
+      "sha256": "06edce1514e0f673acfc1e9693ff26c5a44c32f6001a7d2fd0e632f9e3b1165b"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/symbols/daydream/default/full.png",
+      "sha256": "1fde77f23c6a73ff3337f7c971ab68e49f3dba76468aa666a3daa241f165b92a"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "daydream",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/symbols/daydream/default/widget.png",
+      "sha256": "de09623b3fbaeee5a9b92effb2b9056057541698f8747beba5c0443253cae935"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "full",
+      "file": "main/2/symbols/coven-contrast/default/full.png",
+      "sha256": "bc57407a0a6a0270f6105bd636a152b504fa91238b013b99591581ce549e5016"
+    },
+    {
+      "pass": "main",
+      "scale": 2,
+      "scene": "symbols",
+      "theme": "coven-contrast",
+      "variant": "default",
+      "crop": "widget",
+      "file": "main/2/symbols/coven-contrast/default/widget.png",
+      "sha256": "42ab9bec46fd6bdc927b0760807fdd55daaccc02d72269b8b7fbfb592f5416f3"
+    }
+  ],
+  "warnings": [],
+  "finishedAt": "2026-10-11T13:36:07.962Z",
+  "run": "2026-10-11T13-32-37",
+  "repoCommit": "538035f1c8fd4f2e136c29b31cf532e151c4193e",
+  "repoDirty": true
+}

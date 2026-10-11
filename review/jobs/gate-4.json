@@ -37,11 +37,11 @@
         { "press": "ctrl+alt+shift+a", "wait": 500 },
         { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
         { "press": "ctrl+alt+shift+y", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "notes.md", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F1", "wait": 800 },
         { "press": "ctrl+alt+shift+1", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "spells.ts", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F1", "wait": 800 },
         { "insert": "✦ ", "wait": 800 },
@@ -54,7 +54,7 @@
         { "press": "ctrl+alt+F3", "wait": 800 },
         { "press": "ctrl+alt+F2", "wait": 500 },
         { "press": "ctrl+alt+shift+y", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "notes.md", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F2", "wait": 500 },
         { "press": "alt+shift+F5", "wait": 1000 }
@@ -67,11 +67,11 @@
         { "press": "ctrl+alt+shift+a", "wait": 500 },
         { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
         { "press": "ctrl+alt+shift+y", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "notes.md", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F1", "wait": 800 },
         { "press": "ctrl+alt+shift+1", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "spells.ts", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F1", "wait": 800 },
         { "insert": "✦ ", "wait": 800 },
@@ -84,7 +84,7 @@
         { "press": "ctrl+alt+F3", "wait": 800 },
         { "press": "ctrl+alt+F2", "wait": 500 },
         { "press": "ctrl+alt+shift+y", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "notes.md", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F2", "wait": 500 },
         { "press": "alt+shift+F5", "wait": 1000 }
@@ -94,7 +94,7 @@
       "name": "find-replace",
       "setup": [
         { "press": "ctrl+alt+shift+1", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "spells.ts", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F4", "wait": 800 },
         { "insert": "potion", "wait": 800 },
@@ -210,7 +210,7 @@
         { "press": "ctrl+alt+shift+a", "wait": 500 },
         { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
         { "press": "ctrl+alt+F10", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "hexes.ts", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-gutter-lightbulb-sparkle-filled'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 30000 }
       ],
@@ -236,7 +236,7 @@
       "name": "symbols",
       "setup": [
         { "press": "alt+shift+F1", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "symbols.grimoire", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F12", "wait": 1500 },
         { "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-class', '.codicon-symbol-method', '.codicon-symbol-function', '.codicon-symbol-field', '.codicon-symbol-property', '.codicon-symbol-variable'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
@@ -252,7 +252,7 @@
       "name": "symbols-2",
       "setup": [
         { "press": "alt+shift+F6", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "charms.grimoire", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "ctrl+alt+F12", "wait": 1500 },
         { "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-constant', '.codicon-symbol-interface', '.codicon-symbol-enum', '.codicon-symbol-module', '.codicon-symbol-namespace', '.codicon-symbol-string'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
@@ -269,7 +269,7 @@
       "settings": { "workbench.iconTheme": null, "editor.wordBasedSuggestions": "off" },
       "setup": [
         { "press": "alt+shift+F1", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "symbols.grimoire", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "press": "alt+shift+F2", "wait": 2000 },
         { "waitFor": "(() => { const c = document.querySelector('.part.editor .suggest-widget'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-keyword', '.codicon-symbol-text', '.codicon-symbol-snippet', '.codicon-symbol-file', '.codicon-symbol-folder'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
@@ -290,7 +290,7 @@
         { "press": "ctrl+alt+shift+3", "wait": 2000 },
         { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-debug-breakpoint.codicon-debug-stackframe'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 40000 },
         { "press": "alt+shift+F3", "wait": 800 },
-        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "until": "quick-input-row", "file": "unbrewed.js", "timeout": 10000 },
         { "press": "Enter", "wait": 2000 },
         { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-debug-breakpoint-unverified', '.margin .codicon-debug-breakpoint-log-unverified'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 20000 },
         { "hold": "alt", "wait": 1000 },

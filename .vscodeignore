@@ -17,5 +17,6 @@ test/**
 review/**
 review-out/**
 icons/product-src-variants/**
+icons/file-src/**
 .superpowers/**
 .claude/**

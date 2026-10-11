@@ -5,14 +5,16 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { USAGE, filterJob, parseGateArgs } from './args.mjs';
+import { resolveWaits } from './waits.mjs';
+import { prepareWorkspace, workspaceOf } from './workspace.mjs';
 
 const root = path.resolve(import.meta.dirname, '..', '..');
 const variantDir = path.join(root, 'icons', 'product-src-variants');
 const variantArgs = fs.existsSync(variantDir)
   ? fs.readdirSync(variantDir).filter((file) => file.endsWith('.svg')).map((file) => `--variant=${file.split('.')[0]}=icons/product-src-variants/${file}`)
   : [];
-// Arguments and the job are checked before anything is built or launched: a bad option, an unknown job file, scene
-// or scale stops here with the usage.
+// Arguments and the job are checked before anything is built or launched: a bad option, an unknown job file, scene,
+// scale, named wait or workspace stops here with the usage.
 let args;
 let job;
 try {
@@ -23,7 +25,8 @@ try {
   }
   // The variants pass runs only with a variant drawing and without --skip-variants. It is dropped before the job is cut
   // down, so a scene only that pass captures stops here too (gate-4 review).
-  job = filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), { ...args, skipVariants: args.skipVariants || !variantArgs.length });
+  job = resolveWaits(filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), { ...args, skipVariants: args.skipVariants || !variantArgs.length }));
+  workspaceOf(job, root);
 } catch (error) {
   console.error(`${error.message}\n${USAGE}`);
   process.exit(2);
@@ -59,35 +62,8 @@ fs.mkdirSync(work, { recursive: true });
 for (const file of fs.readdirSync(out).filter((name) => name.endsWith('.vsix'))) fs.copyFileSync(path.join(out, file), path.join(work, file));
 fs.copyFileSync(path.join(root, 'scripts', 'review', 'capture.mjs'), path.join(work, 'capture.mjs'));
 fs.cpSync(path.join(root, 'review', 'profile'), path.join(work, 'profile'), { recursive: true });
-const workspace = path.join(work, 'workspace');
-fs.cpSync(path.join(root, 'review', 'workspace'), workspace, { recursive: true });
-const git = (...gitArgs) => execFileSync('git', ['-c', 'user.name=review', '-c', 'user.email=review@localhost', ...gitArgs], { cwd: workspace, stdio: 'ignore' });
-git('init', '-q', '-b', 'moonlit-review');
-git('config', 'core.fileMode', 'false'); // Windows-side writes drop WSL mode bits; the terminal's git must not list them
-// Windows git checks files out as written (LF). With its default core.autocrlf true, a merge --abort wrote README.md back
-// with CRLF, the next scale's restore put LF back, and the stale index size made the next merge refuse to run.
-git('config', 'core.autocrlf', 'false');
-git('add', '-A');
-git('commit', '-q', '-m', 'review fixture');
-// Gate 2 git states: the git extension (Windows git) needs an identity to merge, a branch that conflicts with this one
-// on README.md (git-branch-conflicts, spellboundReview.scm), and an upstream, so the status bar shows sync, not Publish.
-git('config', 'user.name', 'review');
-git('config', 'user.email', 'review@localhost');
-const readmePath = path.join(workspace, 'README.md');
-const readme = fs.readFileSync(readmePath, 'utf8');
-git('checkout', '-q', '-b', 'rival-brew');
-fs.writeFileSync(readmePath, readme.replace('This folder is a fixture', 'This folder is a rival fixture'));
-git('commit', '-q', '-am', 'rival brew');
-git('checkout', '-q', 'moonlit-review');
-fs.writeFileSync(readmePath, readme.replace('This folder is a fixture', 'This folder is a moonlit fixture'));
-git('commit', '-q', '-am', 'moonlit brew');
-git('init', '-q', '--bare', '../origin.git'); // a relative URL, so WSL git and Windows git both resolve it
-git('remote', 'add', 'origin', '../origin.git');
-git('push', '-q', '-u', 'origin', 'moonlit-review');
-const spellsPath = path.join(workspace, 'spells.ts');
-fs.writeFileSync(spellsPath, fs.readFileSync(spellsPath, 'utf8').replace('// Review fixture:', '// Review fixture, stirred:')); // diff-remove + diff-insert
-fs.appendFileSync(spellsPath, '\n// stirred during review\n'); // modified -> amber
-fs.writeFileSync(path.join(workspace, 'new-spell.ts'), 'export const fresh = true;\n'); // untracked -> mint
+// The job's fixture, as the folder "workspace" (the window title and command centre read "workspace" in every gate).
+prepareWorkspace(root, job, path.join(work, 'workspace'));
 
 // 4. Fill machine paths and theme signatures, then capture under VS Code's Electron in Node mode.
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));

@@ -62,5 +62,8 @@
   { "key": "alt+shift+F3", "command": "workbench.action.quickOpen", "args": "unbrewed.js:3" },
   { "key": "alt+shift+F5", "command": "workbench.action.closeAllEditors" },
   { "key": "alt+shift+F6", "command": "workbench.action.quickOpen", "args": "charms.grimoire" },
-  { "key": "ctrl+alt+F12", "command": "workbench.action.gotoSymbol" }
+  { "key": "ctrl+alt+F12", "command": "workbench.action.gotoSymbol" },
+  { "key": "alt+shift+F7", "command": "workbench.action.quickOpen" },
+  { "key": "alt+shift+F8", "command": "runCommands", "args": { "commands": ["workbench.files.action.showActiveFileInExplorer", "workbench.files.action.focusFilesExplorer"] } },
+  { "key": "alt+shift+F9", "command": "workbench.files.action.collapseExplorerFolders" }
 ]

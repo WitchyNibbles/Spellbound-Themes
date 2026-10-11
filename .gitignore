@@ -2,6 +2,8 @@ node_modules/
 *.vsix
 .vscode/
 !review/workspace/.vscode/
+# The file-icon review fixture has a node_modules folder of its own (gate 5; test/review-workspace.test.mjs).
+!review/workspace-files/node_modules/
 .vscode-test/
 .playwright-mcp/
 .DS_Store

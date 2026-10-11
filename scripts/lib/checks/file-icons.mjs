@@ -1,5 +1,5 @@
 import { contrast, hexes } from '../../../src/color.mjs';
-import { REQUIRED_FILE_EXTENSIONS, REQUIRED_FILE_NAMES, REQUIRED_FOLDER_NAMES, SIDEBARS } from '../file-icon-requirements.mjs';
+import { REQUIRED_FILE_EXTENSIONS, REQUIRED_FILE_NAMES, REQUIRED_FOLDER_NAMES, REQUIRED_LANGUAGE_IDS, SIDEBARS } from '../file-icon-requirements.mjs';
 
 const STAGE = 'file-icons';
 const REQUIRED_KEYS = Object.entries({
@@ -7,6 +7,7 @@ const REQUIRED_KEYS = Object.entries({
   fileNames: REQUIRED_FILE_NAMES,
   folderNames: REQUIRED_FOLDER_NAMES,
   folderNamesExpanded: REQUIRED_FOLDER_NAMES,
+  languageIds: REQUIRED_LANGUAGE_IDS,
 });
 const lowerKeys = (object) => new Set(Object.keys(object ?? {}).map((key) => key.toLowerCase()));
 

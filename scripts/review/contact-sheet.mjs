@@ -1,4 +1,6 @@
-// One HTML page per (pass, scene, crop): rows = theme and variant, columns = scale, images at 1:1 device pixels.
+// One HTML page per (pass, scene, crop): rows = theme and variant, columns = scale, each scale followed by the same
+// captures in grayscale (spec 6.3), images at 1:1 device pixels. The agent-browser session that renders the sheets is
+// closed at the end, also when a sheet fails.
 // Usage: node scripts/review/contact-sheet.mjs <run-dir>
 import fs from 'node:fs';
 import path from 'node:path';
@@ -11,23 +13,27 @@ fs.mkdirSync(sheets, { recursive: true });
 const browser = (...args) => execFileSync('agent-browser', args, { stdio: 'inherit' });
 const groups = Object.groupBy(manifest.captures.filter((capture) => capture.crop !== 'full'), (capture) => `${capture.pass}-${capture.scene}-${capture.crop}`);
 
-browser('set', 'viewport', '2400', '1600', '1');
-for (const [key, captures] of Object.entries(groups)) {
-  const scales = [...new Set(captures.map((capture) => capture.scale))].sort((a, b) => a - b);
-  const rowKey = (capture) => `${capture.theme} · ${capture.variant}`;
-  const rows = [...new Set(captures.map(rowKey))];
-  const cell = (row, scale) => {
-    const capture = captures.find((candidate) => rowKey(candidate) === row && candidate.scale === scale);
-    return capture ? `<td><img src="../captures/${capture.file}"></td>` : '<td>–</td>';
-  };
-  const html = `<!doctype html><meta charset="utf-8"><title>${key}</title>
+try {
+  browser('set', 'viewport', '2400', '1600', '1');
+  for (const [key, captures] of Object.entries(groups)) {
+    const scales = [...new Set(captures.map((capture) => capture.scale))].sort((a, b) => a - b);
+    const rowKey = (capture) => `${capture.theme} · ${capture.variant}`;
+    const rows = [...new Set(captures.map(rowKey))];
+    const cell = (row, scale, gray) => {
+      const capture = captures.find((candidate) => rowKey(candidate) === row && candidate.scale === scale);
+      return capture ? `<td><img src="../captures/${capture.file}"${gray ? ' style="filter:grayscale(1)"' : ''}></td>` : '<td>–</td>';
+    };
+    const html = `<!doctype html><meta charset="utf-8"><title>${key}</title>
 <style>body{margin:12px;font:13px system-ui;background:#808080;color:#111}th,td{padding:6px;vertical-align:top;text-align:left}img{image-rendering:pixelated;display:block}</style>
 <h1>${key}</h1><p>VS Code ${manifest.vscodeVersion} · ${manifest.mode} · run ${manifest.run} · repo ${String(manifest.repoCommit).slice(0, 8)}${manifest.repoDirty ? ' (dirty)' : ''} · one image pixel per screen pixel</p>
-<table><tr><th></th>${scales.map((scale) => `<th>${scale * 100}%</th>`).join('')}</tr>
-${rows.map((row) => `<tr><th>${row}</th>${scales.map((scale) => cell(row, scale)).join('')}</tr>`).join('\n')}</table>`;
-  const file = path.join(sheets, `${key}.html`);
-  fs.writeFileSync(file, html);
-  browser('open', `file://${file}`);
-  browser('screenshot', '--full', path.join(sheets, `${key}.png`));
+<table><tr><th></th>${scales.map((scale) => `<th>${scale * 100}%</th><th>${scale * 100}% grayscale</th>`).join('')}</tr>
+${rows.map((row) => `<tr><th>${row}</th>${scales.map((scale) => cell(row, scale, false) + cell(row, scale, true)).join('')}</tr>`).join('\n')}</table>`;
+    const file = path.join(sheets, `${key}.html`);
+    fs.writeFileSync(file, html);
+    browser('open', `file://${file}`);
+    browser('screenshot', '--full', path.join(sheets, `${key}.png`));
+  }
+} finally {
+  try { browser('close'); } catch { /* the session is already gone */ }
 }
 console.log(`${Object.keys(groups).length} contact sheets in ${sheets}`);

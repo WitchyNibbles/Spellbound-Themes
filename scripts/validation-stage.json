@@ -1,4 +1,4 @@
 {
   "$comment": "Stages that npm run validate enforces. Phases append stage names as their work lands; validate --release enforces every stage.",
-  "enforce": ["base", "color-themes", "product-pipeline", "product-batch:1", "product-batch:chrome", "product-batch:status", "product-batch:panel", "product-batch:debug", "product-batch:editor", "product-batch:symbols"]
+  "enforce": ["base", "color-themes", "product-pipeline", "product-batch:1", "product-batch:chrome", "product-batch:status", "product-batch:panel", "product-batch:debug", "product-batch:editor", "product-batch:symbols", "file-icons:pipeline"]
 }

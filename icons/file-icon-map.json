@@ -1,0 +1,14 @@
+{
+  "$comment": "Spec 6.1: per drawing in icons/file-src/, its category (a role of scripts/lib/file-icon-palette.mjs) and the keys it serves. Keys are lower case, and a key belongs to at most one drawing per property. A folder drawing pairs with its -open twin, which serves the same names in folderNamesExpanded. npm run build:file-icons writes icons/file-icons/ and icons/file-icon-theme.json from it.",
+  "drawings": {
+    "parchment": { "category": "muted", "default": "file" },
+    "folder": { "category": "muted", "default": "folder" },
+    "folder-open": { "category": "muted", "default": "folderExpanded" },
+    "folder-src": { "category": "code", "folderNames": ["src", "source"] },
+    "folder-src-open": { "category": "code", "folderNamesExpanded": ["src", "source"] },
+    "gem-cut": { "category": "code", "fileExtensions": ["ts", "mts", "cts"], "languageIds": ["typescript"] },
+    "snake": { "category": "code", "fileExtensions": ["py", "pyw"], "languageIds": ["python"] },
+    "keyring": { "category": "data", "fileExtensions": ["json", "jsonc"], "languageIds": ["json", "jsonc"] },
+    "contract": { "category": "docs", "fileNames": ["license", "license.md"] }
+  }
+}

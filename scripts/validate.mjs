@@ -3,6 +3,8 @@ import path from 'node:path';
 import { createReport, formatResult, loadStageConfig, parseArgs } from './lib/report.mjs';
 import { checkPackage, checkReleaseMetadata } from './lib/checks/package.mjs';
 import { checkFileIconTheme } from './lib/checks/file-icons.mjs';
+import { checkFileIconPipeline, checkSelectionContrast } from './lib/checks/file-icon-pipeline.mjs';
+import { readFileIconInputs } from './lib/file-icons-build.mjs';
 import { PINNED_THEME_NAMES, checkThemeContributions, checkThemeFile } from './lib/checks/color-themes.mjs';
 import { checkBuildFlags, checkFontGeometry, checkGlyphSources, checkPinnedCoverage, checkProductIconContribution, checkProductIconMap } from './lib/checks/product-icons.mjs';
 import { PRODUCT_FONT } from './lib/product-icon-map.mjs';
@@ -60,6 +62,18 @@ for (const contribution of packageJson.contributes?.iconThemes ?? []) {
   };
   checkFileIconTheme({ theme: readJson(themePath), readSvg }, report);
 }
+
+// Spec 6.1 and 8 (F3, F9): the file-icon pipeline, enforced from gate 5; full key coverage stays in `file-icons` above.
+const fileIconTheme = exists('icons/file-icon-theme.json') ? readJson('icons/file-icon-theme.json') : {};
+const builtDir = path.join(root, 'icons', 'file-icons');
+const builtFiles = fs.existsSync(builtDir)
+  ? fs.readdirSync(builtDir, { recursive: true }).filter((file) => file.endsWith('.svg')).map((file) => `icons/file-icons/${file.split(path.sep).join('/')}`)
+  : [];
+const built = Object.fromEntries(builtFiles.map((file) => [file, readText(file)]));
+checkFileIconPipeline({ ...readFileIconInputs(root), theme: fileIconTheme, built }, report);
+const colorThemes = (packageJson.contributes?.themes ?? []).filter((contribution) => exists(contribution.path))
+  .map(({ label, uiTheme, path: themePath }) => ({ label, uiTheme, colors: readJson(themePath).colors ?? {} }));
+checkSelectionContrast({ built, colorThemes }, report);
 
 const result = report.result();
 const enforced = options.only ?? (options.release ? ['every stage'] : options.enforce);

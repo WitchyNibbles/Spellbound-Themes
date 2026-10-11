@@ -21,4 +21,9 @@ export const REQUIRED_FOLDER_NAMES = [
   '.claude', '.venv', 'node_modules', 'cache', '__pycache__',
 ];
 
+// D11 keeps the 1.2.1 languageIds block (spec 6, 6.1); these are its keys, pointed at the new drawings as they land.
+export const REQUIRED_LANGUAGE_IDS = [
+  'python', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'css', 'scss', 'json', 'jsonc', 'yaml', 'markdown',
+];
+
 export const SIDEBARS = Object.freeze({ dark: '#120C1F', light: '#F8F0FB', highContrast: '#000000' });

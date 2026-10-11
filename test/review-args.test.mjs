@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { filterJob, parseGateArgs } from '../scripts/review/args.mjs';
+import { WAITS, resolveWaits } from '../scripts/review/waits.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const job = () => ({
@@ -81,6 +82,49 @@ test('run-gate.mjs drops the variants pass before it cuts the job, so a scene on
       { cwd: root, encoding: 'utf8', timeout: 10000, env: { ...process.env, PATH: '' } });
     assert.equal(result.status, 2, result.stderr);
     assert.match(result.stderr, /No pass captures scene 'icon-sheet'/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('resolveWaits writes a named wait out as the waitFor expression capture.mjs evaluates', () => {
+  // Gate-4 review: quick-input waits checked only that the widget was visible, so Enter could land before a result row
+  // was focused. The focused-row wait is written once (scripts/review/waits.mjs) and every job names it.
+  const job = { passes: [], scenes: [{ name: 'open', setup: [{ press: 'alt+shift+F7' }, { until: 'quick-input-row', file: 'Sample.ts', timeout: 10000 }, { press: 'Enter' }],
+    teardown: [{ until: 'quick-input-row' }] }] };
+  const [, wait] = resolveWaits(job).scenes[0].setup;
+  assert.deepEqual(Object.keys(wait).sort(), ['timeout', 'waitFor']);
+  assert.equal(wait.waitFor, WAITS['quick-input-row']({ file: 'Sample.ts' }));
+  assert.match(wait.waitFor, /\.quick-input-list/);
+  assert.match(wait.waitFor, /\.monaco-list-row\.focused/, 'a focused result row, not only a visible widget');
+  assert.match(wait.waitFor, /r\.top >= box\.top && r\.bottom <= box\.bottom/, 'inside the list, not scrolled away');
+  assert.match(wait.waitFor, /classList\.contains\("sample\.ts-name-file-icon"\)/, 'the focused row is the file asked for (VS Code lowercases the name class)');
+  assert.doesNotMatch(WAITS['quick-input-row']({}), /name-file-icon/, 'without a file, any focused row');
+  assert.equal(resolveWaits(job).scenes[0].teardown[0].waitFor, WAITS['quick-input-row']({}));
+  assert.deepEqual(job.scenes[0].setup[1], { until: 'quick-input-row', file: 'Sample.ts', timeout: 10000 }, 'the job itself is not changed');
+  assert.throws(() => resolveWaits({ scenes: [{ name: 'x', setup: [{ until: 'quick-input-rows' }] }] }), /x setup\[0\]: unknown wait 'quick-input-rows'/);
+  assert.throws(() => resolveWaits({ scenes: [{ name: 'x', setup: [{ until: 'quick-input-row', waitFor: 'true' }] }] }), /x setup\[0\]: a step names a wait or gives waitFor, not both/);
+  assert.throws(() => resolveWaits({ scenes: [{ name: 'x', teardown: [{ waitFor: 'true', file: 'a.ts' }] }] }), /x teardown\[0\]: file belongs to an until step/);
+});
+
+test('run-gate.mjs stops before it builds anything when the job names a missing workspace or an unknown wait', () => {
+  // PATH is emptied, as above, so a run-gate.mjs that went on would fail at its first shell command instead of building.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'spellbound-job-'));
+  const file = path.join(dir, 'job.json');
+  const base = { passes: [{ name: 'main', vsix: ['spellbound-main.vsix'], scales: [1] }], scenes: [{ name: 'panel', crops: [{ name: 'c', selector: 'body' }] }] };
+  try {
+    for (const [job, message] of [
+      [{ ...base, workspace: 'review/no-such-fixture' }, /review\/no-such-fixture is not a folder/],
+      [{ ...base, workspace: '../outside' }, /"workspace" must name a folder of review\//],
+      [{ ...base, scenes: [{ ...base.scenes[0], setup: [{ until: 'nothing' }] }] }, /panel setup\[0\]: unknown wait 'nothing'/],
+    ]) {
+      fs.writeFileSync(file, JSON.stringify(job));
+      const result = spawnSync(process.execPath, ['scripts/review/run-gate.mjs', '--job', path.relative(root, file)],
+        { cwd: root, encoding: 'utf8', timeout: 10000, env: { ...process.env, PATH: '' } });
+      assert.equal(result.status, 2, result.stderr);
+      assert.match(result.stderr, message);
+      assert.match(result.stderr, /^Usage: /m);
+    }
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }

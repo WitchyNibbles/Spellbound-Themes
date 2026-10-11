@@ -154,6 +154,17 @@ async function shutdown({ child, cdp }) {
 const NO_TOOLTIP = `![...document.querySelectorAll('.workbench-hover, .monaco-hover, .debug-hover-widget')].some((el) => {
   const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && !el.closest('.hidden'); })`;
 
+// Where the page's pointer rests: the middle of the empty stretch of the activity bar, between its view icons and the
+// accounts and settings icons. Nothing there has a tooltip, and no scene draws anything there. The machine's own pointer
+// can rest where a new window opens, and a resting pointer keeps a tooltip open (a gate-5 dry run stopped at a 200% launch,
+// waiting for tooltips to close before its first capture), so every launch first moves the page's pointer there. The
+// status bar, where the gate-3 hover scenes park, did not do: an item that appears later (Ln, Col after a file opens) can
+// grow under the pointer, and its tooltip stopped a gate-4 dry run before find-replace at 200%.
+const PARK_POINT = `(() => { const bar = document.querySelector('.part.activitybar'); if (!bar) return null; const box = bar.getBoundingClientRect();
+  const icons = [...bar.querySelectorAll('.action-item')].map((el) => el.getBoundingClientRect()).filter((r) => r.height > 0); const middle = box.top + box.height / 2;
+  const top = Math.max(box.top, ...icons.filter((r) => r.top < middle).map((r) => r.bottom)); const bottom = Math.min(box.bottom, ...icons.filter((r) => r.top >= middle).map((r) => r.top));
+  return bottom - top >= 16 ? { x: box.left + box.width / 2, y: (top + bottom) / 2 } : null; })()`;
+
 // Where a stuck non-optional wait left the focus: class names only, never text, values, titles or ids, which can carry a path.
 async function focusDiagnostics(cdp) {
   try {
@@ -257,6 +268,8 @@ for (const pass of job.passes) {
       // VS Code 1.141 sets the product icon font-family to the font *id* (witchynibbles-product-icons), not the family name.
       await waitFor(() => cdp.evaluate(`(() => { const el = document.querySelector('.codicon-explorer-view-icon'); return !!el && getComputedStyle(el, '::before').fontFamily.includes('witchynibbles-product-icons'); })()`),
         { timeout: 60000, label: 'the WitchyNibbles product icons' });
+      const park = await waitFor(() => cdp.evaluate(PARK_POINT), { timeout: 10000, label: 'an empty stretch of the activity bar' });
+      await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: park.x, y: park.y });
       for (const scene of job.scenes.filter((s) => !pass.scenes || pass.scenes.includes(s.name))) {
         const where = `${pass.name}/${scale}/${scene.name}`;
         log(`  ${scene.name}`);

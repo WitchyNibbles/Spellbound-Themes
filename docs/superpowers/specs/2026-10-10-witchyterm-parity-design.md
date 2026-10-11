@@ -1,7 +1,7 @@
 # Spellbound Themes 2.0: witchyterm parity
 
 - **Date:** 2026-10-10
-- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5)
+- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5); gate 5 decided (section 11.6)
 - **Inspiration:** `../witchyterm` (Moonlit Candle for Claude Code, Windows Terminal, fish/Tide), whose palette lives in `witchyterm/witchy/palette.py`
 - **Research:** `docs/research/vscode-1.141-icon-inventory.md` (every product icon ID visible in a normal VS Code 1.141 session, with resolution rules)
 
@@ -138,6 +138,7 @@ Pixel grid. The font is unhinted, so outline coordinates are drawn exactly as wr
 - No radius, sliver or gap under 1 unit. One exception, kept at gate 3 (G21): the round 0.5-unit dash ends of the unverified dashed ring.
 - Accepted off-grid points (gate 2): the corners of the gear's four 45° teeth, the four band ends of `sync` at 235° and 55°, and the points where the `copilot-unavailable` knockout band cuts the cat head's straight edges. Snapping them would distort the shape or break the 1-unit clearance.
 - Accepted at gate 4 (G40): the lollipop dot and the class-tree connectors touch their strokes; the three ✦ of the ✧ cluster are solid; the solid wrench (G36, like G12 and G26) is an exception to the one-accent rule; refresh's 3×6 head is inherited from restart (G22, G31).
+- Accepted at gate 5 (G42): an accent that is part of the object's silhouette may touch its outline instead of keeping the 1-unit clearance below: the parchment fold, the folder tab, the snake's head and the key bows. An accent that sits on the object (the gem crown, the contract seal, a folder badge) keeps the clearance. Gate 6 applies the rule the same way.
 - Snapping guarantees crisp edges only at whole device scales (100%, 200%). At 125% and 150% it only keeps the blur from getting worse.
 
 Keylines (taken from the measured Codicon bounds):
@@ -453,10 +454,10 @@ The gate-5 sample (proposed geometry; the plan measures and may adjust it within
 | Drawing | Construction | Accent |
 | :- | :- | :- |
 | default parchment | muted portrait sheet, x 3–13, 4-unit folded corner top right | the fold |
-| default folder, closed and open | muted 14×11 body with a tab top left; the open folder adds a 2:1-slope front flap | the tab |
-| `src` folder, closed and open | the default folder with the badge box knocked out; solid grimoire badge with a cut spine notch | the badge |
+| default folder, closed and open | muted 14×12 product folder (x1–15, y2–14: body y4–14 under a tab that rises to y2, as `symbol-folder`); the open folder adds a 2:1-slope front flap (G46) | the tab |
+| `src` folder, closed and open | the default folder with the badge box knocked out; solid grimoire badge (6×7, x9–15, y8–15) with a straight 1×5 spine slot, not a cut notch (G46) | the badge |
 | LICENSE, LICENSE.md | ivory sheet with two text bars | gold (`{data}`) wax-seal disc, diameter 6, lower right |
-| ts, mts, cts | cut gem: flat table, wide crown, pointed pavilion, 14 wide | the table facet |
+| ts, mts, cts | cut gem: flat-topped solid crown over a 1-unit girdle, pointed pavilion, 14 wide and 13 tall (y1–14) (G46) | the whole crown |
 | py, pyw | one 2-unit band in an S-coil | the head, at least 4×4 |
 | json, jsonc | 1-unit ring top left with two keys hanging at different lengths | the key bows |
 
@@ -660,3 +661,15 @@ Taken while planning the file icons, all as recommended.
 - F7 One outline in the category colour plus one filled accent per drawing, which may take another role; folder badges are solid silhouettes on a muted folder (section 6.2).
 - F8 Assets colours: `light` `#176B9A`, `highContrast` `#77D9FF`, each theme's blue role, as the dark `#77D9FF` is (section 6).
 - F9 Style-coloured icons on selected rows: Daydream's active selection is `#B52776` and Coven's is `#FF67B7`, each equal to that set's style colour. Validation warns below 3:1 on each theme's selection colours; gate 5 shows a selected and a focused row, and the author picks the fix from the evidence (sections 6.3, 8).
+
+### 11.6 Gate 5 decisions (2026-10-11)
+
+Taken at review gate 5 (`docs/qa/2.0-gate-5/README.md`), all as recommended.
+
+- G41 The house construction (F6, F7, section 6.2) is approved for gate 6.
+- G42 Accents that touch their outline, option (a): an accent that is part of the object's silhouette (the parchment fold, the folder tab, the snake's head, the key bows) may touch its outline; an accent that sits on the object (the gem crown, the contract seal, a folder badge) keeps the 1-unit clearance. Listed in section 4's exceptions; gate 6 applies it the same way.
+- G43 The gem language is approved as the reference for gate 6: ts the cut gem; js the rough crystal (narrow, tall, pointed at the top with a shorter second point), tilted or faceted so it does not read as a bar chart; tsx/jsx a round ring band with a small cut gem set on top.
+- G44 Each sample drawing is approved as drawn: parchment, folder and folder-open, folder-src and folder-src-open, contract, gem-cut, snake, keyring. The snake reads first as a bold S at 100% and the open `src` folder shows its open state only at its left edge; both are accepted (they read as their objects at 200% and in context, and the tree's twisty also marks an open folder), to be revisited only if gate 6's whole-set judgement shows confusion.
+- G45 F9, option (a): accepted. Icons may fade on the selected row and the focused quick-input row in Moonlit, Daydream and Coven Contrast; the soft warning stays as the record; the selection colours do not change.
+- G46 Every drawing choice listed under "Choices" in the gate-5 README is kept (the 14×12 folder matching `symbol-folder`, the open folder's flap, the filled tab on badged folders, the drawn 1-unit badge knockout, the `src` grimoire with its spine slot, the solid crown and 13-unit-tall gem, the snake, the keyring, the contract without a fold, the gold seal). Section 6.2 now describes them.
+- G47 Gate 5 is approved with G41-G46. Gate 6 is planned next, as its own plan.

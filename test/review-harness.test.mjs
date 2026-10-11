@@ -4,7 +4,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { REQUIRED_FILE_EXTENSIONS, REQUIRED_FILE_NAMES, REQUIRED_FOLDER_NAMES } from '../scripts/lib/file-icon-requirements.mjs';
+import { WAITS } from '../scripts/review/waits.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
@@ -12,7 +16,8 @@ const json = (file) => JSON.parse(read(file));
 const exists = (file) => fs.existsSync(path.join(root, file));
 
 const GATES = ['review/jobs/gate-1.json', 'review/jobs/gate-2.json', 'review/jobs/gate-3.json', 'review/jobs/gate-4.json'];
-const JOBS = [...GATES, 'review/jobs/smoke.json'];
+const GATE_5 = 'review/jobs/gate-5.json';
+const JOBS = [...GATES, GATE_5, 'review/jobs/smoke.json'];
 const PLAIN_KEYS = new Set(['Enter', 'Escape', 'Tab', 'Backspace']);
 
 test('every file the harness needs exists', () => {
@@ -24,7 +29,7 @@ test('every file the harness needs exists', () => {
     'review/helper-extension/package.json', 'review/helper-extension/extension.js', 'review/helper-extension/README.md',
     'review/helper-extension/media/sheet.svg', ...JOBS,
     'scripts/review/stage-extension.mjs', 'scripts/review/capture.mjs', 'scripts/review/run-gate.mjs', 'scripts/review/contact-sheet.mjs',
-    'scripts/review/args.mjs', 'scripts/review/privacy-scan.mjs',
+    'scripts/review/args.mjs', 'scripts/review/privacy-scan.mjs', 'scripts/review/waits.mjs', 'scripts/review/workspace.mjs',
   ]) assert.ok(exists(file), file);
 });
 
@@ -45,8 +50,10 @@ test('job files follow the schema and press only bound chords or plain keys', ()
     for (const scene of job.scenes) {
       assert.ok(scene.crops?.length, `${file} ${scene.name} has no crops`);
       for (const step of [...(scene.setup ?? []), ...(scene.teardown ?? [])]) {
-        assert.ok(step.press || step.insert || step.hover || step.hold || step.waitFor || step.wait, `${file} ${scene.name}: empty step`);
+        assert.ok(step.press || step.insert || step.hover || step.hold || step.waitFor || step.until || step.wait, `${file} ${scene.name}: empty step`);
         if (step.hold) assert.equal(step.hold, 'alt', `${file} ${scene.name}: only Alt can be held`);
+        if (step.until) assert.ok(Object.hasOwn(WAITS, step.until), `${file} ${scene.name}: ${step.until} is not a named wait`);
+        if (step.file) assert.ok(step.until, `${file} ${scene.name}: file belongs to an until step`);
         if (step.press) assert.ok(bound.has(step.press) || PLAIN_KEYS.has(step.press), `${file} ${scene.name}: ${step.press} is not bound`);
       }
     }
@@ -65,7 +72,7 @@ test('the gate covers four scales, both activity bar sizes, and both terminal co
 });
 
 test('every committed sheet is one the gate job produces', () => {
-  for (const file of GATES) {
+  for (const file of [...GATES, GATE_5]) {
     const job = json(file);
     const produced = new Set(job.passes.flatMap((pass) => job.scenes
       .filter((scene) => !pass.scenes || pass.scenes.includes(scene.name))
@@ -104,9 +111,10 @@ test('gate 2 scenes that change the fixture repository put it back', () => {
     if (!(scene.setup ?? []).some((step) => changing.has(step.press))) continue;
     assert.ok((scene.teardown ?? []).some((step) => step.press === restore), `${scene.name} restores the dirty branch`);
   }
-  const runGate = read('scripts/review/run-gate.mjs');
-  assert.match(runGate, /'checkout', '-q', '-b', 'rival-brew'/, 'the fixture has a branch that conflicts');
-  assert.match(runGate, /'remote', 'add', 'origin', '\.\.\/origin\.git'/, 'the fixture has an upstream with a relative URL');
+  // prepareWorkspace (scripts/review/workspace.mjs) builds the repository; test/review-workspace.test.mjs checks the states.
+  const workspace = read('scripts/review/workspace.mjs');
+  assert.match(workspace, /'checkout', '-q', '-b', 'rival-brew'/, 'the fixture has a branch that conflicts');
+  assert.match(workspace, /'remote', 'add', 'origin', '\.\.\/origin\.git'/, 'the fixture has an upstream with a relative URL');
   assert.match(read('review/helper-extension/extension.js'), /merge\('rival-brew'\)/);
 });
 
@@ -283,13 +291,13 @@ test('the fixture keeps LF line endings, so a merge abort does not dirty README.
   // Gate run 2026-10-10T10-28-47: Windows git (core.autocrlf true) wrote README.md back with CRLF on the 100% pass's
   // merge --abort; the 125% launch restored the LF original, the index still held the CRLF size, and git merge refused
   // ("Your local changes to the following files would be overwritten by merge: README.md"), so scm-conflict timed out.
-  assert.match(read('scripts/review/run-gate.mjs'), /git\('config', 'core\.autocrlf', 'false'\)/);
+  assert.match(read('scripts/review/workspace.mjs'), /git\('config', 'core\.autocrlf', 'false'\)/);
 });
 
 test('restoring the workspace never shows up as a change in the terminal listing', () => {
   // Gate run 2026-10-10T02-02-52: files rewritten from Windows lose their WSL mode bits, so WSL git (ll, the prompt)
   // listed every file as modified. The fixture repo ignores modes, and only files whose content changed are rewritten.
-  assert.match(read('scripts/review/run-gate.mjs'), /git\('config', 'core\.fileMode', 'false'\)/);
+  assert.match(read('scripts/review/workspace.mjs'), /git\('config', 'core\.fileMode', 'false'\)/);
   const source = read('scripts/review/capture.mjs');
   const body = source.slice(source.indexOf('function restoreWorkspace'), source.indexOf('\n}\n', source.indexOf('function restoreWorkspace')));
   assert.ok(body.length > 0, 'restoreWorkspace is a function');
@@ -329,7 +337,7 @@ const WAITED_FOR_AT_GATE_4 = {
   'debug-breakpoint-log-unverified': 'G20: a logpoint in unbrewed.js, which the debugger never loads',
 };
 // Pinned by the author after the committed gate-4 run (2026-10-11T00-50-16), which never waited for them. The gate-4 test
-// below skips them; the next gate job must wait for them.
+// below skips them; the gate-5 job waits for them (its symbols scene).
 const PINNED_AFTER_GATE_4_RUN = {
   'symbol-constructor': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
   'symbol-key': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
@@ -668,18 +676,28 @@ test('the gate 4 fixtures give one symbol of each kind and a gutter line whose o
   for (const neighbour of [lines[2], lines[4]]) assert.match(neighbour, /^\S.+/);
 });
 
-test('every gate 4 quick open waits for the quick input before it presses Enter', () => {
+test('every gate 4 quick open waits for a focused row of the file it opens before it presses Enter', () => {
   // The first gate-4 probe lost a quick-open chord at startup (the chat input still had the focus). Waiting for the
-  // widget turns that into a stop that names the scene.
-  const quickOpen = new Set(json('review/profile/keybindings.json').filter((binding) => binding.command === 'workbench.action.quickOpen').map((binding) => binding.key));
+  // widget turns that into a stop that names the scene. Gate 5 (spec 6.3): a visible widget is not enough, because Enter
+  // opens nothing until a result row is focused, so the wait is the shared focused-row wait, naming the file.
+  const quickOpen = new Map(json('review/profile/keybindings.json').filter((binding) => binding.command === 'workbench.action.quickOpen').map((binding) => [binding.key, binding.args]));
+  let checked = 0;
   for (const scene of gate4().scenes) {
-    const steps = [...(scene.setup ?? []), ...(scene.teardown ?? [])];
-    steps.forEach((step, index) => {
-      if (!quickOpen.has(step.press)) return;
-      assert.match(String(steps[index + 1]?.waitFor), /\.quick-input-widget/, `${scene.name}: waits for the quick input`);
-      assert.equal(steps[index + 2]?.press, 'Enter', `${scene.name}: then presses Enter`);
-    });
+    for (const phase of ['setup', 'teardown']) {
+      const steps = scene[phase] ?? [];
+      steps.forEach((step, index) => {
+        if (!quickOpen.has(step.press)) return;
+        const wait = steps[index + 1];
+        assert.equal(wait?.until, 'quick-input-row', `${scene.name} ${phase}[${index}]: waits for a focused row`);
+        assert.ok(!wait.optional, `${scene.name} ${phase}[${index}]: not optionally`);
+        assert.equal(wait.file, quickOpen.get(step.press).split(':')[0], `${scene.name} ${phase}[${index}]: the row of the file the chord opens`);
+        assert.equal(steps[index + 2]?.press, 'Enter', `${scene.name} ${phase}[${index}]: then presses Enter`);
+        checked += 1;
+      });
+    }
   }
+  assert.equal(checked, 12, 'every quick open of the gate-4 job');
+  assert.doesNotMatch(JSON.stringify(gate4()), /return !!w && w\.style\.display !== 'none' && w\.getBoundingClientRect\(\)\.height > 0; \}\)\(\)/, 'no visibility-only quick-input wait is left');
 });
 
 test('every gate 4 quick open follows a wait for the editor group to hold the focus', () => {
@@ -725,4 +743,201 @@ test('a capture timeout names the scene and step and describes the focus without
   for (const forbidden of ['textContent', 'innerText', '.value', '.title', 'getAttribute', 'outerHTML', 'id']) {
     assert.ok(!new RegExp(`\\.${forbidden}\\b`).test(diagnostics) && !diagnostics.includes(`${forbidden}(`), `no ${forbidden} in the diagnostics`);
   }
+});
+
+test('the contact sheet adds a grayscale copy of every capture beside each scale, and closes its agent-browser session', () => {
+  // Spec 6.3: every drawing stays identifiable in grayscale, so each scale gets a second column of the same captures with
+  // filter: grayscale(1). Gate 4: the session the sheets open stayed open after every gate run; it is closed even when a
+  // screenshot fails. A fake agent-browser on PATH records the calls.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'spellbound-sheet-'));
+  try {
+    const bin = path.join(dir, 'bin');
+    fs.mkdirSync(bin);
+    fs.writeFileSync(path.join(bin, 'agent-browser'), '#!/bin/sh\necho "$*" >> "$SHEET_LOG"\nif [ "$1" = screenshot ] && [ -n "$SHEET_FAIL" ]; then exit 1; fi\nexit 0\n', { mode: 0o755 });
+    const run = path.join(dir, 'run');
+    fs.mkdirSync(path.join(run, 'captures'), { recursive: true });
+    const capture = (scale, crop) => ({ pass: 'main', scale, scene: 'tabs', theme: 'daydream', variant: 'default', crop, file: `main/${scale}/tabs/daydream/default/${crop}.png` });
+    fs.writeFileSync(path.join(run, 'captures', 'manifest.json'), JSON.stringify({ vscodeVersion: '1.141.0', mode: 'device-scale', run: 'r', repoCommit: '0123456789', repoDirty: true,
+      captures: [capture(1, 'full'), capture(1, 'tabs'), capture(2, 'tabs')] }));
+    const sheet = (env) => spawnSync(process.execPath, ['scripts/review/contact-sheet.mjs', run],
+      { cwd: root, encoding: 'utf8', timeout: 20000, env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, SHEET_LOG: path.join(dir, 'log'), ...env } });
+    const calls = () => fs.readFileSync(path.join(dir, 'log'), 'utf8').trim().split('\n');
+
+    const ok = sheet({});
+    assert.equal(ok.status, 0, ok.stderr);
+    const html = fs.readFileSync(path.join(run, 'sheets', 'main-tabs-tabs.html'), 'utf8');
+    assert.deepEqual([...html.matchAll(/<th>([^<]*)<\/th>/g)].map((match) => match[1]), ['', '100%', '100% grayscale', '200%', '200% grayscale', 'daydream · default']);
+    const images = [...html.matchAll(/<img src="([^"]+)"( style="filter:grayscale\(1\)")?>/g)].map((match) => [match[1], Boolean(match[2])]);
+    assert.deepEqual(images, [['../captures/main/1/tabs/daydream/default/tabs.png', false], ['../captures/main/1/tabs/daydream/default/tabs.png', true],
+      ['../captures/main/2/tabs/daydream/default/tabs.png', false], ['../captures/main/2/tabs/daydream/default/tabs.png', true]]);
+    assert.equal(calls().at(-1), 'close', 'the session is closed after the last sheet');
+
+    fs.rmSync(path.join(dir, 'log'));
+    const failed = sheet({ SHEET_FAIL: '1' });
+    assert.notEqual(failed.status, 0, 'a failed screenshot fails the sheet step');
+    assert.deepEqual(calls().slice(-2).map((call) => call.split(' ')[0]), ['screenshot', 'close'], 'and still closes the session');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// ---- Gate 5: the file-icon sample (spec 6.3) ----
+const gate5 = () => json(GATE_5);
+const gate5Scene = (name) => gate5().scenes.find((scene) => scene.name === name);
+// The sample of spec 6.2 as the Explorer shows it: the src badge folder and its alias, ts, py and json with their other
+// extensions, LICENSE and LICENSE.md, and one entry of each default (potions and notes.unknown match no key).
+const GATE_5_SAMPLE = {
+  folders: ['potions', 'source', 'src'],
+  files: ['LICENSE', 'LICENSE.md', 'notes.unknown', 'sample.cts', 'sample.json', 'sample.jsonc', 'sample.mts', 'sample.py', 'sample.pyw', 'sample.ts'],
+};
+// VS Code marks a row's icon label with "<lower-case name>-name-file-icon" (or -name-folder-icon); the waits look for these.
+const fileClass = (name) => `${name.toLowerCase()}-name-file-icon`;
+const folderClass = (name) => `${name.toLowerCase()}-name-folder-icon`;
+const ON_SCREEN = /r\.left >= box\.left && r\.right <= box\.right && r\.top >= box\.top && r\.bottom <= box\.bottom/;
+
+test('gate 5 opens the file-icon fixture with the WitchyNibbles file and product icon themes, in all four color themes at 100% and 200%', () => {
+  const job = gate5();
+  assert.equal(job.workspace, 'review/workspace-files');
+  assert.deepEqual(job.passes, [{ name: 'main', vsix: ['spellbound-main.vsix'], scales: [1, 2] }]);
+  assert.deepEqual(job.scenes.map((scene) => scene.name), ['explorer-closed', 'explorer-open', 'tabs', 'breadcrumbs', 'quick-open', 'symbols']);
+  assert.deepEqual(job.commitSheets, ['main-explorer-closed-sidebar', 'main-explorer-open-sidebar', 'main-tabs-tabs', 'main-breadcrumbs-breadcrumbs', 'main-quick-open-widget', 'main-symbols-widget']);
+  const base = json('review/profile/settings.base.json');
+  assert.equal(base['workbench.iconTheme'], json('package.json').contributes.iconThemes[0].id);
+  assert.equal(base['workbench.productIconTheme'], json('package.json').contributes.productIconThemes[0].id);
+  for (const scene of job.scenes) {
+    for (const key of ['workbench.iconTheme', 'workbench.productIconTheme', 'workbench.colorTheme']) assert.ok(!(key in (scene.settings ?? {})), `${scene.name} keeps ${key}`);
+  }
+  // capture.mjs shoots every scene in every theme run-gate.mjs reads from the package, and the package has four.
+  assert.equal(json('package.json').contributes.themes.length, 4);
+  assert.match(read('scripts/review/run-gate.mjs'), /job\.themes = packageJson\.contributes\.themes\.map/);
+  for (const scene of job.scenes) {
+    const checks = scene.setup.filter((step) => step.waitFor && !step.optional && /\.(monaco-icon-label|codicon-)/.test(step.waitFor));
+    assert.ok(checks.length, `${scene.name} waits for its icons`);
+    for (const step of checks) assert.match(step.waitFor, ON_SCREEN, `${scene.name}: on screen, not just in the DOM`);
+  }
+});
+
+test('gate 5 frames the sample in the Explorer and quick open: every other fixture entry is excluded', () => {
+  // The fixture holds a file or folder for every key of spec 6 (gate 6 needs them all); at 200% the Explorer shows about
+  // 16 rows, so gate 5 hides everything but the sample with files.exclude, a scene setting.
+  const keys = [...REQUIRED_FILE_EXTENSIONS, ...REQUIRED_FILE_NAMES, ...REQUIRED_FOLDER_NAMES];
+  for (const key of ['src', 'source', 'ts', 'mts', 'cts', 'py', 'pyw', 'json', 'jsonc', 'license', 'license.md']) assert.ok(keys.includes(key), key);
+  const top = fs.readdirSync(path.join(root, 'review', 'workspace-files'));
+  const sample = [...GATE_5_SAMPLE.folders, ...GATE_5_SAMPLE.files];
+  for (const name of sample) assert.ok(top.includes(name), `${name} is in the fixture`);
+  for (const name of ['potions', 'notes.unknown']) assert.ok(!keys.includes(name) && !keys.includes(name.split('.').at(-1)), `${name} matches no key`);
+  // explorer-open also hides source: with src and potions open, the tree holds 14 full rows at 200% (326 CSS px of 22-px
+  // rows), and source is the alias explorer-closed already shows.
+  for (const [name, hidden] of [['explorer-closed', []], ['explorer-open', ['source']], ['quick-open', []]]) {
+    const exclude = gate5Scene(name).settings['files.exclude'];
+    assert.deepEqual(Object.keys(exclude).sort(), [...top.filter((entry) => !sample.includes(entry)), ...hidden].sort(), name);
+    assert.ok(Object.values(exclude).every((value) => value === true), name);
+  }
+});
+
+test('gate 5 shows the sample in the Explorer closed, then src and the default folder open with LICENSE selected in a focused tree', () => {
+  const keyOf = (command) => json('review/profile/keybindings.json').find((binding) => binding.command === command)?.key;
+  const closed = gate5Scene('explorer-closed').setup.filter((step) => !step.optional).map((step) => String(step.waitFor ?? '')).find((wait) => wait.includes('.explorer-folders-view'));
+  assert.ok(closed, 'explorer-closed waits for the Explorer rows');
+  for (const name of [...GATE_5_SAMPLE.folders.map(folderClass), ...GATE_5_SAMPLE.files.map(fileClass)]) assert.ok(closed.includes(`"${name}"`), `explorer-closed: ${name}`);
+  assert.ok(closed.includes(`rows.length === ${GATE_5_SAMPLE.folders.length + GATE_5_SAMPLE.files.length}`), 'only the sample');
+  assert.match(closed, /const box = list\.getBoundingClientRect\(\)/, 'every row inside the tree, not behind the Outline header');
+  assert.match(closed, /rows\.every\(\(r\) => r\.getAttribute\('aria-expanded'\) !== 'true' && !r\.classList\.contains\('selected'\)\)/, 'no folder open, no row selected');
+  const collapse = keyOf('workbench.files.action.collapseExplorerFolders');
+  for (const name of ['explorer-closed', 'explorer-open']) assert.ok(gate5Scene(name).setup.some((step) => step.press === collapse), `${name} collapses the folders first`);
+
+  const scene = gate5Scene('explorer-open');
+  const opened = scene.setup.filter((step) => step.insert).map((step) => step.insert);
+  assert.deepEqual(opened, ['src/index.ts', 'potions/.keep', 'LICENSE'], 'opening a child reveals and expands its folder; LICENSE last, so it is the one selected');
+  const reveal = json('review/profile/keybindings.json').find((binding) => binding.command === 'runCommands' && binding.args.commands.includes('workbench.files.action.showActiveFileInExplorer'));
+  assert.deepEqual(reveal.args.commands, ['workbench.files.action.showActiveFileInExplorer', 'workbench.files.action.focusFilesExplorer']);
+  const presses = scene.setup.map((step) => step.press);
+  assert.ok(presses.lastIndexOf(reveal.key) > presses.lastIndexOf('Enter'), 'reveals LICENSE and focuses the tree after the last file opens');
+  const wait = scene.setup.at(-1).waitFor;
+  const shown = [...GATE_5_SAMPLE.folders.filter((name) => name !== 'source').map(folderClass), ...GATE_5_SAMPLE.files.map(fileClass), fileClass('index.ts'), fileClass('.keep')];
+  for (const name of shown) assert.ok(wait.includes(`"${name}"`), `explorer-open: ${name}`);
+  assert.ok(wait.includes(`rows.length === ${shown.length}`) && shown.length === 14, 'the sample without source, and the two children');
+  assert.match(wait, /const box = list\.getBoundingClientRect\(\)/, 'every row inside the tree');
+  assert.match(wait, /\['src-name-folder-icon', 'potions-name-folder-icon'\]\.every\(\(name\) => row\(name\)\.getAttribute\('aria-expanded'\) === 'true'\)/);
+  assert.match(wait, /license\.classList\.contains\('selected'\) && license\.classList\.contains\('focused'\) && view\.contains\(document\.activeElement\)/,
+    'LICENSE on the active selection colour (F9 evidence), not the inactive one');
+  assert.deepEqual(scene.teardown.map((step) => step.press), [keyOf('workbench.action.closeAllEditors'), collapse]);
+});
+
+test('gate 5 opens ts, py, json and LICENSE in tabs and pins LICENSE, so a tab shows the gate-4 pushpin', () => {
+  const keyOf = (command) => json('review/profile/keybindings.json').find((binding) => binding.command === command)?.key;
+  const scene = gate5Scene('tabs');
+  assert.deepEqual(scene.setup.filter((step) => step.insert).map((step) => step.insert), ['sample.ts', 'sample.py', 'sample.json', 'LICENSE']);
+  const presses = scene.setup.map((step) => step.press);
+  // At 200% (960 CSS px) the editor between the two side bars held about two tabs, and the other two scrolled away.
+  for (const command of ['workbench.action.closeSidebar', 'workbench.action.closeAuxiliaryBar']) {
+    assert.ok(presses.indexOf(keyOf(command)) >= 0 && presses.indexOf(keyOf(command)) < scene.setup.findIndex((step) => step.insert), `tabs runs ${command} before it opens a file`);
+  }
+  assert.ok(presses.indexOf(keyOf('workbench.action.pinEditor')) > presses.lastIndexOf('Enter'), 'pins LICENSE, the active editor');
+  const wait = scene.setup.at(-1).waitFor;
+  for (const name of ['sample.ts', 'sample.py', 'sample.json', 'LICENSE']) assert.ok(wait.includes(`"${fileClass(name)}"`), name);
+  assert.ok(wait.includes("c.querySelectorAll('.tab').length === 4"));
+  assert.ok(wait.includes("'.tab.sticky:not(.dirty) > .tab-actions .codicon-pinned'"), 'the pushpin (G32) on the pinned tab');
+  assert.ok(wait.includes("classList.contains('license-name-file-icon')"), 'on the LICENSE tab');
+  assert.deepEqual(scene.teardown.map((step) => step.press), [keyOf('workbench.action.unpinEditor'), keyOf('workbench.action.closeAllEditors')]);
+  const breadcrumbs = gate5Scene('breadcrumbs');
+  assert.deepEqual(breadcrumbs.setup.filter((step) => step.insert).map((step) => step.insert), ['src/index.ts']);
+  // 1.141 draws no icon on a folder item of the breadcrumb bar, only on the file item.
+  assert.ok(breadcrumbs.setup.at(-1).waitFor.includes(`"${fileClass('index.ts')}"`), 'breadcrumbs: index.ts');
+  assert.ok(breadcrumbs.setup.at(-1).waitFor.includes("c.querySelectorAll('.monaco-breadcrumb-item.folder').length === 1"), 'breadcrumbs: the src item');
+});
+
+test('gate 5 waits for the four symbol shares pinned after the gate-4 run (G34)', () => {
+  const scene = gate5Scene('symbols');
+  assert.deepEqual(scene.setup.filter((step) => step.insert).map((step) => step.insert), ['fixtures/pins.grimoire']);
+  const goto = json('review/profile/keybindings.json').find((binding) => binding.command === 'workbench.action.gotoSymbol').key;
+  const presses = scene.setup.map((step) => step.press);
+  assert.ok(presses.indexOf(goto) > presses.lastIndexOf('Enter'), 'Go to Symbol in the grimoire');
+  const wait = scene.setup.filter((step) => !step.optional).map((step) => String(step.waitFor ?? '')).find((candidate) => candidate.includes('.quick-input-widget .monaco-list'));
+  for (const id of Object.keys(PINNED_AFTER_GATE_4_RUN)) assert.ok(wait.includes(`'.codicon-${id}'`), id);
+  assert.match(wait, ON_SCREEN);
+});
+
+test('every gate 5 quick open types its file, waits for that file\'s row to be focused, then presses Enter; quick-open waits for a focused row', () => {
+  const keys = json('review/profile/keybindings.json');
+  const quickOpen = keys.find((binding) => binding.command === 'workbench.action.quickOpen' && binding.args === undefined).key;
+  const focus = keys.find((binding) => binding.command === 'workbench.action.focusActiveEditorGroup').key;
+  let checked = 0;
+  for (const scene of gate5().scenes) {
+    const steps = scene.setup;
+    let focused = false; // gate-4 lesson: a quick-open chord is lost while another part (the chat input) holds the focus
+    steps.forEach((step, index) => {
+      if (step.press === focus) focused = false;
+      if (String(step.waitFor ?? '') === "!!document.activeElement?.closest('.part.editor')" && !step.optional) focused = true;
+      if (step.press !== quickOpen) return;
+      assert.ok(focused, `${scene.name} setup[${index}]: waits for the editor group focus first`);
+      const [typed, wait, enter] = steps.slice(index + 1, index + 4);
+      assert.ok(typed.insert, `${scene.name} setup[${index}]: types what to open`);
+      assert.equal(wait.until, 'quick-input-row', `${scene.name} setup[${index}]: waits for a focused row`);
+      assert.ok(!wait.optional);
+      if (scene.name === 'quick-open') {
+        assert.equal(wait.file, undefined, 'the list scene keeps whichever row quick open focuses');
+        assert.notEqual(enter?.press, 'Enter', 'and keeps the list open');
+      } else {
+        assert.equal(wait.file, typed.insert.split('/').at(-1), `${scene.name} setup[${index}]: the row of ${typed.insert}`);
+        assert.equal(enter.press, 'Enter');
+      }
+      checked += 1;
+    });
+  }
+  assert.equal(checked, 10, 'explorer-open 3, tabs 4, breadcrumbs 1, quick-open 1, symbols 1');
+});
+
+test('every launch parks the page pointer on the empty stretch of the activity bar, and no extension recommendation toast opens', () => {
+  // Gate-5 dry runs: a 200% launch stopped waiting for tooltips to close before its first capture (the machine's pointer
+  // rested over the new window); parked on a status bar gap, the pointer later sat on an item that had grown under it; and
+  // opening sample.py raised the "install the recommended Python extension" toast.
+  const capture = read('scripts/review/capture.mjs');
+  const point = capture.match(/const PARK_POINT = `([^`]+)`;/)?.[1];
+  assert.ok(point, 'one park point');
+  assert.match(point, /document\.querySelector\('\.part\.activitybar'\)/);
+  assert.match(point, /bar\.querySelectorAll\('\.action-item'\)/, 'between the icons, not on one');
+  const park = capture.indexOf("await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: park.x, y: park.y });");
+  assert.ok(park > capture.indexOf("label: 'the WitchyNibbles product icons'") && park < capture.indexOf('for (const scene of job.scenes'), 'after the launch, before the first scene');
+  assert.equal(json('review/profile/settings.base.json')['extensions.ignoreRecommendations'], true);
 });
