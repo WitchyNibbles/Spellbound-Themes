@@ -3,6 +3,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { filterJob, parseGateArgs } from '../scripts/review/args.mjs';
 
@@ -42,6 +44,46 @@ test('filterJob keeps only the asked scales and scenes, and drops a pass left wi
   assert.deepEqual(filterJob(job(), { scales: null, scenes: null }), job());
   assert.throws(() => filterJob(job(), { scales: null, scenes: ['panels'] }), /Unknown scene 'panels'/);
   assert.throws(() => filterJob(job(), { scales: [3], scenes: null }), /No pass captures at scale 3/);
+});
+
+test('filterJob stops when no pass would capture an asked scene, rather than dropping every pass', () => {
+  // Gate-3 review: a scene that is in no pass's own scenes list left the cut job with no pass at all, and run-gate.mjs
+  // went on to build, package and launch a capture of nothing.
+  const listed = () => ({
+    passes: [
+      { name: 'main', vsix: ['spellbound-main.vsix'], scales: [1, 2], scenes: ['panel'] },
+      { name: 'variants', vsix: ['spellbound-variants.vsix'], scales: [1, 2], scenes: ['debug'] },
+    ],
+    scenes: [{ name: 'panel' }, { name: 'debug' }, { name: 'icon-sheet' }],
+  });
+  assert.throws(() => filterJob(listed(), { scales: null, scenes: ['icon-sheet'] }), /No pass captures scene 'icon-sheet'/);
+  assert.throws(() => filterJob(listed(), { scales: [2], scenes: ['panel', 'icon-sheet'] }), /No pass captures scene 'icon-sheet'/);
+  assert.deepEqual(filterJob(listed(), { scales: null, scenes: ['debug'] }).passes.map((pass) => pass.name), ['variants']);
+  // With --skip-variants (or no variant drawing) the variants pass is gone before the check, so its scenes stop too.
+  assert.throws(() => filterJob(listed(), { scales: null, scenes: ['debug'], skipVariants: true }), /No pass captures scene 'debug'/);
+});
+
+test('run-gate.mjs drops the variants pass before it cuts the job, so a scene only that pass captures stops with --skip-variants', () => {
+  // Gate-4 review: run-gate.mjs dropped the variants pass after filterJob had accepted a scene only that pass captures,
+  // which left a capture of nothing. PATH is emptied so that a run-gate.mjs without the fix fails at its first shell
+  // command instead of building anything.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'spellbound-job-'));
+  const file = path.join(dir, 'job.json');
+  fs.writeFileSync(file, JSON.stringify({
+    passes: [
+      { name: 'main', vsix: ['spellbound-main.vsix'], scales: [1], scenes: ['panel'] },
+      { name: 'variants', vsix: ['spellbound-variants.vsix'], scales: [1], scenes: ['icon-sheet'] },
+    ],
+    scenes: [{ name: 'panel' }, { name: 'icon-sheet' }],
+  }));
+  try {
+    const result = spawnSync(process.execPath, ['scripts/review/run-gate.mjs', '--job', path.relative(root, file), '--skip-variants', '--scenes=icon-sheet'],
+      { cwd: root, encoding: 'utf8', timeout: 10000, env: { ...process.env, PATH: '' } });
+    assert.equal(result.status, 2, result.stderr);
+    assert.match(result.stderr, /No pass captures scene 'icon-sheet'/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('run-gate.mjs stops on an unknown option before it builds or launches anything, and prints usage for --help', () => {

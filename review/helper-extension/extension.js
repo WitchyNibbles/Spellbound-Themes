@@ -1,7 +1,8 @@
 // Review helper: shows every mapped drawing at 16px in side-by-side trees, creates a Testing provider so the Testing
 // container, the gutter run icons and pass/fail icons appear, raises notifications, sets one breakpoint of each kind,
-// and puts the review fixture into the states that the status-batch glyphs need (Problems severities, staged and
-// conflicted git branch, Copilot states, spinners, quick input).
+// puts the review fixture into the states that the status-batch glyphs need (Problems severities, staged and
+// conflicted git branch, Copilot states, spinners, quick input), and gives the *.grimoire fixtures one symbol of each
+// kind and a suggest list (gate 4).
 const path = require('path');
 const vscode = require('vscode');
 const rows = require('./ids.json'); // written by run-gate.mjs: [{ id, label, description }]
@@ -138,6 +139,27 @@ function activate(context) {
       page = (page + 1) % pages;
       describePage();
       pageChanged.fire();
+    }),
+    // Gate 4: every symbol kind of the symbols batch, from the *.grimoire fixtures. Each "<kind> <name>" line is one symbol,
+    // so Go to Symbol in Editor draws the twelve symbol-* icons a SymbolKind can carry (six per file: twelve rows do not
+    // fit the quick pick at 200%). Keyword, text and snippet exist only as completion kinds, and file and folder are the
+    // editor batch's symbol-file and symbol-folder, so the suggest list carries those five.
+    vscode.languages.registerDocumentSymbolProvider({ pattern: '**/*.grimoire' }, {
+      provideDocumentSymbols: (document) => {
+        const symbols = [];
+        for (let line = 0; line < document.lineCount; line += 1) {
+          const match = /^(\w+) (\w+)$/.exec(document.lineAt(line).text);
+          const kind = match && Object.keys(vscode.SymbolKind).find((name) => name.toLowerCase() === match[1]);
+          if (!kind) continue;
+          const range = document.lineAt(line).range;
+          symbols.push(new vscode.DocumentSymbol(match[2], match[1], vscode.SymbolKind[kind], range, range));
+        }
+        return symbols;
+      },
+    }),
+    vscode.languages.registerCompletionItemProvider({ pattern: '**/*.grimoire' }, {
+      provideCompletionItems: () => [['brew', 'Keyword'], ['moonlight', 'Text'], ['circle', 'Snippet'], ['moon.png', 'File'], ['herbs', 'Folder']]
+        .map(([label, kind], index) => Object.assign(new vscode.CompletionItem(label, vscode.CompletionItemKind[kind]), { sortText: String(index), detail: kind.toLowerCase() })),
     }),
     // Gate 3: one breakpoint of each kind (breakpoints.json), replacing whatever the previous scene left.
     vscode.commands.registerCommand('spellboundReview.breakpoints', () => {

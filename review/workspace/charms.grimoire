@@ -1,0 +1,7 @@
+# Review fixture (gate 4): the review helper reads each "<kind> <name>" line as one symbol.
+constant moons
+interface Potion
+enum Phase
+module Coven
+namespace Herbs
+string incantation

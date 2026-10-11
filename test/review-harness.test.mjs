@@ -11,7 +11,7 @@ const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 const json = (file) => JSON.parse(read(file));
 const exists = (file) => fs.existsSync(path.join(root, file));
 
-const GATES = ['review/jobs/gate-1.json', 'review/jobs/gate-2.json', 'review/jobs/gate-3.json'];
+const GATES = ['review/jobs/gate-1.json', 'review/jobs/gate-2.json', 'review/jobs/gate-3.json', 'review/jobs/gate-4.json'];
 const JOBS = [...GATES, 'review/jobs/smoke.json'];
 const PLAIN_KEYS = new Set(['Enter', 'Escape', 'Tab', 'Backspace']);
 
@@ -19,6 +19,7 @@ test('every file the harness needs exists', () => {
   for (const file of [
     'review/workspace/spells.ts', 'review/workspace/debug-target.js', 'review/workspace/notes.md', 'review/workspace/README.md',
     'review/workspace/unbrewed.js', 'review/workspace/brews.spec.js', 'review/helper-extension/breakpoints.json',
+    'review/workspace/hexes.ts', 'review/workspace/symbols.grimoire', 'review/workspace/charms.grimoire',
     'review/workspace/.vscode/launch.json', 'review/profile/settings.base.json', 'review/profile/keybindings.json',
     'review/helper-extension/package.json', 'review/helper-extension/extension.js', 'review/helper-extension/README.md',
     'review/helper-extension/media/sheet.svg', ...JOBS,
@@ -44,7 +45,8 @@ test('job files follow the schema and press only bound chords or plain keys', ()
     for (const scene of job.scenes) {
       assert.ok(scene.crops?.length, `${file} ${scene.name} has no crops`);
       for (const step of [...(scene.setup ?? []), ...(scene.teardown ?? [])]) {
-        assert.ok(step.press || step.insert || step.hover || step.waitFor || step.wait, `${file} ${scene.name}: empty step`);
+        assert.ok(step.press || step.insert || step.hover || step.hold || step.waitFor || step.wait, `${file} ${scene.name}: empty step`);
+        if (step.hold) assert.equal(step.hold, 'alt', `${file} ${scene.name}: only Alt can be held`);
         if (step.press) assert.ok(bound.has(step.press) || PLAIN_KEYS.has(step.press), `${file} ${scene.name}: ${step.press} is not bound`);
       }
     }
@@ -232,9 +234,10 @@ test('the icon sheet shows every drawing at 200%: pages of three views of 17 row
   assert.match(source, /const ROWS_PER_VIEW = 17;/);
   assert.ok(17 * 22 <= 382, '17 rows fit a 382 px list');
   assert.match(source, /sheet\.description = `page \$\{page \+ 1\} of \$\{pages\}`/, 'every view header names its page');
-  // Gate 3 ends with 71 drawings (47 + 6 panel + 18 debug): two pages, whatever the map holds now.
-  const drawings = Math.max(71, Object.keys(json('icons/product-icon-map.json').drawings).length);
-  assert.equal(Math.ceil(drawings / (17 * views.length)), 2);
+  // Gate 4 shows the map as it stands after the editor, layout and symbols drawings (Parts B and C): more than 102
+  // drawings, so three pages, which gate 4 captures as three scenes. A map past 153 drawings needs a fourth scene.
+  const drawings = Object.keys(json('icons/product-icon-map.json').drawings).length;
+  assert.equal(Math.ceil(drawings / (17 * views.length)), 3, `${drawings} drawings`);
   const keyOf = (command) => json('review/profile/keybindings.json').find((binding) => binding.command === command)?.key;
   assert.ok(keyOf('spellboundReview.iconSheetPage'), 'a chord turns the page');
 
@@ -319,10 +322,19 @@ const NOT_IN_CONTEXT = {
   'debug-breakpoint-conditional-disabled': 'never drawn in 1.141: a disabled conditional breakpoint shows debug-breakpoint-disabled',
   'debug-breakpoint-conditional-unverified': 'never drawn in 1.141: an unverified conditional breakpoint shows debug-breakpoint-unverified',
 };
-// Pinned by the author at gate 3 (spec 11.3), after run 2026-10-10T15-54-10; the gate-4 job must wait for them.
-const PINNED_AFTER_GATE_3_RUN = {
-  'debug-disconnect': 'G23: the Node.js floating toolbar shows it in Stop\'s place (js-debug focuses a child session)',
-  'debug-breakpoint-log-unverified': 'G20: needs a logpoint in a file the debugger has not loaded (unbrewed.js)',
+// Pinned by the author at gate 3 (spec 11.3), after run 2026-10-10T15-54-10. The gate-4 job waits for them (debug-disconnect
+// test below).
+const WAITED_FOR_AT_GATE_4 = {
+  'debug-disconnect': 'G23: the Alt alternative of Stop on the Node.js floating toolbar; the debug-disconnect scene holds Alt',
+  'debug-breakpoint-log-unverified': 'G20: a logpoint in unbrewed.js, which the debugger never loads',
+};
+// Pinned by the author after the committed gate-4 run (2026-10-11T00-50-16), which never waited for them. The gate-4 test
+// below skips them; the next gate job must wait for them.
+const PINNED_AFTER_GATE_4_RUN = {
+  'symbol-constructor': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
+  'symbol-key': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
+  'symbol-object': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
+  'symbol-package': 'G34: pinned by the author after run 2026-10-11T00-50-16; the next gate job must wait for it',
 };
 // The stackframe dot has no element of its own: CSS draws it (::after) on a glyph that is both a breakpoint and a frame.
 const OVERLAYS = {
@@ -336,7 +348,7 @@ test('gate 3 waits, without an optional step, for every panel and debug ID, or n
   const batchIds = Object.entries(ids).filter(([, entry]) => ['panel', 'debug'].includes(entry.batch)).map(([id]) => id);
   assert.equal(batchIds.length, 34);
   for (const id of batchIds) {
-    if (id in NOT_IN_CONTEXT || id in PINNED_AFTER_GATE_3_RUN) continue;
+    if (id in NOT_IN_CONTEXT || id in WAITED_FOR_AT_GATE_4) continue;
     for (const selector of OVERLAYS[id] ?? [`codicon-${id}`]) {
       assert.match(waits, new RegExp(`${selector.replace(/\./g, '\\.')}(?![\\w-])`), `${id}: ${selector}`);
     }
@@ -350,8 +362,56 @@ test('gate 3 shows the panel tab icons through a scene setting that holds for th
   assert.deepEqual(scene.settings, { 'workbench.panel.showLabels': false });
   const source = read('scripts/review/capture.mjs');
   const loop = source.slice(source.indexOf('for (const scene of job.scenes'));
-  assert.ok(loop.indexOf('settingsFor(job.themes[0], sceneSettings)') < loop.indexOf('for (const step of scene.setup'), 'scene settings are written before the setup');
-  assert.match(loop, /settingsFor\(theme, \{ \.\.\.sceneSettings, \.\.\.variant\.settings \}\)/, 'and kept for every capture');
+  assert.ok(loop.indexOf('applySettings(job.themes[0], sceneSettings)') < loop.indexOf('for (const [index, step] of (scene.setup'), 'scene settings are applied before the setup');
+  assert.match(loop, /applySettings\(theme, \{ \.\.\.sceneSettings, \.\.\.variant\.settings \}\)/, 'and kept for every capture');
+});
+
+test('every ID the gate-3 coverage test excuses or reaches through an overlay is a panel or debug ID', () => {
+  // Gate-3 review: a key in these lists that is not a batch ID (a typo, or an ID that moved batches) excuses nothing and
+  // goes unnoticed.
+  const { ids } = json('icons/product-icon-ids.json');
+  for (const id of [...Object.keys(NOT_IN_CONTEXT), ...Object.keys(WAITED_FOR_AT_GATE_4), ...Object.keys(OVERLAYS)]) {
+    assert.ok(['panel', 'debug'].includes(ids[id]?.batch), id);
+  }
+});
+
+test('agent worktrees under .claude/worktrees/ never reach a snapshot or the VSIX', () => {
+  // Gate-4 review: worktree-isolated subagents put whole checkouts under .claude/worktrees/. Untracked, they were staged
+  // by every snapshot's git add -A as embedded repositories, and vsce packaged their files (the package-contents test
+  // failed). Only the worktrees folder is ignored in git: the author may track project settings in .claude/ later.
+  assert.ok(read('.gitignore').split('\n').includes('.claude/worktrees/'), '.gitignore');
+  assert.ok(read('.vscodeignore').split('\n').includes('.claude/**'), '.vscodeignore');
+});
+
+test('no tooltip is in any capture: checked before the first screenshot of each theme and again after its last crop', () => {
+  // Gate-3 review: NO_TOOLTIP was checked once, before the full screenshot, so a tooltip that opened during the crops
+  // would be in them. A debug hover (a variable's value while stopped) is a .debug-hover-widget, not a .monaco-hover.
+  const capture = read('scripts/review/capture.mjs');
+  const selector = capture.match(/const NO_TOOLTIP = `!\[\.\.\.document\.querySelectorAll\('([^']+)'\)\]/)[1];
+  assert.deepEqual(selector.split(', '), ['.workbench-hover', '.monaco-hover', '.debug-hover-widget']);
+  const lastCrop = capture.indexOf('await shoot(crop.name, clip);');
+  const recheck = capture.indexOf('if (!(await cdp.evaluate(NO_TOOLTIP)))', lastCrop);
+  assert.ok(lastCrop > 0 && recheck > lastCrop, 'checked again after the last crop');
+  assert.ok(recheck < capture.indexOf('for (const [index, step] of (scene.teardown'), 'before the teardown moves on');
+  assert.match(capture.slice(recheck, recheck + 200), /throw new Error\(`\$\{where\}\/\$\{theme\.slug\}: a tooltip/);
+});
+
+test('every settings write is applied before the run goes on, even when the theme stays the same', () => {
+  // Gate-3 review: after writing a scene's settings, capture.mjs waited only for the first theme, which a cut-down run
+  // (--scenes) or a variant in the same theme already showed, so the setup could start before VS Code had read the
+  // scene's settings. Every write now carries its own window title (the workspace name and one or two zero-width spaces,
+  // so the command centre still reads "workspace"), and capture.mjs waits until the window shows it.
+  const capture = read('scripts/review/capture.mjs');
+  const start = capture.indexOf('const applySettings = async');
+  assert.ok(start > 0, 'one function writes the settings and waits for them');
+  const body = capture.slice(start, capture.indexOf('\n    };\n', start));
+  assert.match(body, /'\\u200b'\.repeat\(1 \+ \(\+\+settingsWrites % 2\)\)/, 'each write differs from the one before it');
+  assert.match(body, /'window\.title': `\\\$\{rootName\}\$\{mark\}`/);
+  // Awaited, both of them: without the await the run races the settings again (gate-4 review mutation).
+  assert.match(body, /await waitFor\(\(\) => cdp\.evaluate\(`document\.title\.endsWith\(\$\{JSON\.stringify\(mark\)\}\) && !document\.title\.endsWith/);
+  assert.match(body, /await waitFor\(\(\) => cdp\.evaluate\(themeApplied\(theme\.signature\)\)/, 'and still waits for the theme');
+  const loop = capture.slice(capture.indexOf('for (const scene of job.scenes'));
+  assert.equal(loop.split("writeUserFile(userDataDir, 'settings.json'").length - 1, 0, 'the scene loop writes settings only through applySettings');
 });
 
 test('gate 3 reaches debug-hint by moving the pointer onto the glyph margin', () => {
@@ -363,11 +423,11 @@ test('gate 3 reaches debug-hint by moving the pointer onto the glyph margin', ()
   assert.match(read('scripts/review/capture.mjs'), /Input\.dispatchMouseEvent', \{ type: 'mouseMoved'/);
 });
 
-test('the gate 3 breakpoint plan sets each breakpoint kind 1.141 draws once, on code, and stops where the stackframe overlays need it', () => {
+test('the breakpoint plan sets each breakpoint kind 1.141 draws once, on code, and stops where the stackframe overlays need it', () => {
   const plan = json('review/helper-extension/breakpoints.json').breakpoints;
   const kinds = plan.map((breakpoint) => breakpoint.icon);
   assert.deepEqual([...kinds].sort(), ['debug-breakpoint', 'debug-breakpoint-conditional', 'debug-breakpoint-disabled',
-    'debug-breakpoint-log', 'debug-breakpoint-log-disabled', 'debug-breakpoint-unverified']);
+    'debug-breakpoint-log', 'debug-breakpoint-log-disabled', 'debug-breakpoint-log-unverified', 'debug-breakpoint-unverified']);
   for (const { file, line, icon, enabled = true, condition, logMessage } of plan) {
     const source = read(`review/workspace/${file}`).split('\n');
     assert.ok(source[line - 1]?.trim() && !source[line - 1].trim().startsWith('//'), `${icon}: line ${line} of ${file} is code`);
@@ -394,27 +454,30 @@ test('the gate 3 breakpoint plan sets each breakpoint kind 1.141 draws once, on 
   assert.match(helper, /removeBreakpoints\(vscode\.debug\.breakpoints\)/, 'the command replaces earlier breakpoints');
 });
 
-test('gate 3 captures one icon-sheet scene per page, each checking on screen that every row is visible', () => {
+test('gates 3 and 4 capture one icon-sheet scene per page, each checking on screen that every row is visible', () => {
   // The helper pages the sheet (51 drawings a page at 200%); each scene waits for its page and until no view scrolls and
-  // every row icon lies inside the panel. Both side bars are closed first, so the panel has its full width.
+  // every row icon lies inside the panel. Both side bars are closed first, so the panel has its full width. Gate 3 had
+  // two pages (71 drawings); gate 4 has three.
   const keyOf = (command) => json('review/profile/keybindings.json').find((binding) => binding.command === command)?.key;
-  const scenes = json('review/jobs/gate-3.json').scenes.filter((scene) => scene.name.startsWith('icon-sheet'));
-  assert.deepEqual(scenes.map((scene) => scene.name), ['icon-sheet', 'icon-sheet-2']);
-  const presses = scenes[0].setup.map((step) => step.press);
-  const maximize = keyOf('workbench.action.toggleMaximizedPanel');
-  for (const command of ['workbench.action.closeSidebar', 'workbench.action.closeAuxiliaryBar']) {
-    assert.ok(presses.indexOf(keyOf(command)) >= 0 && presses.indexOf(keyOf(command)) < presses.indexOf(maximize), `runs ${command} before maximizing`);
+  for (const [file, pages] of [['review/jobs/gate-3.json', 2], ['review/jobs/gate-4.json', 3]]) {
+    const scenes = json(file).scenes.filter((scene) => scene.name.startsWith('icon-sheet'));
+    assert.deepEqual(scenes.map((scene) => scene.name), ['icon-sheet', 'icon-sheet-2', 'icon-sheet-3'].slice(0, pages));
+    const presses = scenes[0].setup.map((step) => step.press);
+    const maximize = keyOf('workbench.action.toggleMaximizedPanel');
+    for (const command of ['workbench.action.closeSidebar', 'workbench.action.closeAuxiliaryBar']) {
+      assert.ok(presses.indexOf(keyOf(command)) >= 0 && presses.indexOf(keyOf(command)) < presses.indexOf(maximize), `runs ${command} before maximizing`);
+    }
+    for (const scene of scenes.slice(1)) assert.equal(scene.setup[0].press, keyOf('spellboundReview.iconSheetPage'), `${scene.name} turns the page`);
+    scenes.forEach((scene, index) => {
+      const waits = scene.setup.filter((step) => !step.optional).map((step) => String(step.waitFor ?? ''));
+      assert.ok(waits.some((wait) => wait.includes(`'page ${index + 1} of ${pages}'`)), `${file} ${scene.name} waits for page ${index + 1}`);
+      const check = waits.find((wait) => wait.includes('.monaco-list-rows'));
+      assert.ok(check, `${scene.name} waits, not optionally, until every row is visible`);
+      assert.match(check, /lists\.length === 3/);
+      assert.match(check, /rows\.offsetHeight <= list\.clientHeight/, 'no view scrolls');
+      assert.match(check, /r\.right <= box\.right/, 'every row icon is inside the panel');
+    });
   }
-  assert.equal(scenes[1].setup[0].press, keyOf('spellboundReview.iconSheetPage'), 'the second scene turns the page');
-  scenes.forEach((scene, index) => {
-    const waits = scene.setup.filter((step) => !step.optional).map((step) => String(step.waitFor ?? ''));
-    assert.ok(waits.some((wait) => wait.includes(`'page ${index + 1} of 2'`)), `${scene.name} waits for page ${index + 1}`);
-    const check = waits.find((wait) => wait.includes('.monaco-list-rows'));
-    assert.ok(check, `${scene.name} waits, not optionally, until every row is visible`);
-    assert.match(check, /lists\.length === 3/);
-    assert.match(check, /rows\.offsetHeight <= list\.clientHeight/, 'no view scrolls');
-    assert.match(check, /r\.right <= box\.right/, 'every row icon is inside the panel');
-  });
 });
 
 test('every scene that moves the pointer parks it on the status bar and waits for tooltips to close before the next scene', () => {
@@ -457,4 +520,209 @@ test('the Breakpoints view is on screen where gate 3 claims it: other Run views 
     for (const id of selectors) assert.ok(check.includes(`'.codicon-${id}'`), `${name}: ${id}`);
   }
   function keyOfDebugView() { return bindings.find((binding) => binding.command === 'workbench.view.debug').key; }
+});
+
+// ---- Gate 4: editor and symbols batches ----
+// pinned-dirty has no class of its own: 1.141's CSS swaps the content of a dirty pinned tab's codicon-pinned button to
+// var(--vscode-icon-pinned-dirty-content), so the gate waits for that button on a tab that is both sticky and dirty.
+const DRAWN_THROUGH = {
+  'pinned-dirty': ['.tab.sticky.dirty > .tab-actions .codicon-pinned'],
+};
+const gate4 = () => json('review/jobs/gate-4.json');
+const gate4Waits = () => gate4().scenes.flatMap((scene) => (scene.setup ?? []).filter((step) => !step.optional).map((step) => String(step.waitFor ?? ''))).join(' ');
+
+test('gate 4 waits, without an optional step, for every editor and symbols ID on screen', () => {
+  // Checked in VS Code 1.141 while writing the plan: every one of the 49 IDs then pinned is drawn somewhere the review profile
+  // reaches, so no ID is excused. Each wait checks that the icon lies inside its container's box, not just in the DOM.
+  const waits = gate4Waits();
+  const { ids } = json('icons/product-icon-ids.json');
+  const batchIds = Object.entries(ids).filter(([, entry]) => ['editor', 'symbols'].includes(entry.batch)).map(([id]) => id);
+  assert.equal(batchIds.length, 53, '34 editor IDs (with G11 gutter-lightbulb-sparkle-filled) and 19 symbols (with the four G34 shares)');
+  for (const id of Object.keys(PINNED_AFTER_GATE_4_RUN)) assert.ok(batchIds.includes(id), id);
+  for (const id of Object.keys(DRAWN_THROUGH)) assert.ok(batchIds.includes(id), id);
+  for (const id of batchIds.filter((candidate) => !(candidate in PINNED_AFTER_GATE_4_RUN))) {
+    for (const selector of DRAWN_THROUGH[id] ?? [`codicon-${id}`]) {
+      assert.match(waits, new RegExp(`${selector.replace(/[.()]/g, '\\$&')}(?![\\w-])`), `${id}: ${selector}`);
+    }
+  }
+  for (const scene of gate4().scenes.filter((candidate) => !candidate.name.startsWith('icon-sheet'))) {
+    const checks = scene.setup.filter((step) => /'[^']*\.codicon-[^']*'/.test(String(step.waitFor ?? '')));
+    assert.ok(checks.length, `${scene.name} waits for an icon`);
+    for (const step of checks) {
+      assert.match(step.waitFor, /r\.left >= box\.left && r\.right <= box\.right && r\.top >= box\.top && r\.bottom <= box\.bottom/, `${scene.name}: on screen`);
+    }
+  }
+});
+
+test('gate 4 waits for the two debug IDs pinned after the gate-3 run', () => {
+  // G23 and G20 (spec 11.3). For a Node.js launch, 1.141 shows Stop on the floating toolbar and Disconnect as its Alt
+  // alternative (focusedSessionIsAttach is false, because js-debug's child session has a launch parent), so the scene
+  // holds Alt before it waits for Disconnect. Gate 3's toolbar sheets showed Disconnect only because capture.mjs left
+  // Alt held after every chord (probe 2026-10-10T20-28-26 against 2026-10-10T20-35-08).
+  const scene = gate4().scenes.find((candidate) => candidate.name === 'debug-disconnect');
+  const hold = scene.setup.findIndex((step) => step.hold === 'alt');
+  const disconnect = scene.setup.findIndex((step) => !step.optional && String(step.waitFor).includes("'.codicon-debug-disconnect'"));
+  assert.ok(hold >= 0 && disconnect === hold + 1, 'holds Alt, then waits for Disconnect on the toolbar');
+  assert.match(scene.setup[disconnect].waitFor, /document\.querySelector\('\.debug-toolbar'\)/);
+  const unverified = scene.setup.findIndex((step) => !step.optional && String(step.waitFor).includes("'.margin .codicon-debug-breakpoint-log-unverified'"));
+  assert.ok(unverified >= 0 && unverified < hold, 'the unbrewed.js logpoint is waited for in the gutter before Alt is held');
+  for (const id of Object.keys(WAITED_FOR_AT_GATE_4)) assert.match(gate4Waits(), new RegExp(`codicon-${id}(?![\\w-])`), id);
+  const plan = json('review/helper-extension/breakpoints.json').breakpoints;
+  assert.deepEqual(plan.find((breakpoint) => breakpoint.icon === 'debug-breakpoint-log-unverified'),
+    { file: 'unbrewed.js', line: 3, logMessage: 'unbrewed {unbrewed}', icon: 'debug-breakpoint-log-unverified' });
+  // The session ends before the icon sheets: two Stops (the child session, then the launch session) and a wait until the
+  // toolbar is gone (dry run 2026-10-10T20-50-52: one Stop left the launch session running).
+  const stop = json('review/profile/keybindings.json').find((binding) => binding.command === 'workbench.action.debug.stop').key;
+  const [first, second, gone] = scene.teardown;
+  assert.equal(first.press, stop);
+  assert.equal(second.press, stop);
+  assert.match(String(gone.waitFor), /document\.querySelector\('\.debug-toolbar'\)/);
+});
+
+test('capture.mjs releases the modifiers of every chord, and holds Alt only where a step asks', () => {
+  const capture = read('scripts/review/capture.mjs');
+  const press = capture.slice(capture.indexOf('async press(chord)'), capture.indexOf('holdAlt()'));
+  assert.match(press, /for \(const \[bit, name, vk\] of \[\[8, 'Shift', 16\], \[2, 'Control', 17\], \[1, 'Alt', 18\], \[4, 'Meta', 91\]\]\)/);
+  assert.match(press, /type: 'keyUp', modifiers: held, key: name/);
+  assert.match(capture, /holdAlt\(\) \{ return this\.send\('Input\.dispatchKeyEvent', \{ type: 'rawKeyDown', modifiers: 1, key: 'Alt'/);
+  assert.match(capture, /if \(step\.hold === 'alt'\) await cdp\.holdAlt\(\);/);
+  const holds = GATES.flatMap((file) => json(file).scenes.flatMap((scene) => [...(scene.setup ?? []), ...(scene.teardown ?? [])]
+    .filter((step) => step.hold).map(() => `${file} ${scene.name}`)));
+  assert.deepEqual(holds, ['review/jobs/gate-4.json debug-disconnect']);
+});
+
+test('gate 4 reaches each layout toggle state in the title bar and checks nothing covers it', () => {
+  // The layout controls draw panel-left or panel-right (primary side bar), panel-layout-icon (panel) and an
+  // auxiliarybar-*-layout-icon (secondary side bar), each with an -off form when that part is hidden; the side bar's
+  // location decides left or right. At 200% the Customize Layout picker covered the controls (dry run
+  // 2026-10-10T20-52-35), so these waits also check that the icon is the topmost element at its centre.
+  const scenes = Object.fromEntries(gate4().scenes.map((scene) => [scene.name, scene]));
+  for (const [name, location, ids] of [
+    ['layout-on', undefined, ['configure-layout-icon', 'panel-left', 'panel-layout-icon-off', 'auxiliarybar-right-layout-icon']],
+    ['layout-off', undefined, ['panel-left-off', 'panel-layout-icon', 'auxiliarybar-right-off-layout-icon']],
+    ['layout-right', 'right', ['panel-right', 'auxiliarybar-left-off-layout-icon']],
+    ['layout-right-swap', 'right', ['panel-right-off', 'auxiliarybar-left-layout-icon']],
+  ]) {
+    assert.equal(scenes[name].settings?.['workbench.sideBar.location'], location, name);
+    const wait = scenes[name].setup.find((step) => String(step.waitFor).includes('.part.titlebar .titlebar-right .action-toolbar-container')).waitFor;
+    for (const id of ids) assert.ok(wait.includes(`'.codicon-${id}'`), `${name}: ${id}`);
+    assert.match(wait, /el\.contains\(document\.elementFromPoint\(/, `${name}: not covered`);
+  }
+  // panel-bottom is the Panel row of the Customize Layout picker; 1.141 draws it nowhere else.
+  assert.ok(scenes['layout-customize'].setup.some((step) => String(step.waitFor).includes('.quick-input-widget .monaco-list') && String(step.waitFor).includes("'.codicon-panel-bottom'")));
+});
+
+test('gate 4 scene settings: header and row actions always shown, the split direction, no file icon theme for the suggest list', () => {
+  const scenes = Object.fromEntries(gate4().scenes.map((scene) => [scene.name, scene]));
+  // Explorer title actions (new-file, new-folder, refresh, collapse-all) and SCM row actions (discard, go-to-file) show
+  // only under the pointer unless these are set.
+  assert.deepEqual(scenes.explorer.settings, { 'workbench.view.alwaysShowHeaderActions': true });
+  assert.deepEqual(scenes.scm.settings, { 'scm.alwaysShowActions': true });
+  // Split Editor's icon follows the side-by-side direction: split-horizontal by default, split-vertical when "down".
+  assert.equal(scenes.tabs.settings, undefined);
+  assert.deepEqual(scenes['split-down'].settings, { 'workbench.editor.openSideBySideDirection': 'down' });
+  // 1.141 draws symbol-file and symbol-folder in the suggest list only when the file icon theme has no file or folder
+  // icons (the suggest widget's renderer); with WitchyNibbles Icons it shows the file icons instead.
+  assert.deepEqual(scenes.suggest.settings, { 'workbench.iconTheme': null, 'editor.wordBasedSuggestions': 'off' });
+});
+
+test('each gate 4 scene sets up the state it captures and puts the editors back, so it also runs alone', () => {
+  // Gate-4 review: layout-right relied on layout-off to close the secondary side bar, and only split-down's teardown put
+  // back the editors that tabs pinned and changed, so a cut-down run (--scenes) timed out, or met a dirty file.
+  const scenes = Object.fromEntries(gate4().scenes.map((scene) => [scene.name, scene]));
+  const keyOf = (command) => json('review/profile/keybindings.json').find((binding) => binding.command === command)?.key;
+  const primary = [keyOf('workbench.view.explorer'), keyOf('workbench.action.closeSidebar')];
+  const secondary = [keyOf('workbench.action.chat.open'), keyOf('workbench.action.closeAuxiliaryBar')];
+  for (const name of ['layout-on', 'layout-off', 'layout-right', 'layout-right-swap']) {
+    const presses = scenes[name].setup.map((step) => step.press);
+    assert.ok(presses.some((press) => primary.includes(press)), `${name} shows or hides the primary side bar itself`);
+    assert.ok(presses.some((press) => secondary.includes(press)), `${name} shows or hides the secondary side bar itself`);
+  }
+  const [pin, unpin, revert, closeAll] = ['workbench.action.pinEditor', 'workbench.action.unpinEditor', 'workbench.action.files.revert',
+    'workbench.action.closeAllEditors'].map(keyOf);
+  for (const name of ['tabs', 'split-down']) {
+    const setup = scenes[name].setup;
+    const teardown = scenes[name].teardown.map((step) => step.press);
+    assert.equal(setup.filter((step) => step.press === pin).length, 2, `${name} pins its two editors`);
+    assert.ok(setup.some((step) => step.insert), `${name} makes one of them dirty`);
+    assert.deepEqual([teardown.includes(revert), teardown.filter((press) => press === unpin).length, teardown.at(-1)], [true, 2, closeAll], `${name} puts the editors back`);
+  }
+});
+
+test('the gate 4 fixtures give one symbol of each kind and a gutter line whose only code actions are AI ones', () => {
+  // Go to Symbol lists 9 rows at 200% (dry run 2026-10-10T20-35-08), so the twelve symbol kinds are split over two files.
+  const kinds = ['symbols.grimoire', 'charms.grimoire'].map((file) => read(`review/workspace/${file}`).split('\n')
+    .map((line) => /^(\w+) (\w+)$/.exec(line)?.[1]).filter(Boolean));
+  assert.deepEqual(kinds.map((list) => list.length), [6, 6]);
+  assert.deepEqual(kinds.flat().sort(), ['class', 'constant', 'enum', 'field', 'function', 'interface', 'method', 'module', 'namespace', 'property', 'string', 'variable']);
+  const helper = read('review/helper-extension/extension.js');
+  assert.match(helper, /registerDocumentSymbolProvider\(\{ pattern: '\*\*\/\*\.grimoire' \}/);
+  assert.match(helper, /registerCompletionItemProvider\(\{ pattern: '\*\*\/\*\.grimoire' \}/);
+  for (const kind of ['Keyword', 'Text', 'Snippet', 'File', 'Folder']) assert.match(helper, new RegExp(`'${kind}'\\]`), kind);
+  // 1.141 puts the light bulb in the gutter only for an unindented line between two non-blank, unindented lines
+  // (LightBulbWidget.update); otherwise it draws the inline sparkle-filled codicon, which is not this ID.
+  const lines = read('review/workspace/hexes.ts').split('\n');
+  const keyOf = (command, args) => json('review/profile/keybindings.json').find((binding) => binding.command === command && binding.args === args)?.key;
+  assert.ok(keyOf('workbench.action.quickOpen', 'hexes.ts:4'));
+  assert.match(lines[3], /^export const crown: number = 'tall';$/, 'a type error no TypeScript quick fix repairs');
+  for (const neighbour of [lines[2], lines[4]]) assert.match(neighbour, /^\S.+/);
+});
+
+test('every gate 4 quick open waits for the quick input before it presses Enter', () => {
+  // The first gate-4 probe lost a quick-open chord at startup (the chat input still had the focus). Waiting for the
+  // widget turns that into a stop that names the scene.
+  const quickOpen = new Set(json('review/profile/keybindings.json').filter((binding) => binding.command === 'workbench.action.quickOpen').map((binding) => binding.key));
+  for (const scene of gate4().scenes) {
+    const steps = [...(scene.setup ?? []), ...(scene.teardown ?? [])];
+    steps.forEach((step, index) => {
+      if (!quickOpen.has(step.press)) return;
+      assert.match(String(steps[index + 1]?.waitFor), /\.quick-input-widget/, `${scene.name}: waits for the quick input`);
+      assert.equal(steps[index + 2]?.press, 'Enter', `${scene.name}: then presses Enter`);
+    });
+  }
+});
+
+test('every gate 4 quick open follows a wait for the editor group to hold the focus', () => {
+  // Fix round 1: scm leaves the focus in the commit input, and a quick-open chord that lands before the focus chord has
+  // taken effect never opens the widget (the 200% tabs timeout). Since the last focus chord, a non-optional wait on the
+  // focus must come before any quick-open chord.
+  const keys = json('review/profile/keybindings.json');
+  const quickOpen = new Set(keys.filter((binding) => binding.command === 'workbench.action.quickOpen').map((binding) => binding.key));
+  const focus = keys.find((binding) => binding.command === 'workbench.action.focusActiveEditorGroup').key;
+  let checked = 0;
+  for (const scene of gate4().scenes) {
+    let focused = true; // no focus chord yet in this phase: nothing to wait for
+    for (const phase of ['setup', 'teardown']) {
+      focused = true;
+      (scene[phase] ?? []).forEach((step, index) => {
+        if (step.press === focus) focused = false;
+        else if (!step.optional && String(step.waitFor ?? '').includes("document.activeElement?.closest('.part.editor')")) focused = true;
+        else if (quickOpen.has(step.press)) {
+          assert.ok(focused, `${scene.name} ${phase}[${index}]: waits for the editor group focus before the quick open`);
+          checked += 1;
+        }
+      });
+    }
+  }
+  assert.ok(checked >= 6, 'the check reached the quick-open chords');
+  for (const name of ['tabs', 'split-down', 'ai-lightbulb']) {
+    const setup = gate4().scenes.find((scene) => scene.name === name).setup;
+    assert.equal(setup[0].press, focus, name);
+    assert.match(String(setup[1].waitFor), /^!!document\.activeElement\?\.closest\('\.part\.editor'\)$/, `${name}: the focus wait follows the focus chord`);
+    assert.equal(setup[1].timeout, 10000);
+  }
+});
+
+test('a capture timeout names the scene and step and describes the focus without any text', () => {
+  const capture = read('scripts/review/capture.mjs');
+  assert.match(capture, /for \(const \[index, step\] of \(scene\.setup \?\? \[\]\)\.entries\(\)\) await runStep\(cdp, step, `\$\{where\} setup\[\$\{index\}\]`\);/);
+  assert.match(capture, /for \(const \[index, step\] of \(scene\.teardown \?\? \[\]\)\.entries\(\)\) await runStep\(cdp, step, `\$\{where\} teardown\[\$\{index\}\]`\);/);
+  assert.match(capture, /if \(!step\.optional\) throw error\.message\.startsWith\('Timed out'\) \? new Error\(`\$\{where\}: \$\{error\.message\}; \$\{await focusDiagnostics\(cdp\)\}`\) : error;/);
+  const diagnostics = capture.slice(capture.indexOf('async function focusDiagnostics'), capture.indexOf('async function runStep'));
+  assert.match(diagnostics, /classList/);
+  assert.match(diagnostics, /closest\('\.part'\)/);
+  assert.match(diagnostics, /\.quick-input-widget/);
+  for (const forbidden of ['textContent', 'innerText', '.value', '.title', 'getAttribute', 'outerHTML', 'id']) {
+    assert.ok(!new RegExp(`\\.${forbidden}\\b`).test(diagnostics) && !diagnostics.includes(`${forbidden}(`), `no ${forbidden} in the diagnostics`);
+  }
 });

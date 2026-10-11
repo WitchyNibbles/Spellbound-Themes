@@ -37,11 +37,13 @@ export function parseGateArgs(argv) {
   return { job: values.job, skipVariants: values['skip-variants'], help: values.help, scales, scenes: list('scenes', values.scenes) };
 }
 
-// Cuts a gate job down for a dry run. Scene order and each scene's steps stay as in the job file.
-export function filterJob(job, { scales, scenes }) {
+// Cuts a gate job down for a dry run. Scene order and each scene's steps stay as in the job file. With skipVariants
+// (--skip-variants, or no variant drawing to stage) the variants pass is dropped first, so the checks below see only
+// the passes that will run.
+export function filterJob(job, { scales, scenes, skipVariants = false }) {
   const known = job.scenes.map((scene) => scene.name);
   for (const scene of scenes ?? []) if (!known.includes(scene)) throw new Error(`Unknown scene '${scene}' (the job has ${known.join(', ')})`);
-  const passes = job.passes.map((pass) => {
+  const passes = job.passes.filter((pass) => !(skipVariants && pass.name === 'variants')).map((pass) => {
     const cut = { ...pass };
     if (scales) cut.scales = pass.scales.filter((scale) => scales.includes(scale));
     if (scenes) cut.scenes = (pass.scenes ?? known).filter((scene) => scenes.includes(scene));
@@ -49,6 +51,10 @@ export function filterJob(job, { scales, scenes }) {
   }).filter((pass) => pass.scales.length && (!pass.scenes || pass.scenes.length));
   for (const scale of scales ?? []) {
     if (!passes.some((pass) => pass.scales.includes(scale))) throw new Error(`No pass captures at scale ${scale}`);
+  }
+  // A scene left out of every pass's own scenes list would otherwise leave a job with no pass, captured silently.
+  for (const scene of scenes ?? []) {
+    if (!passes.some((pass) => (pass.scenes ?? known).includes(scene))) throw new Error(`No pass captures scene '${scene}'`);
   }
   return { ...job, passes };
 }

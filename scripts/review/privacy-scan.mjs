@@ -26,7 +26,7 @@ export function findPrivateText(text, names) {
   for (const name of names.filter((candidate) => candidate.length >= 3)) {
     if (new RegExp(`(?<![a-z])${escape(name)}(?![a-z])`, 'i').test(flat)) found.push(`user name "${name.toLowerCase()}"`);
   }
-  const directories = /[A-Za-z]:\\Users\\(?!<user>)[^\\\s"']+|\\\\wsl(?:\.localhost|\$)\\[^\\\s"']+\\home\\[^\\\s"']+|\/(?:home|Users)\/(?!<user>)[^/\s"']+/g;
+  const directories = /[A-Za-z]:\\Users\\(?!<user>)[^\\\s"']+|\\\\wsl(?:\.localhost|\$)\\[^\\\s"']+\\home\\(?!<user>)[^\\\s"']+|\/(?:home|Users)\/(?!<user>)[^/\s"']+/g;
   for (const [match] of flat.matchAll(directories)) found.push(`user directory "${match}"`);
   for (const [match] of flat.matchAll(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g)) found.push(`email address "${match}"`);
   return found;

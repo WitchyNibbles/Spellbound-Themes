@@ -32,6 +32,13 @@ test('findPrivateText reads paths the way OCR spaces them, WSL network paths and
   assert.deepEqual(findPrivateText('review@localhost (the fixture identity)', []), [], 'no top-level domain, no address');
 });
 
+test('findPrivateText accepts the documented <user> placeholder in a WSL network path too', () => {
+  // Gate-3 review: C:\Users\<user> and /home/<user> passed, but \\wsl.localhost\...\home\<user> was flagged.
+  assert.deepEqual(findPrivateText('\\\\wsl.localhost\\Ubuntu\\home\\<user>\\projects', []), []);
+  assert.deepEqual(findPrivateText('\\\\wsl$\\Ubuntu\\home\\<user>\\projects', []), []);
+  assert.deepEqual(findPrivateText('\\\\wsl$\\Ubuntu\\home\\someone\\projects', []), ['user directory "\\\\wsl$\\Ubuntu\\home\\someone"']);
+});
+
 test('findPrivateText ignores names too short to match reliably', () => {
   assert.deepEqual(findPrivateText('a quick wizard', ['a', 'qu']), []);
 });

@@ -1,11 +1,12 @@
 {
-  "$comment": "Breakpoints spellboundReview.breakpoints sets for gate 3 (lines are 1-based; icon = the class VS Code 1.141 draws for it). Execution stops on the plain breakpoint in stir (line 9: debug-stackframe with the dot overlay); Call Stack Down then focuses the caller on line 11, whose conditional breakpoint never fires (debug-stackframe-focused with the dot overlay). unbrewed.js is never loaded, so its breakpoint shows as unverified during the session. 1.141 never draws debug-breakpoint-conditional-disabled or -conditional-unverified: a disabled or unverified conditional breakpoint gets the plain disabled or unverified icon (L6 in workbench.desktop.main.js), so the plan has no such breakpoint.",
+  "$comment": "Breakpoints spellboundReview.breakpoints sets for gates 3 and 4 (lines are 1-based; icon = the class VS Code 1.141 draws for it). Execution stops on the plain breakpoint in stir (line 9: debug-stackframe with the dot overlay); Call Stack Down then focuses the caller on line 11, whose conditional breakpoint never fires (debug-stackframe-focused with the dot overlay). unbrewed.js is never loaded, so its breakpoint and its logpoint (gate 4: debug-breakpoint-log-unverified) show as unverified during the session. 1.141 never draws debug-breakpoint-conditional-disabled or -conditional-unverified: a disabled or unverified conditional breakpoint gets the plain disabled or unverified icon (L6 in workbench.desktop.main.js), so the plan has no such breakpoint.",
   "breakpoints": [
     {"file": "debug-target.js", "line": 2, "enabled": false, "icon": "debug-breakpoint-disabled"},
     {"file": "debug-target.js", "line": 4, "enabled": false, "logMessage": "brewed {brewed}", "icon": "debug-breakpoint-log-disabled"},
     {"file": "debug-target.js", "line": 6, "logMessage": "brewed {brewed}", "icon": "debug-breakpoint-log"},
     {"file": "debug-target.js", "line": 9, "icon": "debug-breakpoint"},
     {"file": "debug-target.js", "line": 11, "condition": "brewed < 0", "icon": "debug-breakpoint-conditional"},
-    {"file": "unbrewed.js", "line": 2, "icon": "debug-breakpoint-unverified"}
+    {"file": "unbrewed.js", "line": 2, "icon": "debug-breakpoint-unverified"},
+    {"file": "unbrewed.js", "line": 3, "logMessage": "unbrewed {unbrewed}", "icon": "debug-breakpoint-log-unverified"}
   ]
 }

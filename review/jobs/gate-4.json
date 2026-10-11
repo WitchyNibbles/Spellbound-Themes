@@ -1,0 +1,377 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "passes": [
+    { "name": "main", "vsix": ["spellbound-main.vsix"], "scales": [1, 1.25, 1.5, 2] },
+    { "name": "variants", "vsix": ["spellbound-variants.vsix"], "scales": [1, 2], "scenes": ["tabs", "find-replace", "layout-on", "layout-off", "ai-lightbulb", "symbols", "symbols-2", "icon-sheet", "icon-sheet-2", "icon-sheet-3"] }
+  ],
+  "scenes": [
+    {
+      "name": "explorer",
+      "settings": { "workbench.view.alwaysShowHeaderActions": true },
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 1500 },
+        { "press": "ctrl+alt+shift+4", "wait": 1200 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.sidebar'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-new-file', '.codicon-new-folder', '.codicon-refresh', '.codicon-collapse-all'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 160 }
+      ]
+    },
+    {
+      "name": "scm",
+      "settings": { "scm.alwaysShowActions": true },
+      "setup": [
+        { "press": "ctrl+alt+shift+v", "wait": 2500 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.sidebar'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-sparkle', '.codicon-discard', '.codicon-go-to-file'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 20000 }
+      ],
+      "crops": [
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 260 }
+      ]
+    },
+    {
+      "name": "tabs",
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
+        { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F1", "wait": 800 },
+        { "press": "ctrl+alt+shift+1", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F1", "wait": 800 },
+        { "insert": "✦ ", "wait": 800 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.tab.sticky:not(.dirty) > .tab-actions .codicon-pinned', '.tab.sticky.dirty > .tab-actions .codicon-pinned', '.editor-actions .codicon-split-horizontal'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "tabs", "selector": ".part.editor .tabs-and-actions-container" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+F3", "wait": 800 },
+        { "press": "ctrl+alt+F2", "wait": 500 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F2", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 1000 }
+      ]
+    },
+    {
+      "name": "split-down",
+      "settings": { "workbench.editor.openSideBySideDirection": "down" },
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
+        { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F1", "wait": 800 },
+        { "press": "ctrl+alt+shift+1", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F1", "wait": 800 },
+        { "insert": "✦ ", "wait": 800 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.tab.sticky:not(.dirty) > .tab-actions .codicon-pinned', '.tab.sticky.dirty > .tab-actions .codicon-pinned', '.editor-actions .codicon-split-vertical'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "tabs", "selector": ".part.editor .tabs-and-actions-container" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+F3", "wait": 800 },
+        { "press": "ctrl+alt+F2", "wait": 500 },
+        { "press": "ctrl+alt+shift+y", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F2", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 1000 }
+      ]
+    },
+    {
+      "name": "find-replace",
+      "setup": [
+        { "press": "ctrl+alt+shift+1", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F4", "wait": 800 },
+        { "insert": "potion", "wait": 800 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .find-widget.visible'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-case-sensitive', '.codicon-whole-word', '.codicon-regex', '.codicon-preserve-case', '.codicon-find-replace', '.codicon-find-replace-all'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".part.editor .find-widget.visible" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 800 }
+      ]
+    },
+    {
+      "name": "search-replace",
+      "setup": [
+        { "press": "ctrl+alt+F5", "wait": 1500 },
+        { "insert": "moonwater", "wait": 1500 },
+        { "press": "ctrl+alt+F6", "wait": 500 },
+        { "insert": "starwater", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.sidebar'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-search-replace-all', '.codicon-preserve-case'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "sidebar", "selector": ".part.sidebar", "maxHeight": 260 }
+      ]
+    },
+    {
+      "name": "problems-table",
+      "setup": [
+        { "press": "ctrl+alt+shift+o", "wait": 1500 },
+        { "press": "ctrl+alt+F7", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.panel > .title'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-list-tree'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "title", "selector": ".part.panel > .title" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+F8", "wait": 800 },
+        { "press": "ctrl+alt+shift+e", "wait": 800 }
+      ]
+    },
+    {
+      "name": "layout-on",
+      "setup": [
+        { "press": "ctrl+alt+shift+4", "wait": 800 },
+        { "press": "ctrl+alt+shift+w", "wait": 1500 },
+        { "press": "ctrl+alt+shift+e", "wait": 800 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.titlebar .titlebar-right .action-toolbar-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-configure-layout-icon', '.codicon-panel-left', '.codicon-panel-layout-icon-off', '.codicon-auxiliarybar-right-layout-icon'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom && el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "controls", "selector": ".part.titlebar .titlebar-right .action-toolbar-container" }
+      ]
+    },
+    {
+      "name": "layout-off",
+      "setup": [
+        { "press": "ctrl+alt+shift+F8", "wait": 800 },
+        { "press": "ctrl+alt+shift+F9", "wait": 800 },
+        { "press": "ctrl+alt+shift+o", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.titlebar .titlebar-right .action-toolbar-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-panel-left-off', '.codicon-panel-layout-icon', '.codicon-auxiliarybar-right-off-layout-icon'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom && el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "controls", "selector": ".part.titlebar .titlebar-right .action-toolbar-container" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+e", "wait": 800 }
+      ]
+    },
+    {
+      "name": "layout-right",
+      "settings": { "workbench.sideBar.location": "right" },
+      "setup": [
+        { "press": "ctrl+alt+shift+4", "wait": 1500 },
+        { "press": "ctrl+alt+shift+F9", "wait": 800 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.titlebar .titlebar-right .action-toolbar-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-panel-right', '.codicon-auxiliarybar-left-off-layout-icon'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom && el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "controls", "selector": ".part.titlebar .titlebar-right .action-toolbar-container" }
+      ]
+    },
+    {
+      "name": "layout-right-swap",
+      "settings": { "workbench.sideBar.location": "right" },
+      "setup": [
+        { "press": "ctrl+alt+shift+F8", "wait": 800 },
+        { "press": "ctrl+alt+shift+w", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.titlebar .titlebar-right .action-toolbar-container'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-panel-right-off', '.codicon-auxiliarybar-left-layout-icon'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom && el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "controls", "selector": ".part.titlebar .titlebar-right .action-toolbar-container" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+4", "wait": 800 }
+      ]
+    },
+    {
+      "name": "layout-customize",
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
+        { "press": "ctrl+alt+F9", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-panel-bottom'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".quick-input-widget", "maxHeight": 220 }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 }
+      ]
+    },
+    {
+      "name": "ai-lightbulb",
+      "setup": [
+        { "press": "ctrl+alt+shift+a", "wait": 500 },
+        { "waitFor": "!!document.activeElement?.closest('.part.editor')", "timeout": 10000 },
+        { "press": "ctrl+alt+F10", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-gutter-lightbulb-sparkle-filled'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 30000 }
+      ],
+      "crops": [
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 140 }
+      ]
+    },
+    {
+      "name": "ai-actions",
+      "setup": [
+        { "press": "ctrl+alt+F11", "wait": 2500 },
+        { "waitFor": "(() => { const c = document.querySelector('.action-widget'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-sparkle'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".action-widget" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 800 }
+      ]
+    },
+    {
+      "name": "symbols",
+      "setup": [
+        { "press": "alt+shift+F1", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F12", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-class', '.codicon-symbol-method', '.codicon-symbol-function', '.codicon-symbol-field', '.codicon-symbol-property', '.codicon-symbol-variable'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".quick-input-widget" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 }
+      ]
+    },
+    {
+      "name": "symbols-2",
+      "setup": [
+        { "press": "alt+shift+F6", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "ctrl+alt+F12", "wait": 1500 },
+        { "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-constant', '.codicon-symbol-interface', '.codicon-symbol-enum', '.codicon-symbol-module', '.codicon-symbol-namespace', '.codicon-symbol-string'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".quick-input-widget" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 }
+      ]
+    },
+    {
+      "name": "suggest",
+      "settings": { "workbench.iconTheme": null, "editor.wordBasedSuggestions": "off" },
+      "setup": [
+        { "press": "alt+shift+F1", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "press": "alt+shift+F2", "wait": 2000 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .suggest-widget'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-symbol-keyword', '.codicon-symbol-text', '.codicon-symbol-snippet', '.codicon-symbol-file', '.codicon-symbol-folder'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 15000 }
+      ],
+      "crops": [
+        { "name": "widget", "selector": ".part.editor .suggest-widget" }
+      ],
+      "teardown": [
+        { "press": "Escape", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 800 }
+      ]
+    },
+    {
+      "name": "debug-disconnect",
+      "setup": [
+        { "press": "ctrl+alt+shift+5", "wait": 800 },
+        { "press": "ctrl+alt+shift+i", "wait": 1000 },
+        { "press": "ctrl+alt+shift+3", "wait": 2000 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-debug-breakpoint.codicon-debug-stackframe'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 40000 },
+        { "press": "alt+shift+F3", "wait": 800 },
+        { "waitFor": "(() => { const w = document.querySelector('.quick-input-widget'); return !!w && w.style.display !== 'none' && w.getBoundingClientRect().height > 0; })()", "timeout": 10000 },
+        { "press": "Enter", "wait": 2000 },
+        { "waitFor": "(() => { const c = document.querySelector('.part.editor .monaco-editor'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.margin .codicon-debug-breakpoint-unverified', '.margin .codicon-debug-breakpoint-log-unverified'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 20000 },
+        { "hold": "alt", "wait": 1000 },
+        { "waitFor": "(() => { const c = document.querySelector('.debug-toolbar'); const box = c?.getBoundingClientRect(); return !!box && box.width > 0 && ['.codicon-debug-disconnect'].every((s) => [...c.querySelectorAll(s)].some((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; })); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "toolbar", "selector": ".debug-toolbar" },
+        { "name": "code", "selector": ".part.editor .monaco-editor", "maxHeight": 100 }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+t", "wait": 1500 },
+        { "press": "ctrl+alt+shift+t", "wait": 1500 },
+        { "waitFor": "(() => { const bar = document.querySelector('.debug-toolbar'); return !bar || !bar.getBoundingClientRect().width; })()", "timeout": 15000 },
+        { "press": "ctrl+alt+shift+e", "wait": 500 },
+        { "press": "alt+shift+F5", "wait": 800 }
+      ]
+    },
+    {
+      "name": "icon-sheet",
+      "setup": [
+        { "press": "ctrl+alt+shift+F8", "wait": 500 },
+        { "press": "ctrl+alt+shift+F9", "wait": 500 },
+        { "press": "ctrl+alt+shift+7", "wait": 1500 },
+        { "press": "ctrl+alt+shift+m", "wait": 1500 },
+        { "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 1 of 3')", "timeout": 10000 },
+        { "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ]
+    },
+    {
+      "name": "icon-sheet-2",
+      "setup": [
+        { "press": "ctrl+alt+shift+F4", "wait": 1500 },
+        { "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 2 of 3')", "timeout": 10000 },
+        { "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ]
+    },
+    {
+      "name": "icon-sheet-3",
+      "setup": [
+        { "press": "ctrl+alt+shift+F4", "wait": 1500 },
+        { "waitFor": "[...document.querySelectorAll('.part.panel .pane-header .description')].some((el) => el.textContent.trim() === 'page 3 of 3')", "timeout": 10000 },
+        { "waitFor": "(() => { const panel = document.querySelector('.part.panel'); if (!panel) return false; const box = panel.getBoundingClientRect(); const lists = [...panel.querySelectorAll('.pane-body .monaco-list')]; const icons = [...panel.querySelectorAll('.pane-body .monaco-list-row .codicon')]; return lists.length === 3 && icons.length > 0 && lists.every((list) => { const rows = list.querySelector('.monaco-list-rows'); return !!rows && rows.offsetHeight <= list.clientHeight; }) && icons.every((icon) => { const r = icon.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }); })()", "timeout": 10000 }
+      ],
+      "crops": [
+        { "name": "panel", "selector": ".part.panel" }
+      ],
+      "teardown": [
+        { "press": "ctrl+alt+shift+F4", "wait": 500 },
+        { "press": "ctrl+alt+shift+m", "wait": 800 },
+        { "press": "ctrl+alt+shift+e" }
+      ]
+    }
+  ],
+  "commitSheets": [
+    "main-explorer-sidebar",
+    "main-scm-sidebar",
+    "main-tabs-tabs",
+    "main-split-down-tabs",
+    "main-find-replace-widget",
+    "main-search-replace-sidebar",
+    "main-problems-table-title",
+    "main-layout-on-controls",
+    "main-layout-off-controls",
+    "main-layout-right-controls",
+    "main-layout-right-swap-controls",
+    "main-layout-customize-widget",
+    "main-ai-lightbulb-code",
+    "main-ai-actions-widget",
+    "main-symbols-widget",
+    "main-symbols-2-widget",
+    "main-suggest-widget",
+    "main-debug-disconnect-toolbar",
+    "main-debug-disconnect-code",
+    "main-icon-sheet-panel",
+    "main-icon-sheet-2-panel",
+    "main-icon-sheet-3-panel"
+  ]
+}

@@ -35,6 +35,22 @@
       "fontCharacter": "\\E117",
       "fontId": "witchynibbles-product-icons"
     },
+    "auxiliarybar-left-layout-icon": {
+      "fontCharacter": "\\E160",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "auxiliarybar-left-off-layout-icon": {
+      "fontCharacter": "\\E161",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "auxiliarybar-right-layout-icon": {
+      "fontCharacter": "\\E162",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "auxiliarybar-right-off-layout-icon": {
+      "fontCharacter": "\\E163",
+      "fontId": "witchynibbles-product-icons"
+    },
     "bell": {
       "fontCharacter": "\\E114",
       "fontId": "witchynibbles-product-icons"
@@ -49,6 +65,10 @@
     },
     "breadcrumb-separator": {
       "fontCharacter": "\\E110",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "case-sensitive": {
+      "fontCharacter": "\\E154",
       "fontId": "witchynibbles-product-icons"
     },
     "chat-view-icon": {
@@ -73,6 +93,14 @@
     },
     "close": {
       "fontCharacter": "\\E10F",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "collapse-all": {
+      "fontCharacter": "\\E150",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "configure-layout-icon": {
+      "fontCharacter": "\\E168",
       "fontId": "witchynibbles-product-icons"
     },
     "copilot": {
@@ -223,6 +251,10 @@
       "fontCharacter": "\\E11C",
       "fontId": "witchynibbles-product-icons"
     },
+    "discard": {
+      "fontCharacter": "\\E152",
+      "fontId": "witchynibbles-product-icons"
+    },
     "ellipsis": {
       "fontCharacter": "\\E11E",
       "fontId": "witchynibbles-product-icons"
@@ -263,6 +295,14 @@
       "fontCharacter": "\\E11A",
       "fontId": "witchynibbles-product-icons"
     },
+    "find-replace": {
+      "fontCharacter": "\\E158",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "find-replace-all": {
+      "fontCharacter": "\\E159",
+      "fontId": "witchynibbles-product-icons"
+    },
     "folding-collapsed": {
       "fontCharacter": "\\E10D",
       "fontId": "witchynibbles-product-icons"
@@ -291,6 +331,10 @@
       "fontCharacter": "\\E12E",
       "fontId": "witchynibbles-product-icons"
     },
+    "go-to-file": {
+      "fontCharacter": "\\E14D",
+      "fontId": "witchynibbles-product-icons"
+    },
     "gutter-lightbulb": {
       "fontCharacter": "\\E112",
       "fontId": "witchynibbles-product-icons"
@@ -305,6 +349,10 @@
     },
     "gutter-lightbulb-sparkle": {
       "fontCharacter": "\\E112",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "gutter-lightbulb-sparkle-filled": {
+      "fontCharacter": "\\E148",
       "fontId": "witchynibbles-product-icons"
     },
     "info": {
@@ -327,6 +375,10 @@
       "fontCharacter": "\\E112",
       "fontId": "witchynibbles-product-icons"
     },
+    "list-tree": {
+      "fontCharacter": "\\E151",
+      "fontId": "witchynibbles-product-icons"
+    },
     "loading": {
       "fontCharacter": "\\E127",
       "fontId": "witchynibbles-product-icons"
@@ -341,6 +393,14 @@
     },
     "more": {
       "fontCharacter": "\\E11E",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "new-file": {
+      "fontCharacter": "\\E14C",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "new-folder": {
+      "fontCharacter": "\\E14F",
       "fontId": "witchynibbles-product-icons"
     },
     "notifications-clear": {
@@ -363,12 +423,48 @@
       "fontCharacter": "\\E130",
       "fontId": "witchynibbles-product-icons"
     },
+    "panel-bottom": {
+      "fontCharacter": "\\E164",
+      "fontId": "witchynibbles-product-icons"
+    },
     "panel-close": {
       "fontCharacter": "\\E10F",
       "fontId": "witchynibbles-product-icons"
     },
+    "panel-layout-icon": {
+      "fontCharacter": "\\E164",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "panel-layout-icon-off": {
+      "fontCharacter": "\\E165",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "panel-left": {
+      "fontCharacter": "\\E160",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "panel-left-off": {
+      "fontCharacter": "\\E161",
+      "fontId": "witchynibbles-product-icons"
+    },
     "panel-maximize": {
       "fontCharacter": "\\E135",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "panel-right": {
+      "fontCharacter": "\\E162",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "panel-right-off": {
+      "fontCharacter": "\\E163",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "pinned": {
+      "fontCharacter": "\\E149",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "pinned-dirty": {
+      "fontCharacter": "\\E14A",
       "fontId": "witchynibbles-product-icons"
     },
     "plus": {
@@ -379,8 +475,20 @@
       "fontCharacter": "\\E123",
       "fontId": "witchynibbles-product-icons"
     },
+    "preserve-case": {
+      "fontCharacter": "\\E157",
+      "fontId": "witchynibbles-product-icons"
+    },
     "quick-input-back": {
       "fontCharacter": "\\E118",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "refresh": {
+      "fontCharacter": "\\E153",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "regex": {
+      "fontCharacter": "\\E156",
       "fontId": "witchynibbles-product-icons"
     },
     "remote": {
@@ -411,6 +519,10 @@
       "fontCharacter": "\\E10D",
       "fontId": "witchynibbles-product-icons"
     },
+    "search-replace-all": {
+      "fontCharacter": "\\E159",
+      "fontId": "witchynibbles-product-icons"
+    },
     "search-show-replace": {
       "fontCharacter": "\\E10C",
       "fontId": "witchynibbles-product-icons"
@@ -429,6 +541,102 @@
     },
     "source-control-view-icon": {
       "fontCharacter": "\\E102",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "sparkle": {
+      "fontCharacter": "\\E148",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "split-horizontal": {
+      "fontCharacter": "\\E166",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "split-vertical": {
+      "fontCharacter": "\\E167",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-class": {
+      "fontCharacter": "\\E178",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-constant": {
+      "fontCharacter": "\\E177",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-constructor": {
+      "fontCharacter": "\\E174",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-enum": {
+      "fontCharacter": "\\E17A",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-field": {
+      "fontCharacter": "\\E175",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-file": {
+      "fontCharacter": "\\E14B",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-folder": {
+      "fontCharacter": "\\E14E",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-function": {
+      "fontCharacter": "\\E174",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-interface": {
+      "fontCharacter": "\\E179",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-key": {
+      "fontCharacter": "\\E170",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-keyword": {
+      "fontCharacter": "\\E172",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-method": {
+      "fontCharacter": "\\E174",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-module": {
+      "fontCharacter": "\\E128",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-namespace": {
+      "fontCharacter": "\\E128",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-object": {
+      "fontCharacter": "\\E128",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-package": {
+      "fontCharacter": "\\E128",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-property": {
+      "fontCharacter": "\\E176",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-snippet": {
+      "fontCharacter": "\\E173",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-string": {
+      "fontCharacter": "\\E170",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-text": {
+      "fontCharacter": "\\E170",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "symbol-variable": {
+      "fontCharacter": "\\E171",
       "fontId": "witchynibbles-product-icons"
     },
     "sync": {
@@ -505,6 +713,10 @@
     },
     "warning": {
       "fontCharacter": "\\E120",
+      "fontId": "witchynibbles-product-icons"
+    },
+    "whole-word": {
+      "fontCharacter": "\\E155",
       "fontId": "witchynibbles-product-icons"
     },
     "widget-close": {

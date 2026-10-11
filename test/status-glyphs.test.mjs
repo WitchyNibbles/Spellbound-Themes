@@ -141,6 +141,8 @@ test('copilot-warning is the solid cat head with the "!" cut out (gate 2), and n
 });
 
 // ---- Dirty-branch sprigs (Task 10) ----
+// The badge literals below repeat status.mjs on purpose: the pin records which badge each state ships with, so swapping
+// two badges, or redrawing one without updating this test, fails here (a ✦/✓ swap passed every gate-2 test).
 test('each dirty-branch state carries its own badge: ✦ changes, ✓ staged, ! conflicts', () => {
   assert.equal(drawings['sprig-changes'](), svgDocument(parts.sprigSmall(), parts.star(12.5, 12.5, 2.5, 1)));
   assert.equal(drawings['sprig-staged'](), svgDocument(parts.sprigSmall(), polygon([[10, 12], [11, 11], [12, 12], [14, 10], [15, 11], [12, 14]])));

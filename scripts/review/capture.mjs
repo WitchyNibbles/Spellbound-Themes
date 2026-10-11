@@ -83,7 +83,20 @@ class Cdp {
     for (const type of ['rawKeyDown', 'keyUp']) {
       await this.send('Input.dispatchKeyEvent', { type, modifiers, key: key.key, code: key.code, windowsVirtualKeyCode: key.vk, nativeVirtualKeyCode: key.vk });
     }
+    // Then release the modifiers. VS Code takes the modifier state from the last key event it saw, so without these keyUps
+    // it kept Alt held after every ctrl+alt+shift chord and drew Alt alternatives in later captures: Split Editor Down
+    // for Split Editor Right, and Disconnect for Stop on the Node.js debug toolbar (gate-4 probe 2026-10-10T20-28-26).
+    let held = modifiers;
+    for (const [bit, name, vk] of [[8, 'Shift', 16], [2, 'Control', 17], [1, 'Alt', 18], [4, 'Meta', 91]]) {
+      if (!(held & bit)) continue;
+      held &= ~bit;
+      await this.send('Input.dispatchKeyEvent', { type: 'keyUp', modifiers: held, key: name, code: `${name}Left`, windowsVirtualKeyCode: vk, nativeVirtualKeyCode: vk });
+    }
   }
+
+  // Holds Alt down until the next press, so VS Code shows a menu item's Alt alternative (gate 4: Disconnect, the Alt
+  // alternative of Stop on the Node.js debug toolbar). A lone Alt keydown never reaches the menu bar: that needs a release.
+  holdAlt() { return this.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', modifiers: 1, key: 'Alt', code: 'AltLeft', windowsVirtualKeyCode: 18, nativeVirtualKeyCode: 18 }); }
 
   insert(text) { return this.send('Input.insertText', { text }); }
 
@@ -136,14 +149,24 @@ async function shutdown({ child, cdp }) {
   try { execFileSync('taskkill', ['/PID', String(child.pid), '/T', '/F'], { stdio: 'ignore' }); } catch { /* already gone */ }
 }
 
-// Tooltips (workbench hovers, editor hovers) that are on screen. Every screenshot waits until there are none.
-const NO_TOOLTIP = `![...document.querySelectorAll('.workbench-hover, .monaco-hover')].some((el) => {
+// Tooltips (workbench hovers, editor hovers, the debug hover over a variable) that are on screen. Every screenshot waits
+// until there are none, and the captures of a theme are checked again after the last crop.
+const NO_TOOLTIP = `![...document.querySelectorAll('.workbench-hover, .monaco-hover, .debug-hover-widget')].some((el) => {
   const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && !el.closest('.hidden'); })`;
+
+// Where a stuck non-optional wait left the focus: class names only, never text, values, titles or ids, which can carry a path.
+async function focusDiagnostics(cdp) {
+  try {
+    return await cdp.evaluate(`(() => { const el = document.activeElement; const part = el?.closest('.part'); const quick = document.querySelector('.quick-input-widget');
+      return 'active element classes: [' + (el ? [...el.classList].join(' ') : 'none') + '], its part: [' + (part ? [...part.classList].join(' ') : 'none') + '], quick input visible: ' + (!!quick && quick.style.display !== 'none' && quick.getBoundingClientRect().height > 0); })()`);
+  } catch { return 'focus diagnostics unavailable'; }
+}
 
 async function runStep(cdp, step, where) {
   try {
     if (step.press) await cdp.press(step.press);
     if (step.insert) await cdp.insert(step.insert);
+    if (step.hold === 'alt') await cdp.holdAlt();
     // hover: an expression that returns the { x, y } (CSS px) to move the mouse to, for states only a pointer reaches
     // (the debug-hint breakpoint helper in the glyph margin, the Call Stack row actions). The pointer stays there until
     // a later hover step moves it (scenes that hover park it on the status bar in their teardown). CDP takes the point in
@@ -155,7 +178,7 @@ async function runStep(cdp, step, where) {
     }
     if (step.waitFor) await waitFor(() => cdp.evaluate(step.waitFor), { timeout: step.timeout ?? 30000, label: step.waitFor });
   } catch (error) {
-    if (!step.optional) throw error;
+    if (!step.optional) throw error.message.startsWith('Timed out') ? new Error(`${where}: ${error.message}; ${await focusDiagnostics(cdp)}`) : error;
     manifest.warnings.push(`${where}: optional step failed: ${error.message}`);
   }
   await delay(step.wait ?? 300);
@@ -182,6 +205,7 @@ const baseSettings = JSON.parse(fs.readFileSync(path.join(work, 'profile', 'sett
   .replaceAll('{{shellIntegrationPs1}}', JSON.stringify(shellIntegrationPs1.replaceAll("'", "''")).slice(1, -1)));
 const keybindings = fs.readFileSync(path.join(work, 'profile', 'keybindings.json'), 'utf8');
 const capturesDir = path.join(work, 'captures');
+let settingsWrites = 0; // applySettings marks each write with a window title that differs from the previous one
 // A pass can write the fixture to disk (notes.md reached disk after the first pass of run 2026-10-10T01-41-22),
 // which changed the SCM state for every later scale. Each launch therefore starts from a pristine copy.
 const workspaceDir = path.join(work, 'workspace');
@@ -216,6 +240,17 @@ for (const pass of job.passes) {
     log(`${pass.name} @ ${scale * 100}%: launching`);
     const session = await launch({ userDataDir, extensionsDir, scale });
     const { cdp } = session;
+    // Writes the settings and waits until VS Code has read them. A theme wait alone passes at once when the theme does
+    // not change (a cut-down run, a variant), so each write also sets its own window title: the workspace name and one or
+    // two zero-width spaces, alternating, so the command centre still reads "workspace" and each write differs from the
+    // one before it.
+    const applySettings = async (theme, extra) => {
+      const mark = '\u200b'.repeat(1 + (++settingsWrites % 2));
+      writeUserFile(userDataDir, 'settings.json', settingsFor(theme, { ...extra, 'window.title': `\${rootName}${mark}` }));
+      await waitFor(() => cdp.evaluate(`document.title.endsWith(${JSON.stringify(mark)}) && !document.title.endsWith(${JSON.stringify(`\u200b${mark}`)})`),
+        { timeout: 20000, label: `the settings for ${theme.label}` });
+      await waitFor(() => cdp.evaluate(themeApplied(theme.signature)), { timeout: 20000, label: `theme ${theme.label}` });
+    };
     try {
       const dpr = await cdp.evaluate('window.devicePixelRatio');
       if (Math.abs(dpr - scale) > 0.01) throw new Error(`devicePixelRatio is ${dpr}, expected ${scale}; set "mode": "zoom" in the job file`);
@@ -228,13 +263,11 @@ for (const pass of job.passes) {
         // A scene's own settings (gate 3: panel tabs as icons) hold for its setup and every capture. Each setup starts
         // in the first theme, not in the last theme of the previous scene.
         const sceneSettings = scene.settings ?? {};
-        writeUserFile(userDataDir, 'settings.json', settingsFor(job.themes[0], sceneSettings));
-        await waitFor(() => cdp.evaluate(themeApplied(job.themes[0].signature)), { timeout: 20000, label: `theme ${job.themes[0].label}` });
-        for (const step of scene.setup ?? []) await runStep(cdp, step, where);
+        await applySettings(job.themes[0], sceneSettings);
+        for (const [index, step] of (scene.setup ?? []).entries()) await runStep(cdp, step, `${where} setup[${index}]`);
         for (const theme of job.themes) {
           for (const variant of scene.variants ?? [{ name: 'default', settings: {} }]) {
-            writeUserFile(userDataDir, 'settings.json', settingsFor(theme, { ...sceneSettings, ...variant.settings }));
-            await waitFor(() => cdp.evaluate(themeApplied(theme.signature)), { timeout: 20000, label: `theme ${theme.label}` });
+            await applySettings(theme, { ...sceneSettings, ...variant.settings });
             await delay(1500);
             await waitFor(() => cdp.evaluate(NO_TOOLTIP), { timeout: 10000, label: 'hover tooltips to close' });
             const stem = path.join(capturesDir, pass.name, String(scale), scene.name, theme.slug, variant.name);
@@ -249,9 +282,12 @@ for (const pass of job.passes) {
               if (!clip) { manifest.warnings.push(`${where}/${theme.slug}: no element for ${crop.selector}`); continue; }
               await shoot(crop.name, clip);
             }
+            // Checked again after the last crop: a tooltip that opened during the crops would be in them, and a tooltip
+            // can show a path (gate-3 review). The run stops rather than keep such a capture.
+            if (!(await cdp.evaluate(NO_TOOLTIP))) throw new Error(`${where}/${theme.slug}: a tooltip opened during the captures`);
           }
         }
-        for (const step of scene.teardown ?? []) await runStep(cdp, step, where);
+        for (const [index, step] of (scene.teardown ?? []).entries()) await runStep(cdp, step, `${where} teardown[${index}]`);
       }
     } finally {
       await shutdown(session);

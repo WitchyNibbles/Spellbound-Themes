@@ -508,6 +508,12 @@
       "default": "lightbulb-sparkle",
       "batch": "1"
     },
+    "gutter-lightbulb-sparkle-filled": {
+      "tier": "extra",
+      "kind": "registered",
+      "default": "sparkle-filled",
+      "batch": "editor"
+    },
     "info": {
       "tier": "core",
       "kind": "codicon",
@@ -820,6 +826,12 @@
       "default": null,
       "batch": "symbols"
     },
+    "symbol-constructor": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
     "symbol-enum": {
       "tier": "core",
       "kind": "codicon",
@@ -856,6 +868,12 @@
       "default": null,
       "batch": "symbols"
     },
+    "symbol-key": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
     "symbol-keyword": {
       "tier": "core",
       "kind": "codicon",
@@ -876,6 +894,18 @@
     },
     "symbol-namespace": {
       "tier": "core",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-object": {
+      "tier": "extra",
+      "kind": "codicon",
+      "default": null,
+      "batch": "symbols"
+    },
+    "symbol-package": {
+      "tier": "extra",
       "kind": "codicon",
       "default": null,
       "batch": "symbols"

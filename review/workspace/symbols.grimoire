@@ -1,0 +1,7 @@
+# Review fixture (gate 4): the review helper reads each "<kind> <name>" line as one symbol, and suggests on the last line.
+class Cauldron
+method stir
+function brew
+field ladle
+property colour
+variable dose

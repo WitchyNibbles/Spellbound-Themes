@@ -59,6 +59,16 @@ test('breakpoint holes and dashes are real under the font fill rule', () => {
   assert.equal(inkAt('dashed-ring', [8, 8]), false);
 });
 
+test('neighbouring dashes of the dashed ring are at least 1 unit apart (section 4: no gap under 1 unit)', () => {
+  const dashes = pathsOf(drawings['dashed-ring']()).join('').split(/(?=M)/).map((d) => subpaths(d));
+  assert.equal(dashes.length, 6);
+  dashes.forEach((dash, index) => {
+    const next = (index + 1) % dashes.length;
+    const clearance = gap(dash, dashes[next]);
+    assert.ok(clearance >= 1, `dashes ${index} and ${next}: ${clearance}`);
+  });
+});
+
 test('unverified and disabled differ where it shows: the dashed ring has gaps where the ring is solid', () => {
   for (const degrees of [0, 60, 120, 180, 240, 300]) {
     assert.equal(inkAt('moon-outline', polar(3.5, degrees)), true);
@@ -89,6 +99,7 @@ test('each step arrow lands on a 3x3 moon on pixel column 7, 1 unit or more clea
     const all = outlinesOf(drawings[name]());
     assert.ok(keys(all).includes(keys(moon)[0]), `${name} has the moon`);
     const arrow = all.filter((poly) => !keys(moon).includes(JSON.stringify(poly)));
+    assert.ok(arrow.length > 0, `${name}: the arrow outlines are found`);
     const clearance = gap(moon, arrow);
     assert.ok(clearance >= 1 - 1e-9, `${name} clearance ${clearance}`);
   }

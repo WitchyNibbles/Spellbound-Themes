@@ -7,6 +7,10 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { USAGE, filterJob, parseGateArgs } from './args.mjs';
 
 const root = path.resolve(import.meta.dirname, '..', '..');
+const variantDir = path.join(root, 'icons', 'product-src-variants');
+const variantArgs = fs.existsSync(variantDir)
+  ? fs.readdirSync(variantDir).filter((file) => file.endsWith('.svg')).map((file) => `--variant=${file.split('.')[0]}=icons/product-src-variants/${file}`)
+  : [];
 // Arguments and the job are checked before anything is built or launched: a bad option, an unknown job file, scene
 // or scale stops here with the usage.
 let args;
@@ -17,7 +21,9 @@ try {
     console.log(USAGE);
     process.exit(0);
   }
-  job = filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), args);
+  // The variants pass runs only with a variant drawing and without --skip-variants. It is dropped before the job is cut
+  // down, so a scene only that pass captures stops here too (gate-4 review).
+  job = filterJob(JSON.parse(fs.readFileSync(path.join(root, args.job), 'utf8')), { ...args, skipVariants: args.skipVariants || !variantArgs.length });
 } catch (error) {
   console.error(`${error.message}\n${USAGE}`);
   process.exit(2);
@@ -39,12 +45,7 @@ const vsce = path.join(root, 'node_modules', '.bin', 'vsce');
 execFileSync('npm', ['run', 'build'], { cwd: root, stdio: 'inherit' });
 fs.mkdirSync(out, { recursive: true });
 execFileSync('node', ['scripts/review/stage-extension.mjs', out], { cwd: root, stdio: 'inherit' });
-const variantDir = path.join(root, 'icons', 'product-src-variants');
-const variantArgs = fs.existsSync(variantDir)
-  ? fs.readdirSync(variantDir).filter((file) => file.endsWith('.svg')).map((file) => `--variant=${file.split('.')[0]}=icons/product-src-variants/${file}`)
-  : [];
-if (!args.skipVariants && variantArgs.length) execFileSync('node', ['scripts/review/stage-extension.mjs', out, ...variantArgs], { cwd: root, stdio: 'inherit' });
-else job.passes = job.passes.filter((pass) => pass.name !== 'variants');
+if (job.passes.some((pass) => pass.name === 'variants')) execFileSync('node', ['scripts/review/stage-extension.mjs', out, ...variantArgs], { cwd: root, stdio: 'inherit' });
 
 // 2. Package the review helper with one row per drawing.
 const map = JSON.parse(fs.readFileSync(path.join(root, 'icons', 'product-icon-map.json'), 'utf8'));

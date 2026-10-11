@@ -21,7 +21,7 @@ Make the VS Code collection look as good as witchyterm and read as the same bran
 In:
 
 - Color themes: new Moonlit Candle; semantic and typography fixes to Moonlit, Daydream and Coven Contrast.
-- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 172 keys in total. Work is sized by distinct drawings, not by keys.
+- Product icon theme: full redraw. All 132 core-tier IDs, plus the named extras in section 5.1, for 177 keys in total. Work is sized by distinct drawings, not by keys.
 - File icon theme: full redraw, ~30 file types, ~15 folder names, special file names, dark/light/high-contrast sets resolved by a build step from one source per drawing.
 - Build and validation scripts for all of the above.
 - README, CHANGELOG, Marketplace screenshots, version 2.0.0.
@@ -137,6 +137,7 @@ Pixel grid. The font is unhinted, so outline coordinates are drawn exactly as wr
 - (8,8) is a pixel boundary, so an odd-width central feature cannot sit exactly in the middle. Put it on pixel column 7 (x 7–8), as Codicon `add` does, and use the same side in every glyph.
 - No radius, sliver or gap under 1 unit. One exception, kept at gate 3 (G21): the round 0.5-unit dash ends of the unverified dashed ring.
 - Accepted off-grid points (gate 2): the corners of the gear's four 45° teeth, the four band ends of `sync` at 235° and 55°, and the points where the `copilot-unavailable` knockout band cuts the cat head's straight edges. Snapping them would distort the shape or break the 1-unit clearance.
+- Accepted at gate 4 (G40): the lollipop dot and the class-tree connectors touch their strokes; the three ✦ of the ✧ cluster are solid; the solid wrench (G36, like G12 and G26) is an exception to the one-accent rule; refresh's 3×6 head is inherited from restart (G22, G31).
 - Snapping guarantees crisp edges only at whole device scales (100%, 200%). At 125% and 150% it only keeps the blur from getting worse.
 
 Keylines (taken from the measured Codicon bounds):
@@ -181,8 +182,9 @@ Font build:
 - Metaphors only for views, identity and status signals. Universal actions keep familiar silhouettes in the house style.
 - Keys follow `docs/research/vscode-1.141-icon-inventory.md`. Alias IDs that do not inherit (for example `tree-item-expanded`, `toolbar-more`, `menu-submenu`, `quick-input-back`, `dialog-*`, `plus`) get their own explicit entries.
 - Keys beyond the 132 core-tier IDs, included on purpose: `account`, `debug-alt`, `run`, `settings-gear`, `gear`, `ellipsis`, `trash` (helper codicons used directly), `more`, `plus`, `dialog-close`, `dialog-error`, `dialog-info`, `dialog-warning` (extended-tier aliases), and three registered IDs the inventory omits: `timeline-view-icon`, `debug-stackframe-dot` and `copilot-unavailable`. Added by the author decisions (section 11): `debug-breakpoint-unverified`, `debug-breakpoint-conditional-disabled`, `debug-breakpoint-log-disabled`, `debug-breakpoint-conditional-unverified` (debug batch); `copilot-warning`, `copilot-snooze`, `copilot-dot` (status batch); `panel-right`, `panel-right-off`, `auxiliarybar-left-layout-icon`, `auxiliarybar-left-off-layout-icon`, `panel-bottom` (editor batch).
-- Added at review gate 1 (section 11.1): `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix` and the inline light-bulb codicons `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` (batch 1, claimed by the candle; G5 as amended in section 11.1: with chat on, every quick-fix bulb is one of these, in the gutter or inline); `git-branch-changes`, `git-branch-staged-changes`, `git-branch-conflicts` (status batch, sprig variants; G6) and `ports-forwarded-with-process-icon` (status batch, the `terminal-decoration-success` dot; G4). Total: 170 keys (132 core + 38 extras). `gutter-lightbulb-sparkle-filled` (the gutter mark when every action on the line is an AI action) stays stock until gate 4, where it joins the editor batch on the ✧ cluster (section 11.2).
-- Added at review gate 3 (section 11.3): `debug-disconnect` (debug batch, on the Stop square; G23) and `debug-breakpoint-log-unverified` (debug batch, on the dashed ring; G20). Total: 172 keys (132 core + 40 extras), 173 once gate 4 adds `gutter-lightbulb-sparkle-filled`.
+- Added at review gate 1 (section 11.1): `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix` and the inline light-bulb codicons `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` (batch 1, claimed by the candle; G5 as amended in section 11.1: with chat on, every quick-fix bulb is one of these, in the gutter or inline); `git-branch-changes`, `git-branch-staged-changes`, `git-branch-conflicts` (status batch, sprig variants; G6) and `ports-forwarded-with-process-icon` (status batch, the `terminal-decoration-success` dot; G4). Total: 170 keys (132 core + 38 extras). `gutter-lightbulb-sparkle-filled` (the gutter mark when every action on the line is an AI action) stayed stock until gate 4, where it joined the editor batch on the ✧ cluster (section 11.2).
+- Added at review gate 3 (section 11.3): `debug-disconnect` (debug batch, on the Stop square; G23) and `debug-breakpoint-log-unverified` (debug batch, on the dashed ring; G20). Total: 172 keys (132 core + 40 extras).
+- Added at gate 4 (G11, section 11.2): `gutter-lightbulb-sparkle-filled` (editor batch, on the ✧ cluster with `sparkle`). `symbol-constructor`, `symbol-key`, `symbol-object` and `symbol-package` (symbols batch; G34, section 11.4) were pinned after the gate-4 run, on the drawings the stock font shares them with. Total: 177 keys (132 core + 45 extras).
 - Dropped keys from 1.2.1: `home`, `activity-bar-left`, `activity-bar-right`, `menu`, `copy`, `edit`, `save` (not core-tier). `file`/`folder` are replaced by `symbol-file`/`symbol-folder`. `split-vertical` stays: it is a core ID (the Alt state of Split Editor), and it was given a glyph in the design interview. The legacy `layout-sidebar-left`, `layout-sidebar-right` and `layout-panel` keys are dropped too; the registered toggle keys in section 5.2 replace them.
 - Several IDs share one glyph drawing. The map format is drawing-based: each drawing has one SVG source and one codepoint, and lists the IDs that use it. Codepoints are stored in the map, are never reused within a release, and are not derived from an ID's position in a list.
 - A product icon theme cannot rotate a glyph per ID (only tree twisties are rotated by VS Code's CSS). Every orientation used is its own pre-rotated drawing, so "one chevron" means separate down, right and up drawings, each ID taking the orientation of its Codicon default.
@@ -283,8 +285,8 @@ Editor, find, layout, SCM:
 | :- | :- | :- |
 | `light-bulb`, `gutter-lightbulb`, `gutter-lightbulb-sparkle`, `gutter-lightbulb-auto-fix`, `gutter-lightbulb-aifix-auto-fix`, `lightbulb-sparkle`, `lightbulb-autofix`, `lightbulb-sparkle-autofix` | candle | flame |
 | `circle-filled` (dirty tab dot) | ✦ (audit every other use of `circle-filled` before changing it) | ✦ |
-| `pinned` / `pinned-dirty` | hatpin, round head / ✦ head | head |
-| `sparkle`; `gutter-lightbulb-sparkle-filled` from gate 4 (section 11.2) | three-star cluster ✧ | largest star |
+| `pinned` / `pinned-dirty` | pushpin (flange, waist, cap; needle 1.41 clear), the same plus a 5×5 ✦ badge at x9-14 (G32) | head |
+| `sparkle`, `gutter-lightbulb-sparkle-filled` (G11) | three-star cluster ✧ | largest star |
 | `new-file` / `new-folder` | page / folder with `+` | corner / tab |
 | `go-to-file`, `symbol-file`, `symbol-folder` | page with arrow, page, folder | corner / tab |
 | `collapse-all`, `list-tree`, `discard`, `refresh` | usual shapes | main shape |
@@ -295,7 +297,24 @@ Editor, find, layout, SCM:
 | `panel-right`/`-off`, `auxiliarybar-left-layout-icon`/`auxiliarybar-left-off-layout-icon`, `panel-bottom` | mirrored pane drawings of the frame toggles above (side bars swapped; `panel-bottom` the bottom pane) | pane |
 | `configure-layout-icon` | frame with four panes | one pane |
 
-Symbols (`symbol-class`, `-method`, `-function`, `-field`, `-property`, `-variable`, `-constant`, `-interface`, `-enum`, `-module`, `-namespace`, `-keyword`, `-string`, `-text`, `-snippet`): Codicon meanings kept (cube = method, wrench = property, `[x]` = variable, …), redrawn in the house style.
+Symbols (`symbol-class`, `-method`, `-function`, `-field`, `-property`, `-variable`, `-constant`, `-interface`, `-enum`, `-module`, `-namespace`, `-keyword`, `-string`, `-text`, `-snippet`, and the G34 shares `-constructor`, `-key`, `-object`, `-package`): Codicon meanings kept, redrawn in the house style. The stock font's sharing is kept: `symbol-method`, `symbol-function` and `symbol-constructor` share one glyph, `symbol-string`, `symbol-text` and `symbol-key` another, and `symbol-module`, `symbol-namespace`, `symbol-object` and `symbol-package` take the `bracket` braces. Nineteen IDs, twelve glyphs, each told apart from every other by its silhouette at 16px, because several kinds share a colour in the suggest widget, the Outline view and the breadcrumbs.
+
+| IDs | Glyph | Filled part |
+| :- | :- | :- |
+| `symbol-class` | node tree: parent upper left, a child to its right and one below-right, 1-unit connectors | parent node |
+| `symbol-method`, `symbol-function`, `symbol-constructor` | isometric cube on 2:1 slopes, front edge on column 7 | top face |
+| `symbol-field` | flat slab, the cube's flat sibling: top face over one band | top face |
+| `symbol-property` | open-end wrench, one solid shape with the jaw cut out (2.12 wide) | the whole wrench (a solid silhouette like the witch hat and the quill vane; kept at gate 4, G36) |
+| `symbol-variable` | `[x]`: square brackets around a 6×6 x (the `close` construction: two 1.41-wide bevel-ended bands) | none (strokes) |
+| `symbol-constant` | 10×10 tile with `=` cut out (two 1×6 slots) | tile, `=` cut out (kept at gate 4, G35) |
+| `symbol-interface` | lollipop: dot, stick, 7-unit ring on row 7 | dot |
+| `symbol-enum` | two cards: solid back card, outline front card with a value line | back card |
+| `symbol-module`, `symbol-namespace`, `symbol-object`, `symbol-package` | `{ }`, the `bracket` drawing (as in the stock font) | none |
+| `symbol-keyword` | lines of text with the first word as a solid block | keyword block |
+| `symbol-string`, `symbol-text`, `symbol-key` | `abc` in the shared letter construction (double-storey `a`) | none (letterforms) |
+| `symbol-snippet` | frame open at the bottom, bottom edge three dashes | none (strokes) |
+
+Letterforms share one construction, used by the find toggles and the symbols alike: 1-unit stems and bars on whole numbers, 45° strokes 1.41 across, radius-1 outer corners on the round side, square stem side and inner corners, closed counters at least 2×2, letters 1 unit apart, a double-storey `a`. The find toggles use it 5 units wide with x-height 7 and capitals and ascenders 10; `abc` uses it 4 units wide with x-height 6 (y6–12) and the ascender to y3. Square brackets use the same 1-unit stroke, span y2–14 and have 2-unit serifs.
 
 ### 5.3 Review gate
 
@@ -545,7 +564,7 @@ Taken at review gate 3 (`docs/qa/2.0-gate-3/README.md`), all as recommended.
 - G20 `debug-breakpoint-log-unverified` is pinned in the debug batch on the dashed ring.
 - G21 The dashed ring keeps its round 0.5-unit dash ends, the one sub-unit radius in the set (section 4).
 - G22 The debug toolbar keeps its weights: continue, pause and stop solid; the steps and restart light.
-- G23 `debug-disconnect` is pinned in the debug batch on the Stop square. js-debug focuses a child session, so the Node.js toolbar shows Disconnect where Stop would be, and the row now ends solid.
+- G23 `debug-disconnect` is pinned in the debug batch on the Stop square. For a Node.js launch, 1.141 shows Stop on the floating toolbar, with Disconnect as its Alt alternative; gate 3's sheets showed Disconnect because the capture harness left Alt held (fixed at gate 4). The pin stands: Disconnect shows while Alt is held and for attach sessions, and it is the Stop square either way, so the row ends solid.
 - G24 The focused frame keeps its drawing; focused and top frame differ by colour only, and a conditional breakpoint under a focused frame shows no breakpoint colour (1.141's CSS).
 - G25 `testing-run-all-icon` keeps the filled triangle with the open chevron ahead of it.
 - G26 The quill (`output-view-icon`) keeps its solid vane, an exception to the one-accent rule like the witch hat (G12).
@@ -553,3 +572,18 @@ Taken at review gate 3 (`docs/qa/2.0-gate-3/README.md`), all as recommended.
 - G28 The quill and the broom keep their shared diagonal.
 - G29 Coven Contrast sets `quickInputList.focusBackground` (`#FF67B7`, the list selection) and `quickInputList.focusForeground` and `quickInputList.focusIconForeground` (`#000000`). 1.141 leaves the focused quick-input row transparent in high contrast, so its black text and icons sat on the near-black quick input. The other themes keep VS Code's defaults.
 - G30 The panel batch and the debug batch are approved with G18–G29.
+
+### 11.4 Gate 4 decisions (2026-10-11)
+
+Taken at review gate 4 (`docs/qa/2.0-gate-4/README.md`), all as recommended.
+
+- G31 `refresh` keeps the mirrored `restart` construction.
+- G32 `pinned` and `pinned-dirty` are redrawn as a pushpin (flange, waist, cap and a 45° needle in close's 3-13 box; the dirty state adds a 5×5 ✦ badge at x9-14, so `pinned-dirty` spans 3-14: the badge sits one unit past close's box, as the stock dirty dot overshoots its pin), because the hatpins read as a match or lens and as a magic wand at gate 4.
+- G33 The layout toggles keep the stock silhouettes.
+- G34 `symbol-constructor`, `symbol-key`, `symbol-object` and `symbol-package` are pinned in the symbols batch, claimed onto the cube, `abc` and braces as the stock font shares them. 177 keys (132 core + 45 extras); the next gate job must wait for them.
+- G35 The solid `=` tile (`symbol-constant`) stays.
+- G36 The solid wrench (`symbol-property`) stays, an exception to the one-accent rule like G12 and G26.
+- G37 G23's reason is corrected (section 11.3): Stop shows on the Node.js toolbar and Disconnect is its Alt alternative; the pin stands.
+- G38 `sparkle-filled` stays stock: pinning it would make the two states of the Search view's AI-results toggle identical.
+- G39 `symbol-file` and `symbol-folder` stay mapped.
+- G40 The editor batch and the symbols batch are approved with G31-G39, and the section-4 exceptions they carry are listed in section 4.

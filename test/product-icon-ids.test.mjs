@@ -5,10 +5,10 @@ import pinned from '../icons/product-icon-ids.json' with { type: 'json' };
 const entries = Object.entries(pinned.ids);
 const BATCHES = ['1', 'chrome', 'panel', 'status', 'debug', 'editor', 'symbols'];
 
-test('132 core IDs plus 40 named extras', () => {
+test('132 core IDs plus 45 named extras', () => {
   assert.equal(entries.filter(([, e]) => e.tier === 'core').length, 132);
-  assert.equal(entries.filter(([, e]) => e.tier === 'extra').length, 40);
-  assert.equal(entries.length, 172);
+  assert.equal(entries.filter(([, e]) => e.tier === 'extra').length, 45);
+  assert.equal(entries.length, 177);
 });
 
 test('the keys added by author decisions 4, 5 and 7 sit in their batches', () => {
@@ -31,11 +31,19 @@ test('the keys added at gate 1 (G4-G6) sit in their batches with the kind and de
     'ports-forwarded-with-process-icon': { kind: 'registered', default: 'circle-filled', batch: 'status' },
   };
   for (const [id, entry] of Object.entries(expected)) assert.deepEqual(pinned.ids[id], { tier: 'extra', ...entry }, id);
-  assert.equal('gutter-lightbulb-sparkle-filled' in pinned.ids, false, 'the all-AI gutter mark stays unpinned until gate 4 (spec 11.2, G11)');
+});
+
+test('G34: the four symbol shares pinned after the gate-4 run sit in the symbols batch with the kind and default the 1.141 bundle registers', () => {
+  for (const id of ['symbol-constructor', 'symbol-key', 'symbol-object', 'symbol-package']) assert.deepEqual(pinned.ids[id], { tier: 'extra', kind: 'codicon', default: null, batch: 'symbols' }, id);
 });
 
 test('the keys added at gate 3 (G20, G23) sit in the debug batch with the kind and default the 1.141 bundle registers', () => {
   for (const id of ['debug-disconnect', 'debug-breakpoint-log-unverified']) assert.deepEqual(pinned.ids[id], { tier: 'extra', kind: 'codicon', default: null, batch: 'debug' }, id);
+});
+
+test('G11: the all-AI gutter mark is pinned in the editor batch with the kind and default the 1.141 bundle registers', () => {
+  assert.deepEqual(pinned.ids['gutter-lightbulb-sparkle-filled'], { tier: 'extra', kind: 'registered', default: 'sparkle-filled', batch: 'editor' });
+  assert.equal(entries.filter(([, e]) => e.batch === 'editor').length, 34);
 });
 
 test('every key has a known batch and kind', () => {

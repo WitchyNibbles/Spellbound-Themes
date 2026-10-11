@@ -55,9 +55,13 @@ test('knockOut removes a convex region, keeps holes as holes and leaves other pa
 });
 
 test('knockOut adds no duplicate points when the region boundary passes through a vertex', () => {
-  // x >= 2 cuts the diamond through its top and bottom vertices; the kept half is the left triangle, three points.
+  // knockOut removes the region, so [[1, 0, 2]] (x >= 2) removes the right half of the diamond and [[-1, 0, -2]]
+  // (x <= 2) the left half. Both boundaries run through the top and bottom vertices; whichever half is left over is a
+  // triangle of three points, with no vertex repeated.
   const diamond = polygon([[2, 0], [4, 2], [2, 4], [0, 2]]);
-  assert.deepEqual(knockOut([diamond], [[1, 0, 2]]), ['M2 0L2 4L0 2Z']);
-  // -0.1x >= -0.3 meets the apex (3, 3) up to floating-point noise (about 5e-17); it still counts as on the boundary.
+  assert.deepEqual(knockOut([diamond], [[1, 0, 2]]), ['M2 0L2 4L0 2Z'], 'x >= 2 removed: the left triangle is left');
+  assert.deepEqual(knockOut([diamond], [[-1, 0, -2]]), ['M2 0L4 2L2 4Z'], 'x <= 2 removed: the right triangle is left');
+  // -0.1x >= -0.3 (x <= 3, removed) meets the apex (3, 3) up to floating-point noise (about 5e-17); it still counts as
+  // on the boundary, so the right half is left with the apex once.
   assert.deepEqual(knockOut([polygon([[0, 0], [6, 0], [3, 3]])], [[-0.1, 0, -0.3]]), ['M3 0L6 0L3 3Z']);
 });

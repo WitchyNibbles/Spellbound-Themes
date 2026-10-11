@@ -309,12 +309,6 @@
         "loading"
       ]
     },
-    "braces": {
-      "codepoint": "E128",
-      "ids": [
-        "bracket"
-      ]
-    },
     "cat-slash": {
       "codepoint": "E129",
       "ids": [
@@ -529,6 +523,255 @@
       "codepoint": "E147",
       "ids": [
         "testing-passed-icon"
+      ]
+    },
+    "sparkle-cluster": {
+      "codepoint": "E148",
+      "ids": [
+        "sparkle",
+        "gutter-lightbulb-sparkle-filled"
+      ]
+    },
+    "pushpin": {
+      "codepoint": "E149",
+      "ids": [
+        "pinned"
+      ]
+    },
+    "pushpin-dirty": {
+      "codepoint": "E14A",
+      "ids": [
+        "pinned-dirty"
+      ]
+    },
+    "page": {
+      "codepoint": "E14B",
+      "ids": [
+        "symbol-file"
+      ]
+    },
+    "page-plus": {
+      "codepoint": "E14C",
+      "ids": [
+        "new-file"
+      ]
+    },
+    "page-arrow": {
+      "codepoint": "E14D",
+      "ids": [
+        "go-to-file"
+      ]
+    },
+    "folder": {
+      "codepoint": "E14E",
+      "ids": [
+        "symbol-folder"
+      ]
+    },
+    "folder-plus": {
+      "codepoint": "E14F",
+      "ids": [
+        "new-folder"
+      ]
+    },
+    "collapse-stack": {
+      "codepoint": "E150",
+      "ids": [
+        "collapse-all"
+      ]
+    },
+    "tree-node": {
+      "codepoint": "E151",
+      "ids": [
+        "list-tree"
+      ]
+    },
+    "undo-arrow": {
+      "codepoint": "E152",
+      "ids": [
+        "discard"
+      ]
+    },
+    "refresh-arrow": {
+      "codepoint": "E153",
+      "ids": [
+        "refresh"
+      ]
+    },
+    "toggle-case": {
+      "codepoint": "E154",
+      "ids": [
+        "case-sensitive"
+      ]
+    },
+    "toggle-word": {
+      "codepoint": "E155",
+      "ids": [
+        "whole-word"
+      ]
+    },
+    "toggle-regex": {
+      "codepoint": "E156",
+      "ids": [
+        "regex"
+      ]
+    },
+    "toggle-preserve": {
+      "codepoint": "E157",
+      "ids": [
+        "preserve-case"
+      ]
+    },
+    "replace-box": {
+      "codepoint": "E158",
+      "ids": [
+        "find-replace"
+      ]
+    },
+    "replace-stack": {
+      "codepoint": "E159",
+      "ids": [
+        "find-replace-all",
+        "search-replace-all"
+      ]
+    },
+    "pane-left": {
+      "codepoint": "E160",
+      "ids": [
+        "panel-left",
+        "auxiliarybar-left-layout-icon"
+      ]
+    },
+    "pane-left-off": {
+      "codepoint": "E161",
+      "ids": [
+        "panel-left-off",
+        "auxiliarybar-left-off-layout-icon"
+      ]
+    },
+    "pane-right": {
+      "codepoint": "E162",
+      "ids": [
+        "auxiliarybar-right-layout-icon",
+        "panel-right"
+      ]
+    },
+    "pane-right-off": {
+      "codepoint": "E163",
+      "ids": [
+        "auxiliarybar-right-off-layout-icon",
+        "panel-right-off"
+      ]
+    },
+    "pane-bottom": {
+      "codepoint": "E164",
+      "ids": [
+        "panel-layout-icon",
+        "panel-bottom"
+      ]
+    },
+    "pane-bottom-off": {
+      "codepoint": "E165",
+      "ids": [
+        "panel-layout-icon-off"
+      ]
+    },
+    "split-horizontal": {
+      "codepoint": "E166",
+      "ids": [
+        "split-horizontal"
+      ]
+    },
+    "split-vertical": {
+      "codepoint": "E167",
+      "ids": [
+        "split-vertical"
+      ]
+    },
+    "four-panes": {
+      "codepoint": "E168",
+      "ids": [
+        "configure-layout-icon"
+      ]
+    },
+    "bracket-x": {
+      "codepoint": "E171",
+      "ids": [
+        "symbol-variable"
+      ]
+    },
+    "keyword-lines": {
+      "codepoint": "E172",
+      "ids": [
+        "symbol-keyword"
+      ]
+    },
+    "snippet-frame": {
+      "codepoint": "E173",
+      "ids": [
+        "symbol-snippet"
+      ]
+    },
+    "slab": {
+      "codepoint": "E175",
+      "ids": [
+        "symbol-field"
+      ]
+    },
+    "wrench": {
+      "codepoint": "E176",
+      "ids": [
+        "symbol-property"
+      ]
+    },
+    "equals-block": {
+      "codepoint": "E177",
+      "ids": [
+        "symbol-constant"
+      ]
+    },
+    "class-tree": {
+      "codepoint": "E178",
+      "ids": [
+        "symbol-class"
+      ]
+    },
+    "lollipop": {
+      "codepoint": "E179",
+      "ids": [
+        "symbol-interface"
+      ]
+    },
+    "cards": {
+      "codepoint": "E17A",
+      "ids": [
+        "symbol-enum"
+      ]
+    },
+    "cube": {
+      "codepoint": "E174",
+      "ids": [
+        "symbol-method",
+        "symbol-function",
+        "symbol-constructor"
+      ]
+    },
+    "abc": {
+      "codepoint": "E170",
+      "ids": [
+        "symbol-string",
+        "symbol-text",
+        "symbol-key"
+      ]
+    },
+    "braces": {
+      "codepoint": "E128",
+      "ids": [
+        "bracket",
+        "symbol-module",
+        "symbol-namespace",
+        "symbol-object",
+        "symbol-package"
       ]
     }
   }

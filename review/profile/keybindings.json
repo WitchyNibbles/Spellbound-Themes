@@ -45,5 +45,22 @@
   { "key": "ctrl+alt+shift+F8", "command": "workbench.action.closeSidebar" },
   { "key": "ctrl+alt+shift+F9", "command": "workbench.action.closeAuxiliaryBar" },
   { "key": "ctrl+alt+shift+F10", "command": "workbench.action.quickOpen", "args": "term " },
-  { "key": "ctrl+alt+shift+F11", "command": "runCommands", "args": { "commands": ["workbench.debug.variablesView.toggleVisibility", "workbench.debug.watchExpressionsView.toggleVisibility"] } }
+  { "key": "ctrl+alt+shift+F11", "command": "runCommands", "args": { "commands": ["workbench.debug.variablesView.toggleVisibility", "workbench.debug.watchExpressionsView.toggleVisibility"] } },
+  { "key": "ctrl+alt+F1", "command": "workbench.action.pinEditor" },
+  { "key": "ctrl+alt+F2", "command": "workbench.action.unpinEditor" },
+  { "key": "ctrl+alt+F3", "command": "workbench.action.files.revert" },
+  { "key": "ctrl+alt+F4", "command": "editor.action.startFindReplaceAction" },
+  { "key": "ctrl+alt+F5", "command": "workbench.action.replaceInFiles" },
+  { "key": "ctrl+alt+F6", "command": "search.focus.nextInputBox" },
+  { "key": "ctrl+alt+F7", "command": "workbench.actions.table.workbench.panel.markers.view.viewAsTable" },
+  { "key": "ctrl+alt+F8", "command": "workbench.actions.table.workbench.panel.markers.view.viewAsTree" },
+  { "key": "ctrl+alt+F9", "command": "workbench.action.customizeLayout" },
+  { "key": "ctrl+alt+F10", "command": "workbench.action.quickOpen", "args": "hexes.ts:4" },
+  { "key": "ctrl+alt+F11", "command": "editor.action.quickFix" },
+  { "key": "alt+shift+F1", "command": "workbench.action.quickOpen", "args": "symbols.grimoire:8" },
+  { "key": "alt+shift+F2", "command": "editor.action.triggerSuggest" },
+  { "key": "alt+shift+F3", "command": "workbench.action.quickOpen", "args": "unbrewed.js:3" },
+  { "key": "alt+shift+F5", "command": "workbench.action.closeAllEditors" },
+  { "key": "alt+shift+F6", "command": "workbench.action.quickOpen", "args": "charms.grimoire" },
+  { "key": "ctrl+alt+F12", "command": "workbench.action.gotoSymbol" }
 ]

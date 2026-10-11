@@ -2,7 +2,7 @@
   "name": "spellbound-review-helper",
   "displayName": "Spellbound review helper",
   "description": "Review-only helper for the Spellbound gate screenshots. Not part of the published extension.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "witchynibbles-review",
   "engines": { "vscode": "^1.100.0" },
   "main": "./extension.js",
