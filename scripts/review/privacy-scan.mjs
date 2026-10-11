@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Scans gate evidence before it is committed and reports user names, user directories and email addresses in it.
 // Usage: node scripts/review/privacy-scan.mjs <file>...
-//   .png files are read with OCR (python3 with Pillow upscales them 3x, then tesseract reads them); .json, .md and .txt
-//   files are read as text. Exit 0: nothing found. Exit 1: something found. Exit 2: the scan could not run (no file
+//   .png files are read with OCR (python3 with Pillow upscales them 3x, then tesseract reads them; a tall image is cut
+//   into overlapping horizontal tiles first, because tesseract refuses an image over ~32,000 px once it is upscaled);
+//   .json, .md and .txt files are read as text. Exit 0: nothing found. Exit 1: something found. Exit 2: the scan could not run (no file
 //   given, a missing or unsupported file, a .png OCR reads fewer than 20 characters from, no Windows user name under WSL, no Pillow or tesseract): it fails closed.
 // The names come from this machine at run time (the WSL user, Windows %USERNAME% and the %USERPROFILE% folder), and
 // the output names the kind of finding, never the name, so no name is written to disk or into committed output.
@@ -15,6 +16,11 @@ import { pathToFileURL } from 'node:url';
 
 const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const MIN_OCR_CHARS = 20;
+// A tile is TILE_HEIGHT source pixels tall, so 3x upscaled it is far below tesseract's 32,767 px limit. Each tile starts
+// TILE_HEIGHT - TILE_OVERLAP below the last; the overlap is larger than the tallest text line, so a line a tile cuts
+// is whole in the next one.
+export const TILE_HEIGHT = 2000;
+export const TILE_OVERLAP = 400;
 const TEXT = new Set(['.json', '.md', '.txt']);
 
 // OCR spaces out path separators ("C: \Users\Name\ AppData"); join them before matching.
@@ -51,13 +57,25 @@ export function machineUserNames() {
   return [...names];
 }
 
-// Grey, light text on dark, three times larger: tesseract misses 100% UI text on a dark theme without this.
+// Grey, light text on dark, three times larger: tesseract misses 100% UI text on a dark theme without this. Writes the
+// image as overlapping tiles (one tile when it is short); a tile of a single colour has no text and is not written.
 const PREPARE = `import sys
 from PIL import Image, ImageOps
-image = Image.open(sys.argv[1]).convert('L')
+source, directory, tile_height, overlap = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
+image = Image.open(source).convert('L')
 if sum(image.resize((64, 64)).getdata()) / 4096 < 128:
     image = ImageOps.invert(image)
-image.resize((image.width * 3, image.height * 3), Image.LANCZOS).save(sys.argv[2])`;
+top, number = 0, 0
+while True:
+    bottom = min(top + tile_height, image.height)
+    tile = image.crop((0, top, image.width, bottom))
+    low, high = tile.getextrema()
+    if low != high:
+        tile.resize((tile.width * 3, tile.height * 3), Image.LANCZOS).save('%s/tile-%04d.png' % (directory, number))
+    if bottom == image.height:
+        break
+    top += tile_height - overlap
+    number += 1`;
 
 function checkOcrTools() {
   const python = process.env.PRIVACY_SCAN_PYTHON ?? 'python3';
@@ -75,10 +93,11 @@ function checkOcrTools() {
   return { python, tesseract };
 }
 
+// The text of each tile of the image that is not a single colour (none when the whole image is).
 function ocr(file, scratch, { python, tesseract }) {
-  const prepared = path.join(scratch, 'prepared.png');
-  execFileSync(python, ['-I', '-c', PREPARE, file, prepared], { stdio: 'ignore' });
-  return execFileSync(tesseract, [prepared, 'stdout'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
+  const directory = fs.mkdtempSync(path.join(scratch, 'tiles-'));
+  execFileSync(python, ['-I', '-c', PREPARE, file, directory, String(TILE_HEIGHT), String(TILE_OVERLAP)], { stdio: 'ignore' });
+  return fs.readdirSync(directory).sort().map((tile) => execFileSync(tesseract, [path.join(directory, tile), 'stdout'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 }));
 }
 
 function main(files) {
@@ -95,11 +114,13 @@ function main(files) {
   try {
     for (const file of files) {
       const kind = path.extname(file).toLowerCase();
-      let text = kind === '.png' ? ocr(file, scratch, tools) : fs.readFileSync(file, 'utf8');
+      let texts = kind === '.png' ? ocr(file, scratch, tools) : [fs.readFileSync(file, 'utf8')];
       // Fails closed: an image that OCR read (almost) nothing from is not clean, it is unread.
-      if (kind === '.png' && text.replace(/\s/g, '').length < MIN_OCR_CHARS) throw new Error(`could not scan ${file}: OCR read fewer than ${MIN_OCR_CHARS} characters from it`);
-      if (kind === '.json') text = text.replaceAll('\\\\', '\\'); // JSON escapes each backslash of a Windows path
-      const found = findPrivateText(text, names);
+      if (kind === '.png' && texts.join('').replace(/\s/g, '').length < MIN_OCR_CHARS) throw new Error(`could not scan ${file}: OCR read fewer than ${MIN_OCR_CHARS} characters from it`);
+      if (kind === '.json') texts = texts.map((text) => text.replaceAll('\\\\', '\\')); // JSON escapes each backslash of a Windows path
+      // A tile is searched on its own; what two tiles both read in their overlap is one finding.
+      const all = texts.flatMap((text) => findPrivateText(text, names));
+      const found = texts.length > 1 ? [...new Set(all)] : all;
       problems += found.length;
       // The kind of finding only, never the matched text, so the output can be pasted into a review.
       console.log(`${found.length ? '✗' : '✓'} ${file}${found.length ? `: ${found.length} finding(s): ${found.map((item) => item.split(' "')[0]).join(', ')}` : ''}`);

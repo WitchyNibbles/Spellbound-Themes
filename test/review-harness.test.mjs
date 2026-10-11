@@ -17,7 +17,8 @@ const exists = (file) => fs.existsSync(path.join(root, file));
 
 const GATES = ['review/jobs/gate-1.json', 'review/jobs/gate-2.json', 'review/jobs/gate-3.json', 'review/jobs/gate-4.json'];
 const GATE_5 = 'review/jobs/gate-5.json';
-const JOBS = [...GATES, GATE_5, 'review/jobs/smoke.json'];
+const GATE_6 = 'review/jobs/gate-6.json';
+const JOBS = [...GATES, GATE_5, GATE_6, 'review/jobs/smoke.json'];
 const PLAIN_KEYS = new Set(['Enter', 'Escape', 'Tab', 'Backspace']);
 
 test('every file the harness needs exists', () => {
@@ -72,7 +73,7 @@ test('the gate covers four scales, both activity bar sizes, and both terminal co
 });
 
 test('every committed sheet is one the gate job produces', () => {
-  for (const file of [...GATES, GATE_5]) {
+  for (const file of [...GATES, GATE_5, GATE_6]) {
     const job = json(file);
     const produced = new Set(job.passes.flatMap((pass) => job.scenes
       .filter((scene) => !pass.scenes || pass.scenes.includes(scene.name))

@@ -1,0 +1,4201 @@
+{
+  "expectVersion": "1.141.0",
+  "port": 9333,
+  "mode": "device-scale",
+  "helperVsix": "spellbound-review-helper.vsix",
+  "workspace": "review/workspace-files",
+  "passes": [
+    {
+      "name": "main",
+      "vsix": [
+        "spellbound-main.vsix"
+      ],
+      "scales": [
+        1,
+        2
+      ]
+    }
+  ],
+  "scenes": [
+    {
+      "name": "explorer-gems-keys",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.css": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"sample.js-name-file-icon\",\"sample.mjs-name-file-icon\",\"sample.cjs-name-file-icon\",\"sample.ts-name-file-icon\",\"sample.mts-name-file-icon\",\"sample.cts-name-file-icon\",\"sample.tsx-name-file-icon\",\"sample.jsx-name-file-icon\",\"tsconfig.json-name-file-icon\",\"jsconfig.json-name-file-icon\",\"sample.json-name-file-icon\",\"sample.html-name-file-icon\",\"sample.htm-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-code-data",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.cts": true,
+          "sample.env": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsx": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"sample.py-name-file-icon\",\"sample.pyw-name-file-icon\",\"sample.sh-name-file-icon\",\"sample.ps1-name-file-icon\",\"sample.fish-name-file-icon\",\"sample.css-name-file-icon\",\"sample.scss-name-file-icon\",\"sample.less-name-file-icon\",\"sample.sql-name-file-icon\",\"sample.jsonc-name-file-icon\",\"sample.jsonl-name-file-icon\",\"sample.db-name-file-icon\",\"sample.yaml-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-config",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".github": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"sample.yml-name-file-icon\",\"sample.toml-name-file-icon\",\"sample.env-name-file-icon\",\"sample.lock-name-file-icon\",\".env-name-file-icon\",\".env.local-name-file-icon\",\".env.development-name-file-icon\",\".env.production-name-file-icon\",\".env.example-name-file-icon\",\".gitignore-name-file-icon\",\"dockerfile-name-file-icon\",\"package.json-name-file-icon\",\"pyproject.toml-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-docs",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "Dockerfile": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "package.json": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"requirements.txt-name-file-icon\",\"package-lock.json-name-file-icon\",\"yarn.lock-name-file-icon\",\"cargo.lock-name-file-icon\",\"poetry.lock-name-file-icon\",\"sample.md-name-file-icon\",\"sample.mdx-name-file-icon\",\"sample.txt-name-file-icon\",\"readme.md-name-file-icon\",\"changelog.md-name-file-icon\",\"license-name-file-icon\",\"license.md-name-file-icon\",\"notes.unknown-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-assets",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.txt": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 13 && [\"sample.svg-name-file-icon\",\"sample.png-name-file-icon\",\"sample.jpg-name-file-icon\",\"sample.jpeg-name-file-icon\",\"sample.gif-name-file-icon\",\"sample.webp-name-file-icon\",\"sample.ttf-name-file-icon\",\"sample.otf-name-file-icon\",\"sample.woff-name-file-icon\",\"sample.woff2-name-file-icon\",\"conftest.py-name-file-icon\",\"pytest.ini-name-file-icon\",\"jest.config.js-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-tests",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.js": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 12 && [\"jest.config.ts-name-file-icon\",\"jest.config.mjs-name-file-icon\",\"jest.config.cjs-name-file-icon\",\"jest.config.json-name-file-icon\",\"sample.test.ts-name-file-icon\",\"sample.test.tsx-name-file-icon\",\"sample.test.js-name-file-icon\",\"sample.test.jsx-name-file-icon\",\"sample.test.mjs-name-file-icon\",\"sample.test.cjs-name-file-icon\",\"sample.test.mts-name-file-icon\",\"sample.test.cts-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-specs",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 8 && [\"sample.spec.ts-name-file-icon\",\"sample.spec.tsx-name-file-icon\",\"sample.spec.js-name-file-icon\",\"sample.spec.jsx-name-file-icon\",\"sample.spec.mjs-name-file-icon\",\"sample.spec.cjs-name-file-icon\",\"sample.spec.mts-name-file-icon\",\"sample.spec.cts-name-file-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-folders",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"src-name-folder-icon\",\"source-name-folder-icon\",\"lib-name-folder-icon\",\"bin-name-folder-icon\",\"potions-name-folder-icon\",\"scripts-name-folder-icon\",\"test-name-folder-icon\",\"fixtures-name-folder-icon\",\"docs-name-folder-icon\",\"assets-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-folders-2",
+      "settings": {
+        "files.exclude": {
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".gitignore": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "assets": true,
+          "bin": true,
+          "conftest.py": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tsconfig.json": true,
+          "yarn.lock": true
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"tests-name-folder-icon\",\"cache-name-folder-icon\",\".github-name-folder-icon\",\"workflows-name-folder-icon\",\".claude-name-folder-icon\",\"__tests__-name-folder-icon\",\"__pycache__-name-folder-icon\",\"dist-name-folder-icon\",\".venv-name-folder-icon\",\"node_modules-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && rows.every((r) => r.getAttribute('aria-expanded') !== 'true' && !r.classList.contains('selected')) && !view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ]
+    },
+    {
+      "name": "explorer-open",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "src/index.ts",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "index.ts",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "source/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "lib/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "bin/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "potions/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"src-name-folder-icon\",\"index.ts-name-file-icon\",\"source-name-folder-icon\",\".keep-name-file-icon\",\"lib-name-folder-icon\",\"bin-name-folder-icon\",\"potions-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && [\"src-name-folder-icon\",\"source-name-folder-icon\",\"lib-name-folder-icon\",\"bin-name-folder-icon\",\"potions-name-folder-icon\"].every((name) => row(name).getAttribute('aria-expanded') === 'true') && view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "explorer-open-2",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "source": true,
+          "src": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "scripts/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "test/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "fixtures/pins.grimoire",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "pins.grimoire",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "docs/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "assets/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"scripts-name-folder-icon\",\".keep-name-file-icon\",\"test-name-folder-icon\",\"fixtures-name-folder-icon\",\"pins.grimoire-name-file-icon\",\"docs-name-folder-icon\",\"assets-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && [\"scripts-name-folder-icon\",\"test-name-folder-icon\",\"fixtures-name-folder-icon\",\"docs-name-folder-icon\",\"assets-name-folder-icon\"].every((name) => row(name).getAttribute('aria-expanded') === 'true') && view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "explorer-open-3",
+      "settings": {
+        "files.exclude": {
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tsconfig.json": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "tests/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "cache/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": ".github/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "workflows/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": ".claude/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"tests-name-folder-icon\",\".keep-name-file-icon\",\"cache-name-folder-icon\",\".github-name-folder-icon\",\"workflows-name-folder-icon\",\".claude-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && [\"tests-name-folder-icon\",\"cache-name-folder-icon\",\".github-name-folder-icon\",\"workflows-name-folder-icon\",\".claude-name-folder-icon\"].every((name) => row(name).getAttribute('aria-expanded') === 'true') && view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "explorer-open-4",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false,
+        "search.exclude": {
+          "**/node_modules": false
+        }
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+4",
+          "wait": 1200
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "__tests__/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "__pycache__/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "dist/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": ".venv/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "node_modules/.keep",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".keep",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F8",
+          "wait": 1000
+        },
+        {
+          "waitFor": "(() => { const view = document.querySelector('.part.sidebar .explorer-folders-view'); const list = view?.querySelector('.monaco-list'); if (!list) return false; const box = list.getBoundingClientRect(); const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const rows = [...view.querySelectorAll('.monaco-list-row')]; const row = (name) => rows.find((r) => r.querySelector('.monaco-icon-label')?.classList.contains(name)); return rows.length === 10 && [\"__tests__-name-folder-icon\",\".keep-name-file-icon\",\"__pycache__-name-folder-icon\",\"dist-name-folder-icon\",\".venv-name-folder-icon\",\"node_modules-name-folder-icon\"].every((name) => !!row(name) && inside(row(name).querySelector('.monaco-icon-label'))) && [\"__tests__-name-folder-icon\",\"__pycache__-name-folder-icon\",\"dist-name-folder-icon\",\".venv-name-folder-icon\",\"node_modules-name-folder-icon\"].every((name) => row(name).getAttribute('aria-expanded') === 'true') && view.contains(document.activeElement); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "sidebar",
+          "selector": ".part.sidebar",
+          "maxHeight": 420
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        },
+        {
+          "press": "alt+shift+F9",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "tabs-gems",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.js",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.js",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.tsx",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.tsx",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.ts",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.ts",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.html",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.html",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.js-name-file-icon\",\"sample.tsx-name-file-icon\",\"sample.ts-name-file-icon\",\"sample.html-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-code",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.sh",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.sh",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.ps1",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.ps1",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.fish",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.fish",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.css",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.css",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.sh-name-file-icon\",\"sample.ps1-name-file-icon\",\"sample.fish-name-file-icon\",\"sample.css-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-data",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.sql",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.sql",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.jsonl",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.jsonl",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.db",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.db",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.yaml",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.yaml",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.sql-name-file-icon\",\"sample.jsonl-name-file-icon\",\"sample.db-name-file-icon\",\"sample.yaml-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-config",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.toml",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.toml",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.env",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.env",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.lock",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.lock",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "package.json",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "package.json",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.toml-name-file-icon\",\"sample.env-name-file-icon\",\"sample.lock-name-file-icon\",\"package.json-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-config-2",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "tsconfig.json",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "tsconfig.json",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "Dockerfile",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "Dockerfile",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": ".gitignore",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": ".gitignore",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.json",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.json",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"tsconfig.json-name-file-icon\",\"dockerfile-name-file-icon\",\".gitignore-name-file-icon\",\"sample.json-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-docs",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.md",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.md",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.txt",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.txt",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "README.md",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "README.md",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "CHANGELOG.md",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "CHANGELOG.md",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.md-name-file-icon\",\"sample.txt-name-file-icon\",\"readme.md-name-file-icon\",\"changelog.md-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "tabs-assets-tests",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+F8",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+F9",
+          "wait": 500
+        },
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.svg",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.svg",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.png",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.png",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.ttf",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.ttf",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.test.ts",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "sample.test.ts",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .tabs-and-actions-container'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.svg-name-file-icon\",\"sample.png-name-file-icon\",\"sample.ttf-name-file-icon\",\"sample.test.ts-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))) && c.querySelectorAll('.tab').length === 4; })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "tabs",
+          "selector": ".part.editor .tabs-and-actions-container"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "README.md",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "file": "README.md",
+          "timeout": 10000
+        },
+        {
+          "press": "Enter",
+          "wait": 1500
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.part.editor .breadcrumbs-control'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"readme.md-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "breadcrumbs",
+          "selector": ".part.editor .breadcrumbs-control"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "alt+shift+F5",
+          "wait": 800
+        }
+      ]
+    },
+    {
+      "name": "quick-open-code",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.env": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.js-name-file-icon\",\"sample.tsx-name-file-icon\",\"sample.html-name-file-icon\",\"sample.sh-name-file-icon\",\"sample.ps1-name-file-icon\",\"sample.fish-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "widget",
+          "selector": ".quick-input-widget"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "Escape",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "quick-open-data",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.cts": true,
+          "sample.env": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.lock": true,
+          "sample.md": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.svg": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.ts": true,
+          "sample.test.tsx": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.ttf": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.css-name-file-icon\",\"sample.sql-name-file-icon\",\"sample.jsonl-name-file-icon\",\"sample.db-name-file-icon\",\"sample.yaml-name-file-icon\",\"sample.toml-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "widget",
+          "selector": ".quick-input-widget"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "Escape",
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "quick-open-assets",
+      "settings": {
+        "files.exclude": {
+          ".claude": true,
+          ".env": true,
+          ".env.development": true,
+          ".env.example": true,
+          ".env.local": true,
+          ".env.production": true,
+          ".github": true,
+          ".gitignore": true,
+          ".venv": true,
+          "CHANGELOG.md": true,
+          "Cargo.lock": true,
+          "Dockerfile": true,
+          "LICENSE": true,
+          "LICENSE.md": true,
+          "README.md": true,
+          "__pycache__": true,
+          "__tests__": true,
+          "assets": true,
+          "bin": true,
+          "cache": true,
+          "conftest.py": true,
+          "dist": true,
+          "docs": true,
+          "fixtures": true,
+          "jest.config.cjs": true,
+          "jest.config.js": true,
+          "jest.config.json": true,
+          "jest.config.mjs": true,
+          "jest.config.ts": true,
+          "jsconfig.json": true,
+          "lib": true,
+          "node_modules": true,
+          "notes.unknown": true,
+          "package-lock.json": true,
+          "package.json": true,
+          "poetry.lock": true,
+          "potions": true,
+          "pyproject.toml": true,
+          "pytest.ini": true,
+          "requirements.txt": true,
+          "sample.cjs": true,
+          "sample.css": true,
+          "sample.cts": true,
+          "sample.db": true,
+          "sample.fish": true,
+          "sample.gif": true,
+          "sample.htm": true,
+          "sample.html": true,
+          "sample.jpeg": true,
+          "sample.jpg": true,
+          "sample.js": true,
+          "sample.json": true,
+          "sample.jsonc": true,
+          "sample.jsonl": true,
+          "sample.jsx": true,
+          "sample.less": true,
+          "sample.mdx": true,
+          "sample.mjs": true,
+          "sample.mts": true,
+          "sample.otf": true,
+          "sample.png": true,
+          "sample.ps1": true,
+          "sample.py": true,
+          "sample.pyw": true,
+          "sample.scss": true,
+          "sample.sh": true,
+          "sample.spec.cjs": true,
+          "sample.spec.cts": true,
+          "sample.spec.js": true,
+          "sample.spec.jsx": true,
+          "sample.spec.mjs": true,
+          "sample.spec.mts": true,
+          "sample.spec.ts": true,
+          "sample.spec.tsx": true,
+          "sample.sql": true,
+          "sample.test.cjs": true,
+          "sample.test.cts": true,
+          "sample.test.js": true,
+          "sample.test.jsx": true,
+          "sample.test.mjs": true,
+          "sample.test.mts": true,
+          "sample.test.tsx": true,
+          "sample.toml": true,
+          "sample.ts": true,
+          "sample.tsx": true,
+          "sample.txt": true,
+          "sample.webp": true,
+          "sample.woff": true,
+          "sample.woff2": true,
+          "sample.yaml": true,
+          "sample.yml": true,
+          "scripts": true,
+          "source": true,
+          "src": true,
+          "test": true,
+          "tests": true,
+          "tsconfig.json": true,
+          "workflows": true,
+          "yarn.lock": true
+        },
+        "search.quickOpen.includeHistory": false
+      },
+      "setup": [
+        {
+          "press": "ctrl+alt+shift+a",
+          "wait": 500
+        },
+        {
+          "waitFor": "!!document.activeElement?.closest('.part.editor')",
+          "timeout": 10000
+        },
+        {
+          "press": "alt+shift+F7",
+          "wait": 800
+        },
+        {
+          "insert": "sample.",
+          "wait": 300
+        },
+        {
+          "until": "quick-input-row",
+          "timeout": 10000
+        },
+        {
+          "waitFor": "(() => { const c = document.querySelector('.quick-input-widget .monaco-list'); const box = c?.getBoundingClientRect(); if (!box || !box.width) return false; const inside = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.left >= box.left && r.right <= box.right && r.top >= box.top && r.bottom <= box.bottom; }; const labels = [...c.querySelectorAll('.monaco-icon-label')]; return [\"sample.env-name-file-icon\",\"sample.lock-name-file-icon\",\"sample.md-name-file-icon\",\"sample.svg-name-file-icon\",\"sample.ttf-name-file-icon\",\"sample.test.ts-name-file-icon\"].every((name) => labels.some((el) => el.classList.contains(name) && inside(el))); })()"
+        }
+      ],
+      "crops": [
+        {
+          "name": "widget",
+          "selector": ".quick-input-widget"
+        }
+      ],
+      "teardown": [
+        {
+          "press": "Escape",
+          "wait": 500
+        }
+      ]
+    }
+  ],
+  "commitSheets": [
+    "main-explorer-gems-keys-sidebar",
+    "main-explorer-code-data-sidebar",
+    "main-explorer-config-sidebar",
+    "main-explorer-docs-sidebar",
+    "main-explorer-assets-sidebar",
+    "main-explorer-tests-sidebar",
+    "main-explorer-specs-sidebar",
+    "main-explorer-folders-sidebar",
+    "main-explorer-folders-2-sidebar",
+    "main-explorer-open-sidebar",
+    "main-explorer-open-2-sidebar",
+    "main-explorer-open-3-sidebar",
+    "main-explorer-open-4-sidebar",
+    "main-tabs-gems-tabs",
+    "main-tabs-code-tabs",
+    "main-tabs-data-tabs",
+    "main-tabs-config-tabs",
+    "main-tabs-config-2-tabs",
+    "main-tabs-docs-tabs",
+    "main-tabs-assets-tests-tabs",
+    "main-breadcrumbs-breadcrumbs",
+    "main-quick-open-code-widget",
+    "main-quick-open-data-widget",
+    "main-quick-open-assets-widget"
+  ]
+}

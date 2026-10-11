@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileGlyphModules } from '../scripts/file-glyphs/index.mjs';
 import { checkFileIconTheme } from '../scripts/lib/checks/file-icons.mjs';
+import { REQUIRED_FILE_EXTENSIONS, REQUIRED_FILE_NAMES, REQUIRED_FOLDER_NAMES, REQUIRED_LANGUAGE_IDS } from '../scripts/lib/file-icon-requirements.mjs';
 import { buildFileIconTheme, mapProblems, readFileIconInputs } from '../scripts/lib/file-icons-build.mjs';
 import { createReport } from '../scripts/lib/report.mjs';
 
@@ -86,9 +87,9 @@ const SAMPLE = {
   contract: { category: 'docs', fileNames: ['license', 'license.md'] },
 };
 
-test('the gate-5 map: the three defaults and the six sample drawings of spec 6.2, in module order, and nothing else', () => {
+test('the map keeps the defaults and the gate-5 sample as decided (G44), and lists every drawing in module order', () => {
   const { map: committed } = readFileIconInputs(root);
-  assert.deepEqual(committed.drawings, { ...defaults, ...SAMPLE });
+  for (const [name, entry] of Object.entries({ ...defaults, ...SAMPLE })) assert.deepEqual(committed.drawings[name], entry, name);
   assert.deepEqual(Object.keys(committed.drawings), fileGlyphModules.flatMap(({ drawings }) => Object.keys(drawings)));
 });
 
@@ -111,7 +112,59 @@ test('the gate-5 theme serves every sample key in all three sets, so the coverag
   const served = Object.values(SAMPLE).flatMap((entry) => Object.entries(entry).filter(([property]) => property !== 'category')
     .flatMap(([property, keys]) => keys.flatMap((key) => ['dark', 'light', 'highContrast'].map((set) => `${set} ${property} ${key}`))));
   assert.deepEqual(served.filter((line) => missing.includes(line)), []);
-  assert.ok(missing.includes('dark languageIds javascript'), 'keys outside the sample stay pending until gate 6');
+});
+
+// Gate 6 (spec 6, 8): every key the spec lists is served, by exactly one drawing, and no key it does not list.
+test('the gate-6 map serves exactly the keys of spec 6: every required extension, file name, folder name and language ID, and no other', () => {
+  const { map: committed } = readFileIconInputs(root);
+  const served = (property) => Object.values(committed.drawings).flatMap((entry) => entry[property] ?? []).sort();
+  assert.deepEqual(served('fileExtensions'), [...REQUIRED_FILE_EXTENSIONS].sort());
+  assert.deepEqual(served('fileNames'), [...REQUIRED_FILE_NAMES].sort());
+  assert.deepEqual(served('folderNames'), [...REQUIRED_FOLDER_NAMES].sort());
+  assert.deepEqual(served('folderNamesExpanded'), [...REQUIRED_FOLDER_NAMES].sort());
+  assert.deepEqual(served('languageIds'), [...REQUIRED_LANGUAGE_IDS].sort());
+  for (const [name, entry] of Object.entries(committed.drawings)) assert.ok(Object.keys(entry).some((key) => key !== 'category'), `${name} serves a key or a default`);
+});
+
+test('the built theme passes the file-icons coverage stage with nothing pending (gate 6, spec 8)', () => {
+  const { map: committed, sources } = readFileIconInputs(root);
+  const { theme, files } = buildFileIconTheme(committed, sources);
+  const report = createReport({ enforce: ['file-icons'] });
+  checkFileIconTheme({ theme, readSvg: (iconPath) => files[`icons/${iconPath.slice(2)}`] }, report);
+  assert.deepEqual(report.result(), { errors: [], pending: [], warnings: [] });
+});
+
+// VS Code's file icon lookup (spec 6): an exact file name first (case-insensitive), then the longest dot-suffix in
+// fileExtensions, then the default file. languageIds only apply when neither matches.
+const iconOf = (theme, name) => {
+  const lower = name.toLowerCase();
+  if (theme.fileNames?.[lower]) return theme.fileNames[lower];
+  const parts = lower.split('.');
+  for (let index = 1; index < parts.length; index += 1) {
+    const suffix = parts.slice(index).join('.');
+    if (theme.fileExtensions?.[suffix]) return theme.fileExtensions[suffix];
+  }
+  return theme.file;
+};
+
+test('the most specific key wins for the names spec 6 enumerates: lockfiles, configs, tests, .env variants and the special docs', () => {
+  const { map: committed, sources } = readFileIconInputs(root);
+  const { theme } = buildFileIconTheme(committed, sources);
+  const expected = {
+    'package-lock.json': 'padlock', 'yarn.lock': 'padlock', 'Cargo.lock': 'padlock', 'sample.lock': 'padlock', 'package.json': 'recipe-card',
+    'tsconfig.json': 'gem-gear', 'jsconfig.json': 'gem-gear', 'sample.json': 'keyring', 'jest.config.json': 'flask', 'jest.config.ts': 'flask',
+    'sample.test.ts': 'flask', 'sample.spec.tsx': 'flask', 'sample.test.mjs': 'flask', 'sample.tsx': 'gem-ring', 'sample.mts': 'gem-cut',
+    'conftest.py': 'flask', 'sample.py': 'snake', 'pytest.ini': 'flask', '.env': 'vial', '.env.local': 'vial', 'sample.env': 'vial',
+    'README.md': 'grimoire-open', 'CHANGELOG.md': 'owl', 'LICENSE.md': 'contract', 'sample.md': 'quill', 'requirements.txt': 'recipe-card',
+    'sample.txt': 'scroll', 'pyproject.toml': 'recipe-card', 'sample.toml': 'tag', 'Dockerfile': 'crate', '.gitignore': 'veil', 'notes.unknown': 'parchment',
+    // The rest of spec 6's enumerated file names (with the ones above, all 27 keys of REQUIRED_FILE_NAMES are exercised below).
+    LICENSE: 'contract', 'poetry.lock': 'padlock', '.env.example': 'vial', '.env.development': 'vial', '.env.production': 'vial',
+    'jest.config.js': 'flask', 'jest.config.mjs': 'flask', 'jest.config.cjs': 'flask',
+  };
+  // Every enumerated file name must be one of the sampled names (case-insensitively), so a new spec name cannot go unpinned.
+  const sampled = new Set(Object.keys(expected).map((name) => name.toLowerCase()));
+  assert.deepEqual(REQUIRED_FILE_NAMES.filter((name) => !sampled.has(name)), [], 'every enumerated file name is sampled');
+  assert.deepEqual(Object.fromEntries(Object.keys(expected).map((name) => [name, iconOf(theme, name)])), expected);
 });
 
 test('icons/file-icon-theme.json and icons/file-icons/ are a fresh build of the map and the sources (npm run build:file-icons)', () => {

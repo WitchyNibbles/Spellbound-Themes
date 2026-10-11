@@ -174,10 +174,9 @@ test('F9 names both selection keys in one line when the quick-input focus falls 
   assert.deepEqual(report.result().warnings, ['F9: Moonlit list.activeSelectionBackground and quickInputList.focusBackground #F04EAB: dark #A99AB9 (folder, folder-open, parchment) at 1.25:1 (under 3:1)']);
 });
 
-test('npm run validate enforces file-icons:pipeline, after the product batches', () => {
+test('npm run validate enforces file-icons:pipeline and then file-icons (full key coverage, gate 6), after the product batches', () => {
   const { enforce } = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '..', 'scripts', 'validation-stage.json'), 'utf8'));
-  assert.equal(enforce.at(-1), 'file-icons:pipeline');
-  assert.equal(enforce.includes('file-icons'), false, 'full coverage stays pending until gate 6');
+  assert.deepEqual(enforce.slice(-2), ['file-icons:pipeline', 'file-icons']);
 });
 
 test('F9 checks a quick-input focus of its own, and the dark set against every dark color theme', () => {

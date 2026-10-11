@@ -1,7 +1,7 @@
 # Spellbound Themes 2.0: witchyterm parity
 
 - **Date:** 2026-10-10
-- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5); gate 5 decided (section 11.6)
+- **Status:** design agreed in a grilling session; spec review applied (section 10); all author decisions taken (section 11); file-icon pipeline and gates planned (sections 6.1–6.3, 11.5); gate 5 decided (section 11.6); gate 6 decided (section 11.7)
 - **Inspiration:** `../witchyterm` (Moonlit Candle for Claude Code, Windows Terminal, fish/Tide), whose palette lives in `witchyterm/witchy/palette.py`
 - **Research:** `docs/research/vscode-1.141-icon-inventory.md` (every product icon ID visible in a normal VS Code 1.141 session, with resolution rules)
 
@@ -139,6 +139,7 @@ Pixel grid. The font is unhinted, so outline coordinates are drawn exactly as wr
 - Accepted off-grid points (gate 2): the corners of the gear's four 45° teeth, the four band ends of `sync` at 235° and 55°, and the points where the `copilot-unavailable` knockout band cuts the cat head's straight edges. Snapping them would distort the shape or break the 1-unit clearance.
 - Accepted at gate 4 (G40): the lollipop dot and the class-tree connectors touch their strokes; the three ✦ of the ✧ cluster are solid; the solid wrench (G36, like G12 and G26) is an exception to the one-accent rule; refresh's 3×6 head is inherited from restart (G22, G31).
 - Accepted at gate 5 (G42): an accent that is part of the object's silhouette may touch its outline instead of keeping the 1-unit clearance below: the parchment fold, the folder tab, the snake's head and the key bows. An accent that sits on the object (the gem crown, the contract seal, a folder badge) keeps the clearance. Gate 6 applies the rule the same way.
+- Accepted at gate 6 (G57): 19 exceptions to this section and to section 6.2. (1) `gem-rough`: a solid cluster of three crystals, no hole; the 2-wide small crystal is part of the outline, under the 4×4 accent minimum; 2:1 roofs on solids only (G52). (2) `gem-ring`: the stone's point passes through the band and juts one unit into the hole. (3) `fish-bones`: the tail fork's inner wall is vertical at x2.5; the eye sits half a unit off the spine. (4) `cabinet`: x2-15, half a unit right of the portrait keyline; the cornice overlaps the top wall (gap 0). (5) `beads`: the notches between each bead and the string are under 1 unit. (6) `veil`: the 14×2 rod is under the 4×4 shape minimum. (7) `crate`: two 1.41-wide struts under the 4×4 minimum, touching, with corner wedges under 1 unit. (8) `vial`: two 1×1 eye holes under the 2-unit cut-out (the label exception named in section 6). (9) `padlock` body and `crate` struts: accents that touch the outline (G42). (10) `scroll`: offset rolls, gap 0 (G42). (11) `grimoire-open`: page-hole top diagonals 2.5 wide against the 2-unit diagonal, and 0.5-unit chamfers where the holes meet the spine dip. (12) `owl`: half-unit eyes, the Timeline glyph's ink (G7). (13) `quill`: solid vane (G26). (14) `compass`: no bow; a 1-unit needle leaves a 0.5-unit ledge; the bounds overshoot the keyline by one unit on the right. (15) `flask`: the 7×3 liquid is under the 4×4 minimum (the product glyph's ink). (16) `workflows`: the ring's four openings are about 1.48 across, under the 2-unit cut-out. (17) `.github`: rule-clean; a generic small bird, not the raven of section 6. (18) `node_modules`: a spider on its thread replaces the cobweb; the 1×1 notches are the legs' gap (G53). (19) Folder badges: the look-alike margins dist/cache 32, tests/dist 30 and fixtures/assets 28 of 256 sit near the floor of 25.
 - Snapping guarantees crisp edges only at whole device scales (100%, 200%). At 125% and 150% it only keeps the blur from getting worse.
 
 Keylines (taken from the measured Codicon bounds):
@@ -359,13 +360,13 @@ Letterforms share one construction, used by the find toggles and the symbols ali
 - Section 4's grid, padding, pixel-grid and accent rules apply to file icons too.
 - A detail below the accent minimum is dropped or merged into a solid silhouette with one feature: the `.env` skull label becomes a label with two eye pixels, the tsconfig gear a cog with a hole, each folder badge one bold silhouette.
 - Folder badges sit in a fixed box of about 7×7 in the bottom-right, with a 1-unit knockout gap from the folder outline.
-- Icons in the same category that are easy to confuse differ in silhouette (overall outline), not only in facets or colour: the js, ts and tsx/jsx gems; the json keyring and the html skeleton key; the yaml cairn, the jsonl beads, the db cylinder and the lib books. The metaphors stay as listed.
+- Icons in the same category that are easy to confuse differ in silhouette (overall outline), not only in facets or colour: the js, ts and tsx/jsx gems; the json keyring and the html skeleton key; the yaml cairn, the jsonl beads, the db cylinder and the lib slabs. The metaphors stay as listed.
 
 Types:
 
 | Types | Object | Category |
 | :- | :- | :- |
-| js, mjs, cjs | rough crystal | code |
+| js, mjs, cjs | rough crystal cluster (three solid crystals; G52) | code |
 | ts, mts, cts | cut, faceted gem | code |
 | tsx, jsx | gem set in a ring | code |
 | py, pyw | single coiled snake | code |
@@ -383,7 +384,7 @@ Types:
 | lock, and the `fileNames` `package-lock.json`, `yarn.lock`, `Cargo.lock`, `poetry.lock` | padlock with a crescent keyhole | config |
 | db | cylinder with a crescent | data |
 | md, mdx | quill | docs |
-| txt | curled blank parchment | docs |
+| txt | scroll with offset rolls (curled blank parchment) | docs |
 | svg | drafting compass | assets |
 | png, jpg, jpeg, gif, webp | framed portrait with a moon | assets |
 | ttf, otf, woff, woff2 | type block | assets |
@@ -418,16 +419,16 @@ Folders: a muted folder outline with a small badge, with separate closed and ope
 | docs | open book | docs |
 | scripts | wand with ✦ tip | code |
 | assets | crystal | assets |
-| dist | corked jar | code |
-| lib | stacked books | code |
+| dist | corked bottle | code |
+| lib | stacked slabs (books) | code |
 | bin | play triangle | code |
-| fixtures | tarot card | tests |
-| .github | raven | config |
-| workflows | ritual circle | config |
+| fixtures | tilted card with a diamond pip (tarot card) | tests |
+| .github | small bird (raven) | config |
+| workflows | circled cross (sun-cross ritual sign) | config |
 | .claude | cat | config |
 | .venv | cauldron | config |
-| node_modules | cobweb | config |
-| cache, __pycache__ | pantry jar | config |
+| node_modules | spider on its thread (cobweb; G53) | config |
+| cache, __pycache__ | lidded jar (pantry jar) | config |
 
 ### 6.1 Pipeline (planned 2026-10-11, F3)
 
@@ -443,7 +444,7 @@ Folders: a muted folder outline with a small badge, with separate closed and ope
 
 - Section 4 applies in full: the 16-unit grid, 1-unit padding, pixel-aligned 1-unit strokes, the accent and cut-out minimums, 1-unit clearances, real holes.
 - Closed palette: every painted part uses one of the eight roles above. Interiors are transparent; no dark fills, `opacity`, `fill-opacity` or gradients.
-- An object is a 1-unit outline in its category colour plus one filled accent part. The accent may take another role (the multi-colour case, for example the gold seal on LICENSE or the moon on the portrait); at most one part per drawing does. Folder badges are solid silhouettes in their category colour on a muted folder.
+- An object is a 1-unit outline in its category colour plus one filled accent part. The accent may take another role (the multi-colour case, for example the gold seal on LICENSE or the moon on the portrait); at most one part per drawing does. Folder badges are solid silhouettes in their category colour on a muted folder. Gate 6 accepted exceptions to this rule (G52 `gem-rough`, G57 in section 4).
 - Keylines: portrait objects 12×14 (x 2–14, y 1–15), landscape 14×12, round 14. Folder badges sit in a 7×7 box at x 8–15, y 8–15, with the folder outline knocked out 1 unit around the box.
 - Look-alikes in one category differ in silhouette (this section's 16px rules). Gate 5 sets the gem language with ts, knowing js and tsx follow.
 - 16px renders are judged against a 32×-supersampled reference, not a raw Path2D fill.
@@ -673,3 +674,19 @@ Taken at review gate 5 (`docs/qa/2.0-gate-5/README.md`), all as recommended.
 - G45 F9, option (a): accepted. Icons may fade on the selected row and the focused quick-input row in Moonlit, Daydream and Coven Contrast; the soft warning stays as the record; the selection colours do not change.
 - G46 Every drawing choice listed under "Choices" in the gate-5 README is kept (the 14×12 folder matching `symbol-folder`, the open folder's flap, the filled tab on badged folders, the drawn 1-unit badge knockout, the `src` grimoire with its spine slot, the solid crown and 13-unit-tall gem, the snake, the keyring, the contract without a fold, the gold seal). Section 6.2 now describes them.
 - G47 Gate 5 is approved with G41-G46. Gate 6 is planned next, as its own plan.
+
+### 11.7 Gate 6 decisions (2026-10-11)
+
+Taken at review gate 6 (`docs/qa/2.0-gate-6/README.md`), all as recommended.
+
+- G48 The code batch is approved as built: js `gem-rough`, tsx/jsx `gem-ring`, html `skeleton-key`, sh `tablet-prompt`, ps1 `tablet-dollar`, fish `fish-bones`, css `paintbrush`.
+- G49 The data and config batch is approved as built. The crate is accepted and named as the first candidate for a redraw: at 100% in the tree its two struts line up across the plank into a Z.
+- G50 The docs, assets and tests batch is approved as built, the compass in its fallback form (no bow).
+- G51 The folder batch (14 badges, closed and open) is approved as built.
+- G52 `gem-rough` is a solid three-crystal cluster: a section-4/6.2 exception, like G12, G26 and G36. Section 6's js row says so.
+- G53 The `node_modules` badge is a spider hanging on its thread, replacing spec 6's cobweb: every 7×7 corner web read as a K or a ↖ shortcut arrow. Section 6's folder table is updated. The spider is also the debug view's glyph (section 5.2); the thread sets it apart.
+- G54 Every drawing changed during review is accepted as built: `gem-ring`, `beads`, `cabinet`, `veil`, `crate`, `scroll`, `compass`, `.github`, `workflows`, `.claude`, `cache`, `node_modules`, `fixtures`. Section 6's tables now name the as-built objects.
+- G55 Config badges and config objects stay in the folder (muted) colour; no config colour of their own, no hollow badges.
+- G56 The new gate-6 touching accents are accepted under G42: the tsx stone, the html key's bit, the fish's head, the cabinet's cornice, the beads, the padlock body, the crate's struts, the scroll's top roll, the compass hinge.
+- G57 The 19 section-4/6.2 rule exceptions of the set are accepted and listed in section 4.
+- G58 Gate 6 is approved. The file icons (section 6) are complete. The release (section 9) is next, as its own plan (`docs/superpowers/plans/2026-10-11-spellbound-2-release.md`).

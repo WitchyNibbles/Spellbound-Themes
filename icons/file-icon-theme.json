@@ -18,17 +18,179 @@
     "folder-src-open": {
       "iconPath": "./file-icons/dark/folder-src-open.svg"
     },
+    "folder-tests": {
+      "iconPath": "./file-icons/dark/folder-tests.svg"
+    },
+    "folder-tests-open": {
+      "iconPath": "./file-icons/dark/folder-tests-open.svg"
+    },
+    "folder-docs": {
+      "iconPath": "./file-icons/dark/folder-docs.svg"
+    },
+    "folder-docs-open": {
+      "iconPath": "./file-icons/dark/folder-docs-open.svg"
+    },
+    "folder-scripts": {
+      "iconPath": "./file-icons/dark/folder-scripts.svg"
+    },
+    "folder-scripts-open": {
+      "iconPath": "./file-icons/dark/folder-scripts-open.svg"
+    },
+    "folder-assets": {
+      "iconPath": "./file-icons/dark/folder-assets.svg"
+    },
+    "folder-assets-open": {
+      "iconPath": "./file-icons/dark/folder-assets-open.svg"
+    },
+    "folder-dist": {
+      "iconPath": "./file-icons/dark/folder-dist.svg"
+    },
+    "folder-dist-open": {
+      "iconPath": "./file-icons/dark/folder-dist-open.svg"
+    },
+    "folder-lib": {
+      "iconPath": "./file-icons/dark/folder-lib.svg"
+    },
+    "folder-lib-open": {
+      "iconPath": "./file-icons/dark/folder-lib-open.svg"
+    },
+    "folder-bin": {
+      "iconPath": "./file-icons/dark/folder-bin.svg"
+    },
+    "folder-bin-open": {
+      "iconPath": "./file-icons/dark/folder-bin-open.svg"
+    },
+    "folder-fixtures": {
+      "iconPath": "./file-icons/dark/folder-fixtures.svg"
+    },
+    "folder-fixtures-open": {
+      "iconPath": "./file-icons/dark/folder-fixtures-open.svg"
+    },
+    "folder-github": {
+      "iconPath": "./file-icons/dark/folder-github.svg"
+    },
+    "folder-github-open": {
+      "iconPath": "./file-icons/dark/folder-github-open.svg"
+    },
+    "folder-workflows": {
+      "iconPath": "./file-icons/dark/folder-workflows.svg"
+    },
+    "folder-workflows-open": {
+      "iconPath": "./file-icons/dark/folder-workflows-open.svg"
+    },
+    "folder-claude": {
+      "iconPath": "./file-icons/dark/folder-claude.svg"
+    },
+    "folder-claude-open": {
+      "iconPath": "./file-icons/dark/folder-claude-open.svg"
+    },
+    "folder-venv": {
+      "iconPath": "./file-icons/dark/folder-venv.svg"
+    },
+    "folder-venv-open": {
+      "iconPath": "./file-icons/dark/folder-venv-open.svg"
+    },
+    "folder-node-modules": {
+      "iconPath": "./file-icons/dark/folder-node-modules.svg"
+    },
+    "folder-node-modules-open": {
+      "iconPath": "./file-icons/dark/folder-node-modules-open.svg"
+    },
+    "folder-cache": {
+      "iconPath": "./file-icons/dark/folder-cache.svg"
+    },
+    "folder-cache-open": {
+      "iconPath": "./file-icons/dark/folder-cache-open.svg"
+    },
     "gem-cut": {
       "iconPath": "./file-icons/dark/gem-cut.svg"
     },
     "snake": {
       "iconPath": "./file-icons/dark/snake.svg"
     },
+    "gem-rough": {
+      "iconPath": "./file-icons/dark/gem-rough.svg"
+    },
+    "gem-ring": {
+      "iconPath": "./file-icons/dark/gem-ring.svg"
+    },
+    "skeleton-key": {
+      "iconPath": "./file-icons/dark/skeleton-key.svg"
+    },
+    "tablet-prompt": {
+      "iconPath": "./file-icons/dark/tablet-prompt.svg"
+    },
+    "tablet-dollar": {
+      "iconPath": "./file-icons/dark/tablet-dollar.svg"
+    },
+    "fish-bones": {
+      "iconPath": "./file-icons/dark/fish-bones.svg"
+    },
+    "paintbrush": {
+      "iconPath": "./file-icons/dark/paintbrush.svg"
+    },
     "keyring": {
       "iconPath": "./file-icons/dark/keyring.svg"
     },
+    "cabinet": {
+      "iconPath": "./file-icons/dark/cabinet.svg"
+    },
+    "beads": {
+      "iconPath": "./file-icons/dark/beads.svg"
+    },
+    "cylinder": {
+      "iconPath": "./file-icons/dark/cylinder.svg"
+    },
+    "cairn": {
+      "iconPath": "./file-icons/dark/cairn.svg"
+    },
+    "tag": {
+      "iconPath": "./file-icons/dark/tag.svg"
+    },
+    "vial": {
+      "iconPath": "./file-icons/dark/vial.svg"
+    },
+    "padlock": {
+      "iconPath": "./file-icons/dark/padlock.svg"
+    },
+    "recipe-card": {
+      "iconPath": "./file-icons/dark/recipe-card.svg"
+    },
+    "gem-gear": {
+      "iconPath": "./file-icons/dark/gem-gear.svg"
+    },
+    "crate": {
+      "iconPath": "./file-icons/dark/crate.svg"
+    },
+    "veil": {
+      "iconPath": "./file-icons/dark/veil.svg"
+    },
     "contract": {
       "iconPath": "./file-icons/dark/contract.svg"
+    },
+    "quill": {
+      "iconPath": "./file-icons/dark/quill.svg"
+    },
+    "scroll": {
+      "iconPath": "./file-icons/dark/scroll.svg"
+    },
+    "grimoire-open": {
+      "iconPath": "./file-icons/dark/grimoire-open.svg"
+    },
+    "owl": {
+      "iconPath": "./file-icons/dark/owl.svg"
+    },
+    "compass": {
+      "iconPath": "./file-icons/dark/compass.svg"
+    },
+    "portrait": {
+      "iconPath": "./file-icons/dark/portrait.svg"
+    },
+    "type-block": {
+      "iconPath": "./file-icons/dark/type-block.svg"
+    },
+    "flask": {
+      "iconPath": "./file-icons/dark/flask.svg"
     },
     "parchment_light": {
       "iconPath": "./file-icons/light/parchment.svg"
@@ -45,17 +207,179 @@
     "folder-src-open_light": {
       "iconPath": "./file-icons/light/folder-src-open.svg"
     },
+    "folder-tests_light": {
+      "iconPath": "./file-icons/light/folder-tests.svg"
+    },
+    "folder-tests-open_light": {
+      "iconPath": "./file-icons/light/folder-tests-open.svg"
+    },
+    "folder-docs_light": {
+      "iconPath": "./file-icons/light/folder-docs.svg"
+    },
+    "folder-docs-open_light": {
+      "iconPath": "./file-icons/light/folder-docs-open.svg"
+    },
+    "folder-scripts_light": {
+      "iconPath": "./file-icons/light/folder-scripts.svg"
+    },
+    "folder-scripts-open_light": {
+      "iconPath": "./file-icons/light/folder-scripts-open.svg"
+    },
+    "folder-assets_light": {
+      "iconPath": "./file-icons/light/folder-assets.svg"
+    },
+    "folder-assets-open_light": {
+      "iconPath": "./file-icons/light/folder-assets-open.svg"
+    },
+    "folder-dist_light": {
+      "iconPath": "./file-icons/light/folder-dist.svg"
+    },
+    "folder-dist-open_light": {
+      "iconPath": "./file-icons/light/folder-dist-open.svg"
+    },
+    "folder-lib_light": {
+      "iconPath": "./file-icons/light/folder-lib.svg"
+    },
+    "folder-lib-open_light": {
+      "iconPath": "./file-icons/light/folder-lib-open.svg"
+    },
+    "folder-bin_light": {
+      "iconPath": "./file-icons/light/folder-bin.svg"
+    },
+    "folder-bin-open_light": {
+      "iconPath": "./file-icons/light/folder-bin-open.svg"
+    },
+    "folder-fixtures_light": {
+      "iconPath": "./file-icons/light/folder-fixtures.svg"
+    },
+    "folder-fixtures-open_light": {
+      "iconPath": "./file-icons/light/folder-fixtures-open.svg"
+    },
+    "folder-github_light": {
+      "iconPath": "./file-icons/light/folder-github.svg"
+    },
+    "folder-github-open_light": {
+      "iconPath": "./file-icons/light/folder-github-open.svg"
+    },
+    "folder-workflows_light": {
+      "iconPath": "./file-icons/light/folder-workflows.svg"
+    },
+    "folder-workflows-open_light": {
+      "iconPath": "./file-icons/light/folder-workflows-open.svg"
+    },
+    "folder-claude_light": {
+      "iconPath": "./file-icons/light/folder-claude.svg"
+    },
+    "folder-claude-open_light": {
+      "iconPath": "./file-icons/light/folder-claude-open.svg"
+    },
+    "folder-venv_light": {
+      "iconPath": "./file-icons/light/folder-venv.svg"
+    },
+    "folder-venv-open_light": {
+      "iconPath": "./file-icons/light/folder-venv-open.svg"
+    },
+    "folder-node-modules_light": {
+      "iconPath": "./file-icons/light/folder-node-modules.svg"
+    },
+    "folder-node-modules-open_light": {
+      "iconPath": "./file-icons/light/folder-node-modules-open.svg"
+    },
+    "folder-cache_light": {
+      "iconPath": "./file-icons/light/folder-cache.svg"
+    },
+    "folder-cache-open_light": {
+      "iconPath": "./file-icons/light/folder-cache-open.svg"
+    },
     "gem-cut_light": {
       "iconPath": "./file-icons/light/gem-cut.svg"
     },
     "snake_light": {
       "iconPath": "./file-icons/light/snake.svg"
     },
+    "gem-rough_light": {
+      "iconPath": "./file-icons/light/gem-rough.svg"
+    },
+    "gem-ring_light": {
+      "iconPath": "./file-icons/light/gem-ring.svg"
+    },
+    "skeleton-key_light": {
+      "iconPath": "./file-icons/light/skeleton-key.svg"
+    },
+    "tablet-prompt_light": {
+      "iconPath": "./file-icons/light/tablet-prompt.svg"
+    },
+    "tablet-dollar_light": {
+      "iconPath": "./file-icons/light/tablet-dollar.svg"
+    },
+    "fish-bones_light": {
+      "iconPath": "./file-icons/light/fish-bones.svg"
+    },
+    "paintbrush_light": {
+      "iconPath": "./file-icons/light/paintbrush.svg"
+    },
     "keyring_light": {
       "iconPath": "./file-icons/light/keyring.svg"
     },
+    "cabinet_light": {
+      "iconPath": "./file-icons/light/cabinet.svg"
+    },
+    "beads_light": {
+      "iconPath": "./file-icons/light/beads.svg"
+    },
+    "cylinder_light": {
+      "iconPath": "./file-icons/light/cylinder.svg"
+    },
+    "cairn_light": {
+      "iconPath": "./file-icons/light/cairn.svg"
+    },
+    "tag_light": {
+      "iconPath": "./file-icons/light/tag.svg"
+    },
+    "vial_light": {
+      "iconPath": "./file-icons/light/vial.svg"
+    },
+    "padlock_light": {
+      "iconPath": "./file-icons/light/padlock.svg"
+    },
+    "recipe-card_light": {
+      "iconPath": "./file-icons/light/recipe-card.svg"
+    },
+    "gem-gear_light": {
+      "iconPath": "./file-icons/light/gem-gear.svg"
+    },
+    "crate_light": {
+      "iconPath": "./file-icons/light/crate.svg"
+    },
+    "veil_light": {
+      "iconPath": "./file-icons/light/veil.svg"
+    },
     "contract_light": {
       "iconPath": "./file-icons/light/contract.svg"
+    },
+    "quill_light": {
+      "iconPath": "./file-icons/light/quill.svg"
+    },
+    "scroll_light": {
+      "iconPath": "./file-icons/light/scroll.svg"
+    },
+    "grimoire-open_light": {
+      "iconPath": "./file-icons/light/grimoire-open.svg"
+    },
+    "owl_light": {
+      "iconPath": "./file-icons/light/owl.svg"
+    },
+    "compass_light": {
+      "iconPath": "./file-icons/light/compass.svg"
+    },
+    "portrait_light": {
+      "iconPath": "./file-icons/light/portrait.svg"
+    },
+    "type-block_light": {
+      "iconPath": "./file-icons/light/type-block.svg"
+    },
+    "flask_light": {
+      "iconPath": "./file-icons/light/flask.svg"
     },
     "parchment_hc": {
       "iconPath": "./file-icons/high-contrast/parchment.svg"
@@ -72,79 +396,473 @@
     "folder-src-open_hc": {
       "iconPath": "./file-icons/high-contrast/folder-src-open.svg"
     },
+    "folder-tests_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-tests.svg"
+    },
+    "folder-tests-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-tests-open.svg"
+    },
+    "folder-docs_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-docs.svg"
+    },
+    "folder-docs-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-docs-open.svg"
+    },
+    "folder-scripts_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-scripts.svg"
+    },
+    "folder-scripts-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-scripts-open.svg"
+    },
+    "folder-assets_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-assets.svg"
+    },
+    "folder-assets-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-assets-open.svg"
+    },
+    "folder-dist_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-dist.svg"
+    },
+    "folder-dist-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-dist-open.svg"
+    },
+    "folder-lib_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-lib.svg"
+    },
+    "folder-lib-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-lib-open.svg"
+    },
+    "folder-bin_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-bin.svg"
+    },
+    "folder-bin-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-bin-open.svg"
+    },
+    "folder-fixtures_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-fixtures.svg"
+    },
+    "folder-fixtures-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-fixtures-open.svg"
+    },
+    "folder-github_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-github.svg"
+    },
+    "folder-github-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-github-open.svg"
+    },
+    "folder-workflows_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-workflows.svg"
+    },
+    "folder-workflows-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-workflows-open.svg"
+    },
+    "folder-claude_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-claude.svg"
+    },
+    "folder-claude-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-claude-open.svg"
+    },
+    "folder-venv_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-venv.svg"
+    },
+    "folder-venv-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-venv-open.svg"
+    },
+    "folder-node-modules_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-node-modules.svg"
+    },
+    "folder-node-modules-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-node-modules-open.svg"
+    },
+    "folder-cache_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-cache.svg"
+    },
+    "folder-cache-open_hc": {
+      "iconPath": "./file-icons/high-contrast/folder-cache-open.svg"
+    },
     "gem-cut_hc": {
       "iconPath": "./file-icons/high-contrast/gem-cut.svg"
     },
     "snake_hc": {
       "iconPath": "./file-icons/high-contrast/snake.svg"
     },
+    "gem-rough_hc": {
+      "iconPath": "./file-icons/high-contrast/gem-rough.svg"
+    },
+    "gem-ring_hc": {
+      "iconPath": "./file-icons/high-contrast/gem-ring.svg"
+    },
+    "skeleton-key_hc": {
+      "iconPath": "./file-icons/high-contrast/skeleton-key.svg"
+    },
+    "tablet-prompt_hc": {
+      "iconPath": "./file-icons/high-contrast/tablet-prompt.svg"
+    },
+    "tablet-dollar_hc": {
+      "iconPath": "./file-icons/high-contrast/tablet-dollar.svg"
+    },
+    "fish-bones_hc": {
+      "iconPath": "./file-icons/high-contrast/fish-bones.svg"
+    },
+    "paintbrush_hc": {
+      "iconPath": "./file-icons/high-contrast/paintbrush.svg"
+    },
     "keyring_hc": {
       "iconPath": "./file-icons/high-contrast/keyring.svg"
     },
+    "cabinet_hc": {
+      "iconPath": "./file-icons/high-contrast/cabinet.svg"
+    },
+    "beads_hc": {
+      "iconPath": "./file-icons/high-contrast/beads.svg"
+    },
+    "cylinder_hc": {
+      "iconPath": "./file-icons/high-contrast/cylinder.svg"
+    },
+    "cairn_hc": {
+      "iconPath": "./file-icons/high-contrast/cairn.svg"
+    },
+    "tag_hc": {
+      "iconPath": "./file-icons/high-contrast/tag.svg"
+    },
+    "vial_hc": {
+      "iconPath": "./file-icons/high-contrast/vial.svg"
+    },
+    "padlock_hc": {
+      "iconPath": "./file-icons/high-contrast/padlock.svg"
+    },
+    "recipe-card_hc": {
+      "iconPath": "./file-icons/high-contrast/recipe-card.svg"
+    },
+    "gem-gear_hc": {
+      "iconPath": "./file-icons/high-contrast/gem-gear.svg"
+    },
+    "crate_hc": {
+      "iconPath": "./file-icons/high-contrast/crate.svg"
+    },
+    "veil_hc": {
+      "iconPath": "./file-icons/high-contrast/veil.svg"
+    },
     "contract_hc": {
       "iconPath": "./file-icons/high-contrast/contract.svg"
+    },
+    "quill_hc": {
+      "iconPath": "./file-icons/high-contrast/quill.svg"
+    },
+    "scroll_hc": {
+      "iconPath": "./file-icons/high-contrast/scroll.svg"
+    },
+    "grimoire-open_hc": {
+      "iconPath": "./file-icons/high-contrast/grimoire-open.svg"
+    },
+    "owl_hc": {
+      "iconPath": "./file-icons/high-contrast/owl.svg"
+    },
+    "compass_hc": {
+      "iconPath": "./file-icons/high-contrast/compass.svg"
+    },
+    "portrait_hc": {
+      "iconPath": "./file-icons/high-contrast/portrait.svg"
+    },
+    "type-block_hc": {
+      "iconPath": "./file-icons/high-contrast/type-block.svg"
+    },
+    "flask_hc": {
+      "iconPath": "./file-icons/high-contrast/flask.svg"
     }
   },
   "file": "parchment",
   "folder": "folder",
   "folderExpanded": "folder-open",
   "fileExtensions": {
+    "cjs": "gem-rough",
+    "css": "paintbrush",
     "cts": "gem-cut",
+    "db": "cylinder",
+    "env": "vial",
+    "fish": "fish-bones",
+    "gif": "portrait",
+    "htm": "skeleton-key",
+    "html": "skeleton-key",
+    "jpeg": "portrait",
+    "jpg": "portrait",
+    "js": "gem-rough",
     "json": "keyring",
     "jsonc": "keyring",
+    "jsonl": "beads",
+    "jsx": "gem-ring",
+    "less": "paintbrush",
+    "lock": "padlock",
+    "md": "quill",
+    "mdx": "quill",
+    "mjs": "gem-rough",
     "mts": "gem-cut",
+    "otf": "type-block",
+    "png": "portrait",
+    "ps1": "tablet-dollar",
     "py": "snake",
     "pyw": "snake",
-    "ts": "gem-cut"
+    "scss": "paintbrush",
+    "sh": "tablet-prompt",
+    "spec.cjs": "flask",
+    "spec.cts": "flask",
+    "spec.js": "flask",
+    "spec.jsx": "flask",
+    "spec.mjs": "flask",
+    "spec.mts": "flask",
+    "spec.ts": "flask",
+    "spec.tsx": "flask",
+    "sql": "cabinet",
+    "svg": "compass",
+    "test.cjs": "flask",
+    "test.cts": "flask",
+    "test.js": "flask",
+    "test.jsx": "flask",
+    "test.mjs": "flask",
+    "test.mts": "flask",
+    "test.ts": "flask",
+    "test.tsx": "flask",
+    "toml": "tag",
+    "ts": "gem-cut",
+    "tsx": "gem-ring",
+    "ttf": "type-block",
+    "txt": "scroll",
+    "webp": "portrait",
+    "woff": "type-block",
+    "woff2": "type-block",
+    "yaml": "cairn",
+    "yml": "cairn"
   },
   "fileNames": {
+    ".env": "vial",
+    ".env.development": "vial",
+    ".env.example": "vial",
+    ".env.local": "vial",
+    ".env.production": "vial",
+    ".gitignore": "veil",
+    "cargo.lock": "padlock",
+    "changelog.md": "owl",
+    "conftest.py": "flask",
+    "dockerfile": "crate",
+    "jest.config.cjs": "flask",
+    "jest.config.js": "flask",
+    "jest.config.json": "flask",
+    "jest.config.mjs": "flask",
+    "jest.config.ts": "flask",
+    "jsconfig.json": "gem-gear",
     "license": "contract",
-    "license.md": "contract"
+    "license.md": "contract",
+    "package-lock.json": "padlock",
+    "package.json": "recipe-card",
+    "poetry.lock": "padlock",
+    "pyproject.toml": "recipe-card",
+    "pytest.ini": "flask",
+    "readme.md": "grimoire-open",
+    "requirements.txt": "recipe-card",
+    "tsconfig.json": "gem-gear",
+    "yarn.lock": "padlock"
   },
   "folderNames": {
+    ".claude": "folder-claude",
+    ".github": "folder-github",
+    ".venv": "folder-venv",
+    "__pycache__": "folder-cache",
+    "__tests__": "folder-tests",
+    "assets": "folder-assets",
+    "bin": "folder-bin",
+    "cache": "folder-cache",
+    "dist": "folder-dist",
+    "docs": "folder-docs",
+    "fixtures": "folder-fixtures",
+    "lib": "folder-lib",
+    "node_modules": "folder-node-modules",
+    "scripts": "folder-scripts",
     "source": "folder-src",
-    "src": "folder-src"
+    "src": "folder-src",
+    "test": "folder-tests",
+    "tests": "folder-tests",
+    "workflows": "folder-workflows"
   },
   "folderNamesExpanded": {
+    ".claude": "folder-claude-open",
+    ".github": "folder-github-open",
+    ".venv": "folder-venv-open",
+    "__pycache__": "folder-cache-open",
+    "__tests__": "folder-tests-open",
+    "assets": "folder-assets-open",
+    "bin": "folder-bin-open",
+    "cache": "folder-cache-open",
+    "dist": "folder-dist-open",
+    "docs": "folder-docs-open",
+    "fixtures": "folder-fixtures-open",
+    "lib": "folder-lib-open",
+    "node_modules": "folder-node-modules-open",
+    "scripts": "folder-scripts-open",
     "source": "folder-src-open",
-    "src": "folder-src-open"
+    "src": "folder-src-open",
+    "test": "folder-tests-open",
+    "tests": "folder-tests-open",
+    "workflows": "folder-workflows-open"
   },
   "languageIds": {
+    "css": "paintbrush",
+    "javascript": "gem-rough",
+    "javascriptreact": "gem-ring",
     "json": "keyring",
     "jsonc": "keyring",
+    "markdown": "quill",
     "python": "snake",
-    "typescript": "gem-cut"
+    "scss": "paintbrush",
+    "typescript": "gem-cut",
+    "typescriptreact": "gem-ring",
+    "yaml": "cairn"
   },
   "light": {
     "file": "parchment_light",
     "folder": "folder_light",
     "folderExpanded": "folder-open_light",
     "fileExtensions": {
+      "cjs": "gem-rough_light",
+      "css": "paintbrush_light",
       "cts": "gem-cut_light",
+      "db": "cylinder_light",
+      "env": "vial_light",
+      "fish": "fish-bones_light",
+      "gif": "portrait_light",
+      "htm": "skeleton-key_light",
+      "html": "skeleton-key_light",
+      "jpeg": "portrait_light",
+      "jpg": "portrait_light",
+      "js": "gem-rough_light",
       "json": "keyring_light",
       "jsonc": "keyring_light",
+      "jsonl": "beads_light",
+      "jsx": "gem-ring_light",
+      "less": "paintbrush_light",
+      "lock": "padlock_light",
+      "md": "quill_light",
+      "mdx": "quill_light",
+      "mjs": "gem-rough_light",
       "mts": "gem-cut_light",
+      "otf": "type-block_light",
+      "png": "portrait_light",
+      "ps1": "tablet-dollar_light",
       "py": "snake_light",
       "pyw": "snake_light",
-      "ts": "gem-cut_light"
+      "scss": "paintbrush_light",
+      "sh": "tablet-prompt_light",
+      "spec.cjs": "flask_light",
+      "spec.cts": "flask_light",
+      "spec.js": "flask_light",
+      "spec.jsx": "flask_light",
+      "spec.mjs": "flask_light",
+      "spec.mts": "flask_light",
+      "spec.ts": "flask_light",
+      "spec.tsx": "flask_light",
+      "sql": "cabinet_light",
+      "svg": "compass_light",
+      "test.cjs": "flask_light",
+      "test.cts": "flask_light",
+      "test.js": "flask_light",
+      "test.jsx": "flask_light",
+      "test.mjs": "flask_light",
+      "test.mts": "flask_light",
+      "test.ts": "flask_light",
+      "test.tsx": "flask_light",
+      "toml": "tag_light",
+      "ts": "gem-cut_light",
+      "tsx": "gem-ring_light",
+      "ttf": "type-block_light",
+      "txt": "scroll_light",
+      "webp": "portrait_light",
+      "woff": "type-block_light",
+      "woff2": "type-block_light",
+      "yaml": "cairn_light",
+      "yml": "cairn_light"
     },
     "fileNames": {
+      ".env": "vial_light",
+      ".env.development": "vial_light",
+      ".env.example": "vial_light",
+      ".env.local": "vial_light",
+      ".env.production": "vial_light",
+      ".gitignore": "veil_light",
+      "cargo.lock": "padlock_light",
+      "changelog.md": "owl_light",
+      "conftest.py": "flask_light",
+      "dockerfile": "crate_light",
+      "jest.config.cjs": "flask_light",
+      "jest.config.js": "flask_light",
+      "jest.config.json": "flask_light",
+      "jest.config.mjs": "flask_light",
+      "jest.config.ts": "flask_light",
+      "jsconfig.json": "gem-gear_light",
       "license": "contract_light",
-      "license.md": "contract_light"
+      "license.md": "contract_light",
+      "package-lock.json": "padlock_light",
+      "package.json": "recipe-card_light",
+      "poetry.lock": "padlock_light",
+      "pyproject.toml": "recipe-card_light",
+      "pytest.ini": "flask_light",
+      "readme.md": "grimoire-open_light",
+      "requirements.txt": "recipe-card_light",
+      "tsconfig.json": "gem-gear_light",
+      "yarn.lock": "padlock_light"
     },
     "folderNames": {
+      ".claude": "folder-claude_light",
+      ".github": "folder-github_light",
+      ".venv": "folder-venv_light",
+      "__pycache__": "folder-cache_light",
+      "__tests__": "folder-tests_light",
+      "assets": "folder-assets_light",
+      "bin": "folder-bin_light",
+      "cache": "folder-cache_light",
+      "dist": "folder-dist_light",
+      "docs": "folder-docs_light",
+      "fixtures": "folder-fixtures_light",
+      "lib": "folder-lib_light",
+      "node_modules": "folder-node-modules_light",
+      "scripts": "folder-scripts_light",
       "source": "folder-src_light",
-      "src": "folder-src_light"
+      "src": "folder-src_light",
+      "test": "folder-tests_light",
+      "tests": "folder-tests_light",
+      "workflows": "folder-workflows_light"
     },
     "folderNamesExpanded": {
+      ".claude": "folder-claude-open_light",
+      ".github": "folder-github-open_light",
+      ".venv": "folder-venv-open_light",
+      "__pycache__": "folder-cache-open_light",
+      "__tests__": "folder-tests-open_light",
+      "assets": "folder-assets-open_light",
+      "bin": "folder-bin-open_light",
+      "cache": "folder-cache-open_light",
+      "dist": "folder-dist-open_light",
+      "docs": "folder-docs-open_light",
+      "fixtures": "folder-fixtures-open_light",
+      "lib": "folder-lib-open_light",
+      "node_modules": "folder-node-modules-open_light",
+      "scripts": "folder-scripts-open_light",
       "source": "folder-src-open_light",
-      "src": "folder-src-open_light"
+      "src": "folder-src-open_light",
+      "test": "folder-tests-open_light",
+      "tests": "folder-tests-open_light",
+      "workflows": "folder-workflows-open_light"
     },
     "languageIds": {
+      "css": "paintbrush_light",
+      "javascript": "gem-rough_light",
+      "javascriptreact": "gem-ring_light",
       "json": "keyring_light",
       "jsonc": "keyring_light",
+      "markdown": "quill_light",
       "python": "snake_light",
-      "typescript": "gem-cut_light"
+      "scss": "paintbrush_light",
+      "typescript": "gem-cut_light",
+      "typescriptreact": "gem-ring_light",
+      "yaml": "cairn_light"
     }
   },
   "highContrast": {
@@ -152,31 +870,147 @@
     "folder": "folder_hc",
     "folderExpanded": "folder-open_hc",
     "fileExtensions": {
+      "cjs": "gem-rough_hc",
+      "css": "paintbrush_hc",
       "cts": "gem-cut_hc",
+      "db": "cylinder_hc",
+      "env": "vial_hc",
+      "fish": "fish-bones_hc",
+      "gif": "portrait_hc",
+      "htm": "skeleton-key_hc",
+      "html": "skeleton-key_hc",
+      "jpeg": "portrait_hc",
+      "jpg": "portrait_hc",
+      "js": "gem-rough_hc",
       "json": "keyring_hc",
       "jsonc": "keyring_hc",
+      "jsonl": "beads_hc",
+      "jsx": "gem-ring_hc",
+      "less": "paintbrush_hc",
+      "lock": "padlock_hc",
+      "md": "quill_hc",
+      "mdx": "quill_hc",
+      "mjs": "gem-rough_hc",
       "mts": "gem-cut_hc",
+      "otf": "type-block_hc",
+      "png": "portrait_hc",
+      "ps1": "tablet-dollar_hc",
       "py": "snake_hc",
       "pyw": "snake_hc",
-      "ts": "gem-cut_hc"
+      "scss": "paintbrush_hc",
+      "sh": "tablet-prompt_hc",
+      "spec.cjs": "flask_hc",
+      "spec.cts": "flask_hc",
+      "spec.js": "flask_hc",
+      "spec.jsx": "flask_hc",
+      "spec.mjs": "flask_hc",
+      "spec.mts": "flask_hc",
+      "spec.ts": "flask_hc",
+      "spec.tsx": "flask_hc",
+      "sql": "cabinet_hc",
+      "svg": "compass_hc",
+      "test.cjs": "flask_hc",
+      "test.cts": "flask_hc",
+      "test.js": "flask_hc",
+      "test.jsx": "flask_hc",
+      "test.mjs": "flask_hc",
+      "test.mts": "flask_hc",
+      "test.ts": "flask_hc",
+      "test.tsx": "flask_hc",
+      "toml": "tag_hc",
+      "ts": "gem-cut_hc",
+      "tsx": "gem-ring_hc",
+      "ttf": "type-block_hc",
+      "txt": "scroll_hc",
+      "webp": "portrait_hc",
+      "woff": "type-block_hc",
+      "woff2": "type-block_hc",
+      "yaml": "cairn_hc",
+      "yml": "cairn_hc"
     },
     "fileNames": {
+      ".env": "vial_hc",
+      ".env.development": "vial_hc",
+      ".env.example": "vial_hc",
+      ".env.local": "vial_hc",
+      ".env.production": "vial_hc",
+      ".gitignore": "veil_hc",
+      "cargo.lock": "padlock_hc",
+      "changelog.md": "owl_hc",
+      "conftest.py": "flask_hc",
+      "dockerfile": "crate_hc",
+      "jest.config.cjs": "flask_hc",
+      "jest.config.js": "flask_hc",
+      "jest.config.json": "flask_hc",
+      "jest.config.mjs": "flask_hc",
+      "jest.config.ts": "flask_hc",
+      "jsconfig.json": "gem-gear_hc",
       "license": "contract_hc",
-      "license.md": "contract_hc"
+      "license.md": "contract_hc",
+      "package-lock.json": "padlock_hc",
+      "package.json": "recipe-card_hc",
+      "poetry.lock": "padlock_hc",
+      "pyproject.toml": "recipe-card_hc",
+      "pytest.ini": "flask_hc",
+      "readme.md": "grimoire-open_hc",
+      "requirements.txt": "recipe-card_hc",
+      "tsconfig.json": "gem-gear_hc",
+      "yarn.lock": "padlock_hc"
     },
     "folderNames": {
+      ".claude": "folder-claude_hc",
+      ".github": "folder-github_hc",
+      ".venv": "folder-venv_hc",
+      "__pycache__": "folder-cache_hc",
+      "__tests__": "folder-tests_hc",
+      "assets": "folder-assets_hc",
+      "bin": "folder-bin_hc",
+      "cache": "folder-cache_hc",
+      "dist": "folder-dist_hc",
+      "docs": "folder-docs_hc",
+      "fixtures": "folder-fixtures_hc",
+      "lib": "folder-lib_hc",
+      "node_modules": "folder-node-modules_hc",
+      "scripts": "folder-scripts_hc",
       "source": "folder-src_hc",
-      "src": "folder-src_hc"
+      "src": "folder-src_hc",
+      "test": "folder-tests_hc",
+      "tests": "folder-tests_hc",
+      "workflows": "folder-workflows_hc"
     },
     "folderNamesExpanded": {
+      ".claude": "folder-claude-open_hc",
+      ".github": "folder-github-open_hc",
+      ".venv": "folder-venv-open_hc",
+      "__pycache__": "folder-cache-open_hc",
+      "__tests__": "folder-tests-open_hc",
+      "assets": "folder-assets-open_hc",
+      "bin": "folder-bin-open_hc",
+      "cache": "folder-cache-open_hc",
+      "dist": "folder-dist-open_hc",
+      "docs": "folder-docs-open_hc",
+      "fixtures": "folder-fixtures-open_hc",
+      "lib": "folder-lib-open_hc",
+      "node_modules": "folder-node-modules-open_hc",
+      "scripts": "folder-scripts-open_hc",
       "source": "folder-src-open_hc",
-      "src": "folder-src-open_hc"
+      "src": "folder-src-open_hc",
+      "test": "folder-tests-open_hc",
+      "tests": "folder-tests-open_hc",
+      "workflows": "folder-workflows-open_hc"
     },
     "languageIds": {
+      "css": "paintbrush_hc",
+      "javascript": "gem-rough_hc",
+      "javascriptreact": "gem-ring_hc",
       "json": "keyring_hc",
       "jsonc": "keyring_hc",
+      "markdown": "quill_hc",
       "python": "snake_hc",
-      "typescript": "gem-cut_hc"
+      "scss": "paintbrush_hc",
+      "typescript": "gem-cut_hc",
+      "typescriptreact": "gem-ring_hc",
+      "yaml": "cairn_hc"
     }
   }
 }

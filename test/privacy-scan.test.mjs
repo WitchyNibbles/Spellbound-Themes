@@ -7,7 +7,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { findPrivateText, normaliseOcr } from '../scripts/review/privacy-scan.mjs';
+import * as privacyScan from '../scripts/review/privacy-scan.mjs';
+
+const { findPrivateText, normaliseOcr } = privacyScan;
 
 const root = path.resolve(import.meta.dirname, '..');
 const sheet = path.join(root, 'docs', 'qa', '2.0-gate-2', 'main-terminal-panel.png');
@@ -121,4 +123,74 @@ test('the scan fails closed on a PNG it could read nothing from (a blank image i
   assert.equal(result.status, 2, result.stdout + result.stderr);
   assert.match(result.stderr, /blank\.png/);
   assert.match(result.stderr, /could not scan/);
+});
+
+// A tall sheet (the gate-6 file-icon sheet is 24,000 px tall) is upscaled 3x and tesseract refuses an image that large
+// ("Image too large"), so the scan reads it in overlapping horizontal tiles. 11,500 px is the least that trips the limit.
+const TALL = { width: 900, height: 11500 };
+const LINE = 'nothing private on this line at all';
+
+// Draws a tall dark PNG with one line of light text at each given y; null when Pillow is absent.
+const drawTall = (file, lines) => {
+  const script = `import sys, json
+from PIL import Image, ImageDraw, ImageFont
+width, height, lines = json.loads(sys.argv[2])
+image = Image.new('RGB', (width, height), (30, 30, 36))
+try:
+    font = ImageFont.truetype('DejaVuSans.ttf', 24)
+except OSError:
+    font = ImageFont.load_default()
+draw = ImageDraw.Draw(image)
+for y, text in lines:
+    draw.text((20, y), text, fill=(220, 220, 220), font=font)
+image.save(sys.argv[1])`;
+  return spawnSync('python3', ['-I', '-c', script, file, JSON.stringify([TALL.width, TALL.height, lines])], { encoding: 'utf8' }).status === 0;
+};
+const withTall = (t, name, lines, run) => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'privacy-scan-test-'));
+  try {
+    const png = path.join(dir, name);
+    if (!ocrAvailable() || !drawTall(png, lines)) return t.skip('Pillow or tesseract is absent');
+    return run(png);
+  } finally {
+    fs.rmSync(dir, { recursive: true });
+  }
+};
+
+test('the scan finds a user directory planted near the bottom of a tall PNG', (t) => {
+  withTall(t, 'tall-planted.png', [[60, LINE], [TALL.height - 80, 'launch C:\\Users\\Someone\\projects\\spellbound node debug']], (png) => {
+    const result = scan([png]);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    assert.match(result.stdout, /✗ .*tall-planted\.png: 1 finding\(s\): user directory/);
+    assert.doesNotMatch(result.stdout, /Someone/);
+  });
+});
+
+test('the scan finds text cut by the end of a tile, because the tiles overlap', (t) => {
+  const { TILE_HEIGHT, TILE_OVERLAP } = privacyScan;
+  assert.ok(TILE_OVERLAP > 100 && TILE_HEIGHT > TILE_OVERLAP, 'the overlap must be larger than the tallest text line');
+  const stride = TILE_HEIGHT - TILE_OVERLAP;
+  // The line starts 15 px above the end of the second tile, so that tile cuts it in half.
+  withTall(t, 'tall-seam.png', [[60, LINE], [stride + TILE_HEIGHT - 15, 'cd C:\\Users\\Someone\\projects\\spellbound node']], (png) => {
+    const result = scan([png]);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    assert.match(result.stdout, /user directory/);
+  });
+});
+
+test('a tall PNG with text only in its top tile and a blank ground below is clean', (t) => {
+  withTall(t, 'tall-top.png', [[60, LINE]], (png) => {
+    const result = scan([png]);
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    assert.match(result.stdout, /^✓ .*tall-top\.png$/m);
+  });
+});
+
+test('the scan fails closed on a tall PNG it could read nothing from (a blank tall image is not clean)', (t) => {
+  withTall(t, 'tall-blank.png', [], (png) => {
+    const result = scan([png]);
+    assert.equal(result.status, 2, result.stdout + result.stderr);
+    assert.match(result.stderr, /tall-blank\.png/);
+    assert.match(result.stderr, /could not scan/);
+  });
 });
